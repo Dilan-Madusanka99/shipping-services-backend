@@ -11,11 +11,12 @@ public class CertificatesRegistrationDto {
     private String cIssuedPlace;
     private Date cIssuedDate;
     private Date cExpiredDate;
+    private String verificationStatus;
 
     public CertificatesRegistrationDto() {
     }
 
-    public CertificatesRegistrationDto(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate) {
+    public CertificatesRegistrationDto(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, String verificationStatus) {
         this.id = id;
         this.sidNo = sidNo;
         this.cName = cName;
@@ -23,20 +24,17 @@ public class CertificatesRegistrationDto {
         this.cIssuedPlace = cIssuedPlace;
         this.cIssuedDate = cIssuedDate;
         this.cExpiredDate = cExpiredDate;
+        this.verificationStatus = verificationStatus;
     }
 
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getSidNo() {
-        return sidNo;
-    }
-
+    public String getSidNo() {return sidNo;}
     public void setSidNo(String sidNo) {
         this.sidNo = sidNo;
     }
@@ -44,7 +42,6 @@ public class CertificatesRegistrationDto {
     public String getcName() {
         return cName;
     }
-
     public void setcName(String cName) {
         this.cName = cName;
     }
@@ -52,7 +49,6 @@ public class CertificatesRegistrationDto {
     public String getcNo() {
         return cNo;
     }
-
     public void setcNo(String cNo) {
         this.cNo = cNo;
     }
@@ -60,7 +56,6 @@ public class CertificatesRegistrationDto {
     public String getcIssuedPlace() {
         return cIssuedPlace;
     }
-
     public void setcIssuedPlace(String cIssuedPlace) {
         this.cIssuedPlace = cIssuedPlace;
     }
@@ -68,7 +63,6 @@ public class CertificatesRegistrationDto {
     public Date getcIssuedDate() {
         return cIssuedDate;
     }
-
     public void setcIssuedDate(Date cIssuedDate) {
         this.cIssuedDate = cIssuedDate;
     }
@@ -76,8 +70,10 @@ public class CertificatesRegistrationDto {
     public Date getcExpiredDate() {
         return cExpiredDate;
     }
-
     public void setcExpiredDate(Date cExpiredDate) {
         this.cExpiredDate = cExpiredDate;
     }
+
+    public String getVerificationStatus() {return verificationStatus;}
+    public void setVerificationStatus(String verificationStatus) {this.verificationStatus = verificationStatus;}
 }

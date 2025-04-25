@@ -30,17 +30,21 @@ public class CertificatesRegistrationEntity {
     @Column(name = "cExpiredDate")
     private Date cExpiredDate;
 
+    @Column(name = "verificationStatus")
+    private String verificationStatus;
+
     public CertificatesRegistrationEntity() {
     }
 
-    public CertificatesRegistrationEntity(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate) {
+    public CertificatesRegistrationEntity(String cIssuedPlace, Long id, String sidNo, String cName, String cNo, Date cIssuedDate, Date cExpiredDate, String verificationStatus) {
+        this.cIssuedPlace = cIssuedPlace;
         this.id = id;
         this.sidNo = sidNo;
         this.cName = cName;
         this.cNo = cNo;
-        this.cIssuedPlace = cIssuedPlace;
         this.cIssuedDate = cIssuedDate;
         this.cExpiredDate = cExpiredDate;
+        this.verificationStatus = verificationStatus;
     }
 
     public Long getId() {
@@ -97,5 +101,13 @@ public class CertificatesRegistrationEntity {
 
     public void setcExpiredDate(Date cExpiredDate) {
         this.cExpiredDate = cExpiredDate;
+    }
+
+    public String getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
     }
 }
