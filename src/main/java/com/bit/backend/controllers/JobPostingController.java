@@ -17,18 +17,18 @@ public class JobPostingController {
 
     public JobPostingController(JobPostingServiceI jobPostingServiceI) {this.jobPostingServiceI = jobPostingServiceI;}
 
-    @PostMapping("/Job_Posting")
+    @PostMapping("/job_posting")
     public ResponseEntity<JobPostingDto> addJobPosting(@RequestBody JobPostingDto jobPostingDto) {
 
         try {
             JobPostingDto jobPostingDtoResponse = jobPostingServiceI.addJobPostingEntity(jobPostingDto);
-            return ResponseEntity.created(URI.create("/Job_Posting"+jobPostingDtoResponse.getId())).body(jobPostingDtoResponse);
+            return ResponseEntity.created(URI.create("/job_posting"+jobPostingDtoResponse.getId())).body(jobPostingDtoResponse);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/Job_Posting")
+    @GetMapping("/job_posting")
     public ResponseEntity<List<JobPostingDto>> getData() {
 
         try {
@@ -39,7 +39,7 @@ public class JobPostingController {
         }
     }
 
-    @PutMapping("/Job_Posting/{id}")
+    @PutMapping("/job_posting/{id}")
     public ResponseEntity<JobPostingDto> updateJobPosting(@PathVariable Long id, @RequestBody JobPostingDto jobPostingDto) {
 
         try {
@@ -50,7 +50,7 @@ public class JobPostingController {
         }
     }
 
-    @DeleteMapping("/Job_Posting/{id}")
+    @DeleteMapping("/job_posting/{id}")
     public ResponseEntity<JobPostingDto> deleteJobPosting(@PathVariable Long id) {
 
         try {
