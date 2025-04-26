@@ -1,5 +1,7 @@
 package com.bit.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class SeafarersDto {
@@ -28,11 +30,18 @@ public class SeafarersDto {
     private String kinMobile;
     private String kinEmail;
     private String englishLanguage;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private byte[] profileImage;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String profileImageName;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String profileImageType;
 
     public SeafarersDto() {
     }
 
-    public SeafarersDto(Long id, String sidNo, String position, Date appliedDate, Date availableDate, String surname, String otherNames, Date dob, String birthPlace, String nic, String religion, String marriedStatus, String gender, String noOfChildren, String address, String home, String mobile, String email, String kinName, String kinRelationship, String kinAddress, String kinMobile, String kinEmail, String englishLanguage) {
+    public SeafarersDto(Long id, String sidNo, String position, Date appliedDate, Date availableDate, String surname, String otherNames, Date dob, String birthPlace, String nic, String religion, String marriedStatus, String gender, String noOfChildren, String address, String home, String mobile, String email, String kinName, String kinRelationship, String kinAddress, String kinMobile, String kinEmail, String englishLanguage, byte[] profileImage,
+                        String profileImageName, String profileImageType) {
         this.id = id;
         this.sidNo = sidNo;
         this.position = position;
@@ -57,6 +66,9 @@ public class SeafarersDto {
         this.kinMobile = kinMobile;
         this.kinEmail = kinEmail;
         this.englishLanguage = englishLanguage;
+        this.profileImage = profileImage; // Photo upload [start]
+        this.profileImageName = profileImageName;
+        this.profileImageType = profileImageType;
     }
 
     public Long getId() {
@@ -249,5 +261,29 @@ public class SeafarersDto {
 
     public void setEnglishLanguage(String englishLanguage) {
         this.englishLanguage = englishLanguage;
+    }
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImageName() {
+        return profileImageName;
+    }
+
+    public void setProfileImageName(String profileImageName) {
+        this.profileImageName = profileImageName;
+    }
+
+    public String getProfileImageType() {
+        return profileImageType;
+    }
+
+    public void setProfileImageType(String profileImageType) {
+        this.profileImageType = profileImageType;
     }
 }
