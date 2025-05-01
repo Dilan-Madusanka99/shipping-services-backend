@@ -4,8 +4,10 @@ import com.bit.backend.dtos.CertificatesRegistrationDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.CertificatesRegistrationServiceI;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -17,10 +19,13 @@ public class CertificatesRegistrationController {
 
     public CertificatesRegistrationController(CertificatesRegistrationServiceI certificatesRegistrationServiceI) {this.certificatesRegistrationServiceI = certificatesRegistrationServiceI;}
 
-    @PostMapping("/certificates_registration")
-    public ResponseEntity<CertificatesRegistrationDto> addCertificatesRegistration(@RequestBody CertificatesRegistrationDto certificatesRegistrationDto) {
+    @PostMapping(value = {"/certificates_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<CertificatesRegistrationDto> addCertificatesRegistration(@RequestPart("certificatesRegistrationForm") CertificatesRegistrationDto certificatesRegistrationDto, @RequestPart("certificateImage") MultipartFile file) {
 
         try {
+            certificatesRegistrationDto.setCertificateImage(file.getBytes());
+            certificatesRegistrationDto.setCertificateImageName(file.getOriginalFilename());
+            certificatesRegistrationDto.setCertificateImageType(file.getContentType());
             CertificatesRegistrationDto certificatesRegistrationDtoResponse = certificatesRegistrationServiceI.addCertificatesRegistrationEntity(certificatesRegistrationDto);
             return ResponseEntity.created(URI.create("/certificates_registration"+certificatesRegistrationDtoResponse.getSidNo())).body(certificatesRegistrationDtoResponse);
         } catch (Exception e) {

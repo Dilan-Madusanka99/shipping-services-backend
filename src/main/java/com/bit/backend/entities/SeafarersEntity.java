@@ -82,10 +82,19 @@ public class SeafarersEntity {
     @Column(name = "english_language")
     private String englishLanguage;
 
+    @Column(name = "profile_image")  // Photo upload [start]
+    private byte[] profileImage;
+
+    @Column(name = "profile_image_name")
+    private String profileImageName;
+
+    @Column(name = "profile_image_type")
+    private String profileImageType;
+
     public SeafarersEntity() {
     }
 
-    public SeafarersEntity(Long id, String sidNo, String position, Date appliedDate, Date availableDate, String surname, String otherNames, Date dob, String birthPlace, String nic, String religion, String marriedStatus, String gender, String noOfChildren, String address, String home, String mobile, String email, String kinName, String kinRelationship, String kinAddress, String kinMobile, String kinEmail, String englishLanguage) {
+    public SeafarersEntity(Long id, String sidNo, String position, Date appliedDate, Date availableDate, String surname, String otherNames, Date dob, String birthPlace, String nic, String religion, String marriedStatus, String gender, String noOfChildren, String address, String home, String mobile, String email, String kinName, String kinRelationship, String kinAddress, String kinMobile, String kinEmail, String englishLanguage, byte[] profileImage, String profileImageName, String profileImageType) {
         this.id = id;
         this.sidNo = sidNo;
         this.position = position;
@@ -110,6 +119,9 @@ public class SeafarersEntity {
         this.kinMobile = kinMobile;
         this.kinEmail = kinEmail;
         this.englishLanguage = englishLanguage;
+        this.profileImage = profileImage;
+        this.profileImageName = profileImageName;
+        this.profileImageType = profileImageType;
     }
 
     public Long getId() {
@@ -302,5 +314,29 @@ public class SeafarersEntity {
 
     public void setEnglishLanguage(String englishLanguage) {
         this.englishLanguage = englishLanguage;
+    }
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImageName() {
+        return profileImageName;
+    }
+
+    public void setProfileImageName(String profileImageName) {
+        this.profileImageName = profileImageName;
+    }
+
+    public String getProfileImageType() {
+        return profileImageType;
+    }
+
+    public void setProfileImageType(String profileImageType) {
+        this.profileImageType = profileImageType;
     }
 }

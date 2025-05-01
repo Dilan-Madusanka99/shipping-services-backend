@@ -4,8 +4,10 @@ import com.bit.backend.dtos.JobPostingDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.JobPostingServiceI;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -17,10 +19,13 @@ public class JobPostingController {
 
     public JobPostingController(JobPostingServiceI jobPostingServiceI) {this.jobPostingServiceI = jobPostingServiceI;}
 
-    @PostMapping("/job_posting")
-    public ResponseEntity<JobPostingDto> addJobPosting(@RequestBody JobPostingDto jobPostingDto) {
+    @PostMapping(value = {"/job_posting"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<JobPostingDto> addJobPosting(@RequestPart("jobPostingForm") JobPostingDto jobPostingDto, @RequestPart("jobPostImage") MultipartFile file) {
 
         try {
+            jobPostingDto.setJobPostImage(file.getBytes());
+            jobPostingDto.setJobPostImageName(file.getOriginalFilename());
+            jobPostingDto.setJobPostImageType(file.getContentType());
             JobPostingDto jobPostingDtoResponse = jobPostingServiceI.addJobPostingEntity(jobPostingDto);
             return ResponseEntity.created(URI.create("/job_posting"+jobPostingDtoResponse.getId())).body(jobPostingDtoResponse);
         } catch (Exception e) {
