@@ -4,8 +4,10 @@ import com.bit.backend.dtos.SeafarersDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.SeafarersServiceI;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -15,12 +17,18 @@ public class SeafarersController {
 
     private final SeafarersServiceI seafarersServiceI;
 
-    public SeafarersController(SeafarersServiceI seafarersServiceI) {this.seafarersServiceI = seafarersServiceI;}
+    public SeafarersController(SeafarersServiceI seafarersServiceI) {
+        this.seafarersServiceI = seafarersServiceI;
+    }
 
-    @PostMapping("/seafarers_registration")
-    public ResponseEntity<SeafarersDto> addSeafarers(@RequestBody SeafarersDto seafarersDto) {
+    //   // Photo upload [start]
+    @PostMapping(value = {"/seafarers_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<SeafarersDto> addSeafarers(@RequestPart("seafarersForm") SeafarersDto seafarersDto, @RequestPart("profileImage") MultipartFile file) {
 
         try {
+            seafarersDto.setProfileImage(file.getBytes());
+            seafarersDto.setProfileImageName(file.getOriginalFilename());
+            seafarersDto.setProfileImageType(file.getContentType());
             SeafarersDto seafarersDtoResponse = seafarersServiceI.addSeafarersEntity(seafarersDto);
             return ResponseEntity.created(URI.create("/seafarers_registration"+seafarersDtoResponse.getSurname())).body(seafarersDtoResponse);
         } catch (Exception e) {

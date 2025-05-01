@@ -33,18 +33,30 @@ public class CertificatesRegistrationEntity {
     @Column(name = "verificationStatus")
     private String verificationStatus;
 
+    @Column(name = "certificate_image")
+    private byte[] certificateImage;
+
+    @Column(name = "certificate_image_name")
+    private String certificateImageName;
+
+    @Column(name = "certificate_image_type")
+    private String certificateImageType;
+
     public CertificatesRegistrationEntity() {
     }
 
-    public CertificatesRegistrationEntity(String cIssuedPlace, Long id, String sidNo, String cName, String cNo, Date cIssuedDate, Date cExpiredDate, String verificationStatus) {
-        this.cIssuedPlace = cIssuedPlace;
+    public CertificatesRegistrationEntity(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, String verificationStatus, byte[] certificateImage, String certificateImageName, String certificateImageType) {
         this.id = id;
         this.sidNo = sidNo;
         this.cName = cName;
         this.cNo = cNo;
+        this.cIssuedPlace = cIssuedPlace;
         this.cIssuedDate = cIssuedDate;
         this.cExpiredDate = cExpiredDate;
         this.verificationStatus = verificationStatus;
+        this.certificateImage = certificateImage;
+        this.certificateImageName = certificateImageName;
+        this.certificateImageType = certificateImageType;
     }
 
     public Long getId() {
@@ -109,5 +121,29 @@ public class CertificatesRegistrationEntity {
 
     public void setVerificationStatus(String verificationStatus) {
         this.verificationStatus = verificationStatus;
+    }
+
+    public byte[] getCertificateImage() {
+        return certificateImage;
+    }
+
+    public void setCertificateImage(byte[] certificateImage) {
+        this.certificateImage = certificateImage;
+    }
+
+    public String getCertificateImageName() {
+        return certificateImageName;
+    }
+
+    public void setCertificateImageName(String certificateImageName) {
+        this.certificateImageName = certificateImageName;
+    }
+
+    public String getCertificateImageType() {
+        return certificateImageType;
+    }
+
+    public void setCertificateImageType(String certificateImageType) {
+        this.certificateImageType = certificateImageType;
     }
 }

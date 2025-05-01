@@ -1,22 +1,48 @@
 package com.bit.backend.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class OtherDetailsRegistrationDto {
 
     private Long id;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private byte[] sidImage;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String sidImageName;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String sidImageType;
     private String sidNo;
     private String sidIssuedPlace;
     private Date sidIssuedDate;
     private Date sidExpireDate;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private byte[] ppImage;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String ppImageName;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String ppImageType;
     private String ppNo;
     private String ppIssuedPlace;
     private Date ppIssuedDate;
     private Date ppExpireDate;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private byte[] cdcImage;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String cdcImageName;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String cdcImageType;
     private String cdcNo;
     private String cdcIssuedPlace;
     private Date cdcIssuedDate;
     private Date cdcExpireDate;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private byte[] yellowFeverImage;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String yellowFeverImageName;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String yellowFeverImageType;
     private String yellowFeverNo;
     private String yellowFeverIssuedPlace;
     private Date yellowFeverIssuedDate;
@@ -25,20 +51,32 @@ public class OtherDetailsRegistrationDto {
     public OtherDetailsRegistrationDto() {
     }
 
-    public OtherDetailsRegistrationDto(Long id, String sidNo, String sidIssuedPlace, Date sidIssuedDate, Date sidExpireDate, String ppNo, String ppIssuedPlace, Date ppIssuedDate, Date ppExpireDate, String cdcNo, String cdcIssuedPlace, Date cdcIssuedDate, Date cdcExpireDate, String yellowFeverNo, String yellowFeverIssuedPlace, Date yellowFeverIssuedDate, Date yellowFeverExpireDate) {
+    public OtherDetailsRegistrationDto(Long id, byte[] sidImage, String sidImageName, String sidImageType, String sidNo, String sidIssuedPlace, Date sidIssuedDate, Date sidExpireDate, byte[] ppImage, String ppImageName, String ppImageType, String ppNo, String ppIssuedPlace, Date ppIssuedDate, Date ppExpireDate, byte[] cdcImage, String cdcImageName, String cdcImageType, String cdcNo, String cdcIssuedPlace, Date cdcIssuedDate, Date cdcExpireDate, byte[] yellowFeverImage, String yellowFeverImageName, String yellowFeverImageType, String yellowFeverNo, String yellowFeverIssuedPlace, Date yellowFeverIssuedDate, Date yellowFeverExpireDate) {
         this.id = id;
+        this.sidImage = sidImage;
+        this.sidImageName = sidImageName;
+        this.sidImageType = sidImageType;
         this.sidNo = sidNo;
         this.sidIssuedPlace = sidIssuedPlace;
         this.sidIssuedDate = sidIssuedDate;
         this.sidExpireDate = sidExpireDate;
+        this.ppImage = ppImage;
+        this.ppImageName = ppImageName;
+        this.ppImageType = ppImageType;
         this.ppNo = ppNo;
         this.ppIssuedPlace = ppIssuedPlace;
         this.ppIssuedDate = ppIssuedDate;
         this.ppExpireDate = ppExpireDate;
+        this.cdcImage = cdcImage;
+        this.cdcImageName = cdcImageName;
+        this.cdcImageType = cdcImageType;
         this.cdcNo = cdcNo;
         this.cdcIssuedPlace = cdcIssuedPlace;
         this.cdcIssuedDate = cdcIssuedDate;
         this.cdcExpireDate = cdcExpireDate;
+        this.yellowFeverImage = yellowFeverImage;
+        this.yellowFeverImageName = yellowFeverImageName;
+        this.yellowFeverImageType = yellowFeverImageType;
         this.yellowFeverNo = yellowFeverNo;
         this.yellowFeverIssuedPlace = yellowFeverIssuedPlace;
         this.yellowFeverIssuedDate = yellowFeverIssuedDate;
@@ -51,6 +89,30 @@ public class OtherDetailsRegistrationDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public byte[] getSidImage() {
+        return sidImage;
+    }
+
+    public void setSidImage(byte[] sidImage) {
+        this.sidImage = sidImage;
+    }
+
+    public String getSidImageName() {
+        return sidImageName;
+    }
+
+    public void setSidImageName(String sidImageName) {
+        this.sidImageName = sidImageName;
+    }
+
+    public String getSidImageType() {
+        return sidImageType;
+    }
+
+    public void setSidImageType(String sidImageType) {
+        this.sidImageType = sidImageType;
     }
 
     public String getSidNo() {
@@ -85,6 +147,30 @@ public class OtherDetailsRegistrationDto {
         this.sidExpireDate = sidExpireDate;
     }
 
+    public byte[] getPpImage() {
+        return ppImage;
+    }
+
+    public void setPpImage(byte[] ppImage) {
+        this.ppImage = ppImage;
+    }
+
+    public String getPpImageName() {
+        return ppImageName;
+    }
+
+    public void setPpImageName(String ppImageName) {
+        this.ppImageName = ppImageName;
+    }
+
+    public String getPpImageType() {
+        return ppImageType;
+    }
+
+    public void setPpImageType(String ppImageType) {
+        this.ppImageType = ppImageType;
+    }
+
     public String getPpNo() {
         return ppNo;
     }
@@ -117,6 +203,30 @@ public class OtherDetailsRegistrationDto {
         this.ppExpireDate = ppExpireDate;
     }
 
+    public byte[] getCdcImage() {
+        return cdcImage;
+    }
+
+    public void setCdcImage(byte[] cdcImage) {
+        this.cdcImage = cdcImage;
+    }
+
+    public String getCdcImageName() {
+        return cdcImageName;
+    }
+
+    public void setCdcImageName(String cdcImageName) {
+        this.cdcImageName = cdcImageName;
+    }
+
+    public String getCdcImageType() {
+        return cdcImageType;
+    }
+
+    public void setCdcImageType(String cdcImageType) {
+        this.cdcImageType = cdcImageType;
+    }
+
     public String getCdcNo() {
         return cdcNo;
     }
@@ -147,6 +257,30 @@ public class OtherDetailsRegistrationDto {
 
     public void setCdcExpireDate(Date cdcExpireDate) {
         this.cdcExpireDate = cdcExpireDate;
+    }
+
+    public byte[] getYellowFeverImage() {
+        return yellowFeverImage;
+    }
+
+    public void setYellowFeverImage(byte[] yellowFeverImage) {
+        this.yellowFeverImage = yellowFeverImage;
+    }
+
+    public String getYellowFeverImageName() {
+        return yellowFeverImageName;
+    }
+
+    public void setYellowFeverImageName(String yellowFeverImageName) {
+        this.yellowFeverImageName = yellowFeverImageName;
+    }
+
+    public String getYellowFeverImageType() {
+        return yellowFeverImageType;
+    }
+
+    public void setYellowFeverImageType(String yellowFeverImageType) {
+        this.yellowFeverImageType = yellowFeverImageType;
     }
 
     public String getYellowFeverNo() {
