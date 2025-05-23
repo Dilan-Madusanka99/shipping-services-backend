@@ -19,25 +19,29 @@ public class OtherDetailsRegistrationController {
 
     public OtherDetailsRegistrationController(OtherDetailsRegistrationServiceI otherDetailsRegistrationServiceI) {this.otherDetailsRegistrationServiceI = otherDetailsRegistrationServiceI;}
 
-    @PostMapping(value = {"/other_details_registration/{id}"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<OtherDetailsRegistrationDto> addOtherDetailsRegistration(@RequestPart("otherDetailsRegistrationForm") OtherDetailsRegistrationDto otherDetailsRegistrationDto, @RequestPart("sidImage, ppImage, cdcImage, yellowFeverImage") MultipartFile file) {
+    @PostMapping(value = {"/other_details_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<OtherDetailsRegistrationDto> addOtherDetailsRegistration(@RequestPart("otherDetailsRegistrationForm") OtherDetailsRegistrationDto otherDetailsRegistrationDto,
+                                                                                   @RequestPart("sidImage") MultipartFile sidImageFile,
+                                                                                   @RequestPart("ppImage") MultipartFile ppImageFile,
+                                                                                   @RequestPart("cdcImage") MultipartFile cdcImageFile,
+                                                                                   @RequestPart("yellowFeverImage") MultipartFile yellowFeverImageFile) {
 
         try {
-            otherDetailsRegistrationDto.setSidImage(file.getBytes());
-            otherDetailsRegistrationDto.setSidImageName(file.getOriginalFilename());
-            otherDetailsRegistrationDto.setSidImageType(file.getContentType());
+            otherDetailsRegistrationDto.setSidImage(sidImageFile.getBytes());
+            otherDetailsRegistrationDto.setSidImageName(sidImageFile.getOriginalFilename());
+            otherDetailsRegistrationDto.setSidImageType(sidImageFile.getContentType());
 
-            otherDetailsRegistrationDto.setPpImage(file.getBytes());
-            otherDetailsRegistrationDto.setPpImageName(file.getOriginalFilename());
-            otherDetailsRegistrationDto.setPpImageType(file.getContentType());
+            otherDetailsRegistrationDto.setPpImage(ppImageFile.getBytes());
+            otherDetailsRegistrationDto.setPpImageName(ppImageFile.getOriginalFilename());
+            otherDetailsRegistrationDto.setPpImageType(ppImageFile.getContentType());
 
-            otherDetailsRegistrationDto.setCdcImage(file.getBytes());
-            otherDetailsRegistrationDto.setCdcImageName(file.getOriginalFilename());
-            otherDetailsRegistrationDto.setCdcImageType(file.getContentType());
+            otherDetailsRegistrationDto.setCdcImage(cdcImageFile.getBytes());
+            otherDetailsRegistrationDto.setCdcImageName(cdcImageFile.getOriginalFilename());
+            otherDetailsRegistrationDto.setCdcImageType(cdcImageFile.getContentType());
 
-            otherDetailsRegistrationDto.setYellowFeverImage(file.getBytes());
-            otherDetailsRegistrationDto.setYellowFeverImageName(file.getOriginalFilename());
-            otherDetailsRegistrationDto.setYellowFeverImageType(file.getContentType());
+            otherDetailsRegistrationDto.setYellowFeverImage(yellowFeverImageFile.getBytes());
+            otherDetailsRegistrationDto.setYellowFeverImageName(yellowFeverImageFile.getOriginalFilename());
+            otherDetailsRegistrationDto.setYellowFeverImageType(yellowFeverImageFile.getContentType());
 
             OtherDetailsRegistrationDto otherDetailsRegistrationDtoResponse = otherDetailsRegistrationServiceI.addOtherDetailsRegistrationEntity(otherDetailsRegistrationDto);
             return ResponseEntity.created(URI.create("/other_details_registration"+otherDetailsRegistrationDtoResponse.getSidNo())).body(otherDetailsRegistrationDtoResponse);
