@@ -60,6 +60,7 @@ public class LoginService implements LoginServiceI {
             LoginEntity newLoginEntity = loginMapper.toLoginEntity(loginDto);
 
             newLoginEntity.setId(id);
+            newLoginEntity.setUserId(optionalLoginEntity.get().getUserId());
             LoginEntity savedLoginEntity = loginRepository.save(newLoginEntity);
 
             LoginDto responseLoginDto = loginMapper.toLoginDto(savedLoginEntity);
