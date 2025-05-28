@@ -10,4 +10,5 @@ public interface UserServiceI {
     List<Integer> getAuthIds(long userId);
     SystemPrivilegeListDto getSystemPrivileges();
     List<Integer> setSystemPrivileges(SystemPrivilegeListDto systemPrivilegeListDto);
+    boolean updatePassword(LoginDto loginDto, String password);
 }

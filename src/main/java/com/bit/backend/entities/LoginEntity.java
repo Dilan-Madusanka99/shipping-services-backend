@@ -28,10 +28,13 @@ public class LoginEntity {
     @Column(name = "role")
     private String role;
 
+    @Column(name = "userId")
+    private Long userId;
+
     public LoginEntity() {
     }
 
-    public LoginEntity(Long id, String users, String firstName, String lastName, String userName, String password, String role) {
+    public LoginEntity(Long id, String users, String firstName, String lastName, String userName, String password, String role, Long userId) {
         this.id = id;
         this.users = users;
         this.firstName = firstName;
@@ -39,6 +42,7 @@ public class LoginEntity {
         this.userName = userName;
         this.password = password;
         this.role = role;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -95,5 +99,13 @@ public class LoginEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

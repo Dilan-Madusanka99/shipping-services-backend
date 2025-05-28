@@ -9,11 +9,12 @@ public class LoginDto {
     private String userName;
     private String password;
     private String role;
+    private Long userId;
 
     public LoginDto() {
     }
 
-    public LoginDto(Long id, String users, String firstName, String lastName, String userName, String password, String role) {
+    public LoginDto(Long id, String users, String firstName, String lastName, String userName, String password, String role, Long userId) {
         this.id = id;
         this.users = users;
         this.firstName = firstName;
@@ -21,6 +22,7 @@ public class LoginDto {
         this.userName = userName;
         this.password = password;
         this.role = role;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -77,5 +79,13 @@ public class LoginDto {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

@@ -97,4 +97,26 @@ public class UserService implements UserServiceI {
 
         return null;
     }
+
+    @Override
+    public boolean updatePassword(LoginDto loginDto, String password) {
+        return this.updateUserPassword(loginDto, password);
+    }
+
+    public boolean updateUserPassword(LoginDto loginDto, String password) {
+        User user = userRepository.findByLogin(
+                loginDto.getUserName()).orElseThrow(() -> new AppException("Unknown User", HttpStatus.NOT_FOUND));
+        try {
+
+            if (passwordEncoder.matches(CharBuffer.wrap(password.toCharArray()), user.getPassword())) {
+                return false; // password not updated
+            }
+
+            user.setPassword(passwordEncoder.encode(CharBuffer.wrap(password.toCharArray())));
+            userRepository.save(user);
+            return true; // password updated
+        } catch(Exception e) {
+            throw new AppException("Error occurred! Please try again", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
