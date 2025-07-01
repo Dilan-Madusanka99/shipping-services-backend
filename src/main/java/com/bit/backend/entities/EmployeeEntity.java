@@ -49,10 +49,19 @@ public class EmployeeEntity {
     @Column(name = "emergencyContactNo") // emg_contact_no
     private String emergencyContactNo;
 
+    @Column(name = "profile_image")  // Photo upload [start]
+    private byte[] profileImage;
+
+    @Column(name = "profile_image_name")
+    private String profileImageName;
+
+    @Column(name = "profile_image_type")
+    private String profileImageType;
+
     public EmployeeEntity() {
     }
 
-    public EmployeeEntity(Long id, String empNo, String firstName, String lastName, String callingName, String nic, Date dob, String roles, String contactNo, String email, String address, String emergencyContactName, String emergencyContactNo) {
+    public EmployeeEntity(Long id, String empNo, String firstName, String lastName, String callingName, String nic, Date dob, String roles, String contactNo, String email, String address, String emergencyContactName, String emergencyContactNo, byte[] profileImage, String profileImageName, String profileImageType) {
         this.id = id;
         this.empNo = empNo;
         this.firstName = firstName;
@@ -66,6 +75,9 @@ public class EmployeeEntity {
         this.address = address;
         this.emergencyContactName = emergencyContactName;
         this.emergencyContactNo = emergencyContactNo;
+        this.profileImage = profileImage;
+        this.profileImageName = profileImageName;
+        this.profileImageType = profileImageType;
     }
 
     public Long getId() {
@@ -170,5 +182,29 @@ public class EmployeeEntity {
 
     public void setEmergencyContactNo(String emergencyContactNo) {
         this.emergencyContactNo = emergencyContactNo;
+    }
+
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImageName() {
+        return profileImageName;
+    }
+
+    public void setProfileImageName(String profileImageName) {
+        this.profileImageName = profileImageName;
+    }
+
+    public String getProfileImageType() {
+        return profileImageType;
+    }
+
+    public void setProfileImageType(String profileImageType) {
+        this.profileImageType = profileImageType;
     }
 }
