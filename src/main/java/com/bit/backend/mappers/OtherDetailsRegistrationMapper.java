@@ -8,7 +8,6 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper( componentModel = "spring" , builder = @Builder(disableBuilder = true))
-
 public interface OtherDetailsRegistrationMapper {
     OtherDetailsRegistrationDto toOtherDetailsRegistrationDto (OtherDetailsRegistrationEntity otherDetailsRegistrationEntity);
     OtherDetailsRegistrationEntity toOtherDetailsRegistrationEntity (OtherDetailsRegistrationDto otherDetailsRegistrationDto);

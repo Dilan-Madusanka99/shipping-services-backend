@@ -1,5 +1,6 @@
 package com.bit.backend.controllers;
 
+import com.bit.backend.dtos.SeaServicesDto;
 import com.bit.backend.dtos.SeafarersDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.SeafarersServiceI;

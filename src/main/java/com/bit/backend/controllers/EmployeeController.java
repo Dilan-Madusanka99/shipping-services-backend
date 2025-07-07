@@ -5,8 +5,10 @@ import com.bit.backend.dtos.EmployeeDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.EmployeeServiceI;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.util.List;
@@ -16,12 +18,16 @@ public class EmployeeController {
 
     private final EmployeeServiceI employeeServiceI;
 
-    public EmployeeController(EmployeeServiceI employeeServiceI) {this.employeeServiceI = employeeServiceI;}
+    public EmployeeController(EmployeeServiceI employeeServiceI) {
+        this.employeeServiceI = employeeServiceI;}
 
-    @PostMapping("/employee")
-    public ResponseEntity<EmployeeDto> addEmployee(@RequestBody EmployeeDto employeeDto) {
+    @PostMapping(value = {"/employee"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<EmployeeDto> addEmployee(@RequestPart ("employeeForm") EmployeeDto employeeDto, @RequestPart("profileImage") MultipartFile file) {
 
         try {
+            employeeDto.setProfileImage(file.getBytes());
+            employeeDto.setProfileImageName(file.getOriginalFilename());
+            employeeDto.setProfileImageType(file.getContentType());
             EmployeeDto employeeDtoResponse = employeeServiceI.addEmployeeEntity(employeeDto);
             return ResponseEntity.created(URI.create("/employee"+employeeDtoResponse.getFirstName())).body(employeeDtoResponse);
         } catch (Exception e) {
