@@ -22,7 +22,7 @@ public class ItemsRegistrationController {
     }
 
     @PostMapping(value = {"/items_Registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ItemsRegistrationDto> addItemsRegistration(@RequestPart("items RegistrationForm") ItemsRegistrationDto itemsRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
+    public ResponseEntity<ItemsRegistrationDto> addItemsRegistration(@RequestPart("itemsRegistrationForm") ItemsRegistrationDto itemsRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
 
         try {
             itemsRegistrationDto.setProfileImage(file.getBytes());
