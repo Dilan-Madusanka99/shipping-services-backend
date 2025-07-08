@@ -47,9 +47,12 @@ public class VesselRegistrationController {
     }
 
     @PutMapping("/vessel_Registration/{id}")
-    public ResponseEntity<VesselRegistrationDto> updateVesselRegistration(@PathVariable Long id, @RequestBody VesselRegistrationDto vesselRegistrationDto) {
+    public ResponseEntity<VesselRegistrationDto> updateVesselRegistration(@PathVariable Long id, @RequestPart ("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
 
         try {
+            vesselRegistrationDto.setProfileImage(file.getBytes());
+            vesselRegistrationDto.setProfileImageName(file.getOriginalFilename());
+            vesselRegistrationDto.setProfileImageType(file.getContentType());
             VesselRegistrationDto responseVesselRegistrationDto = vesselRegistrationServiceI.updateVesselRegistration(id, vesselRegistrationDto);
             return ResponseEntity.ok(responseVesselRegistrationDto);
         } catch (Exception e) {
