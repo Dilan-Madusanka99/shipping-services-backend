@@ -20,7 +20,8 @@ public class CertificatesRegistrationController {
     public CertificatesRegistrationController(CertificatesRegistrationServiceI certificatesRegistrationServiceI) {this.certificatesRegistrationServiceI = certificatesRegistrationServiceI;}
 
     @PostMapping(value = {"/certificates_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<CertificatesRegistrationDto> addCertificatesRegistration(@RequestPart("certificatesRegistrationForm") CertificatesRegistrationDto certificatesRegistrationDto, @RequestPart("certificateImage") MultipartFile file) {
+    public ResponseEntity<CertificatesRegistrationDto> addCertificatesRegistration(@RequestPart("certificatesRegistrationForm") CertificatesRegistrationDto certificatesRegistrationDto,
+                                                                                   @RequestPart("certificateImage") MultipartFile file) {
 
         try {
             certificatesRegistrationDto.setCertificateImage(file.getBytes());
@@ -45,9 +46,16 @@ public class CertificatesRegistrationController {
     }
 
     @PutMapping("/certificates_registration/{id}")
-    public ResponseEntity<CertificatesRegistrationDto> updateCertificatesRegistration(@PathVariable Long id, @RequestBody CertificatesRegistrationDto certificatesRegistrationDto) {
+    public ResponseEntity<CertificatesRegistrationDto> updateCertificatesRegistration(@PathVariable Long id,
+                                                      @RequestPart ("certificatesRegistrationForm") CertificatesRegistrationDto certificatesRegistrationDto,
+                                                      @RequestPart(value = "certificateImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                certificatesRegistrationDto.setCertificateImage(file.getBytes());
+                certificatesRegistrationDto.setCertificateImageName(file.getOriginalFilename());
+                certificatesRegistrationDto.setCertificateImageType(file.getContentType());
+            }
             CertificatesRegistrationDto responseCertificatesRegistrationDto = certificatesRegistrationServiceI.updateCertificatesRegistration(id, certificatesRegistrationDto);
             return ResponseEntity.ok(responseCertificatesRegistrationDto);
         } catch (Exception e) {

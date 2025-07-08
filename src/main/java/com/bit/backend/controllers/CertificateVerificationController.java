@@ -22,7 +22,8 @@ public class CertificateVerificationController {
     }
 
     @PostMapping(value = {"/certificate_Verification"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<CertificateVerificationDto> addCertificateVerification(@RequestPart("certificateVerificationForm") CertificateVerificationDto certificateVerificationDto, @RequestPart("profileImage") MultipartFile file) {
+    public ResponseEntity<CertificateVerificationDto> addCertificateVerification(@RequestPart("certificateVerificationForm") CertificateVerificationDto certificateVerificationDto,
+                                                                                 @RequestPart("profileImage") MultipartFile file) {
 
         try {
             certificateVerificationDto.setProfileImage(file.getBytes());
@@ -47,9 +48,16 @@ public class CertificateVerificationController {
     }
 
     @PutMapping("/certificate_Verification/{id}")
-    public ResponseEntity<CertificateVerificationDto> updateCertificateVerification(@PathVariable Long id, @RequestBody CertificateVerificationDto certificateVerificationDto) {
+    public ResponseEntity<CertificateVerificationDto> updateCertificateVerification(@PathVariable Long id,
+                                                      @RequestPart ("certificateVerificationForm") CertificateVerificationDto certificateVerificationDto,
+                                                      @RequestPart(value = "profileImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                certificateVerificationDto.setProfileImage(file.getBytes());
+                certificateVerificationDto.setProfileImageName(file.getOriginalFilename());
+                certificateVerificationDto.setProfileImageType(file.getContentType());
+            }
             CertificateVerificationDto responseCertificateVerificationDto = certificateVerificationServiceI.updateCertificateVerification(id, certificateVerificationDto);
             return ResponseEntity.ok(responseCertificateVerificationDto);
         } catch (Exception e) {

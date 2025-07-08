@@ -1,6 +1,5 @@
 package com.bit.backend.controllers;
 
-import com.bit.backend.dtos.SeaServicesDto;
 import com.bit.backend.dtos.SeafarersDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.SeafarersServiceI;
@@ -24,7 +23,8 @@ public class SeafarersController {
 
     //   // Photo upload [start]
     @PostMapping(value = {"/seafarers_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<SeafarersDto> addSeafarers(@RequestPart("seafarersForm") SeafarersDto seafarersDto, @RequestPart("profileImage") MultipartFile file) {
+    public ResponseEntity<SeafarersDto> addSeafarers(@RequestPart("seafarersForm") SeafarersDto seafarersDto,
+                                                     @RequestPart("profileImage") MultipartFile file) {
 
         try {
             seafarersDto.setProfileImage(file.getBytes());
@@ -49,9 +49,16 @@ public class SeafarersController {
     }
 
     @PutMapping("/seafarers_registration/{id}")
-    public ResponseEntity<SeafarersDto> updateSeafarers(@PathVariable Long id, @RequestBody SeafarersDto seafarersDto) {
+    public ResponseEntity<SeafarersDto> updateSeafarers(@PathVariable Long id,
+                                                      @RequestPart ("seafarersForm") SeafarersDto seafarersDto,
+                                                      @RequestPart(value = "profileImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                seafarersDto.setProfileImage(file.getBytes());
+                seafarersDto.setProfileImageName(file.getOriginalFilename());
+                seafarersDto.setProfileImageType(file.getContentType());
+            }
             SeafarersDto responseSeafarersDto = seafarersServiceI.updateSeafarers(id, seafarersDto);
             return ResponseEntity.ok(responseSeafarersDto);
         } catch (Exception e) {

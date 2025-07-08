@@ -22,7 +22,8 @@ public class ItemsRegistrationController {
     }
 
     @PostMapping(value = {"/items_Registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<ItemsRegistrationDto> addItemsRegistration(@RequestPart("itemsRegistrationForm") ItemsRegistrationDto itemsRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
+    public ResponseEntity<ItemsRegistrationDto> addItemsRegistration(@RequestPart("itemsRegistrationForm") ItemsRegistrationDto itemsRegistrationDto,
+                                                                     @RequestPart("profileImage") MultipartFile file) {
 
         try {
             itemsRegistrationDto.setProfileImage(file.getBytes());
@@ -47,9 +48,16 @@ public class ItemsRegistrationController {
     }
 
     @PutMapping("/items_Registration/{id}")
-    public ResponseEntity<ItemsRegistrationDto> updateItemsRegistration(@PathVariable Long id, @RequestBody ItemsRegistrationDto itemsRegistrationDto) {
+    public ResponseEntity<ItemsRegistrationDto> updateItemsRegistration(@PathVariable Long id,
+                                                      @RequestPart ("itemsRegistrationForm") ItemsRegistrationDto itemsRegistrationDto,
+                                                      @RequestPart(value = "profileImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                itemsRegistrationDto.setProfileImage(file.getBytes());
+                itemsRegistrationDto.setProfileImageName(file.getOriginalFilename());
+                itemsRegistrationDto.setProfileImageType(file.getContentType());
+            }
             ItemsRegistrationDto responseItemsRegistrationDto = itemsRegistrationServiceI.updateItemsRegistration(id, itemsRegistrationDto);
             return ResponseEntity.ok(responseItemsRegistrationDto);
         } catch (Exception e) {

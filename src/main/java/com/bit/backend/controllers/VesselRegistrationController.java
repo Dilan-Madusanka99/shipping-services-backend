@@ -22,7 +22,8 @@ public class VesselRegistrationController {
     }
 
     @PostMapping(value = {"/vessel_Registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<VesselRegistrationDto> addVesselRegistration(@RequestPart ("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
+    public ResponseEntity<VesselRegistrationDto> addVesselRegistration(@RequestPart ("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto,
+                                                                       @RequestPart("profileImage") MultipartFile file) {
 
         try {
             vesselRegistrationDto.setProfileImage(file.getBytes());
@@ -47,9 +48,16 @@ public class VesselRegistrationController {
     }
 
     @PutMapping("/vessel_Registration/{id}")
-    public ResponseEntity<VesselRegistrationDto> updateVesselRegistration(@PathVariable Long id, @RequestBody VesselRegistrationDto vesselRegistrationDto) {
+    public ResponseEntity<VesselRegistrationDto> updateVesselRegistration(@PathVariable Long id,
+                                                      @RequestPart ("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto,
+                                                      @RequestPart(value = "profileImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                vesselRegistrationDto.setProfileImage(file.getBytes());
+                vesselRegistrationDto.setProfileImageName(file.getOriginalFilename());
+                vesselRegistrationDto.setProfileImageType(file.getContentType());
+            }
             VesselRegistrationDto responseVesselRegistrationDto = vesselRegistrationServiceI.updateVesselRegistration(id, vesselRegistrationDto);
             return ResponseEntity.ok(responseVesselRegistrationDto);
         } catch (Exception e) {

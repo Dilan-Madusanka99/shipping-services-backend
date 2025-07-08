@@ -22,7 +22,8 @@ public class SupplierRegistrationController {
     }
 
     @PostMapping(value = {"/supplier_Registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<SupplierRegistrationDto> addSupplierRegistration(@RequestPart("supplierRegistrationForm") SupplierRegistrationDto supplierRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
+    public ResponseEntity<SupplierRegistrationDto> addSupplierRegistration(@RequestPart("supplierRegistrationForm") SupplierRegistrationDto supplierRegistrationDto,
+                                                                           @RequestPart("profileImage") MultipartFile file) {
 
         try {
             supplierRegistrationDto.setProfileImage(file.getBytes());
@@ -47,9 +48,16 @@ public class SupplierRegistrationController {
     }
 
     @PutMapping("/supplier_Registration/{id}")
-    public ResponseEntity<SupplierRegistrationDto> updateSupplierRegistration(@PathVariable Long id, @RequestBody SupplierRegistrationDto supplierRegistrationDto) {
+    public ResponseEntity<SupplierRegistrationDto> updateSupplierRegistration(@PathVariable Long id,
+                                                      @RequestPart ("supplierRegistrationForm") SupplierRegistrationDto supplierRegistrationDto,
+                                                      @RequestPart(value = "profileImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                supplierRegistrationDto.setProfileImage(file.getBytes());
+                supplierRegistrationDto.setProfileImageName(file.getOriginalFilename());
+                supplierRegistrationDto.setProfileImageType(file.getContentType());
+            }
             SupplierRegistrationDto responseSupplierRegistrationDto = supplierRegistrationServiceI.updateSupplierRegistration(id, supplierRegistrationDto);
             return ResponseEntity.ok(responseSupplierRegistrationDto);
         } catch (Exception e) {
