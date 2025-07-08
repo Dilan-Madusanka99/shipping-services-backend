@@ -46,10 +46,30 @@ public class EmployeeController {
         }
     }
 
+//    @PutMapping("/employee/{id}")
+//    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+//
+//        try {
+//            EmployeeDto responseEmployeeDto = employeeServiceI.updateEmployee(id, employeeDto);
+//            return ResponseEntity.ok(responseEmployeeDto);
+//        } catch (Exception e) {
+//            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+
+// changes for edit - putMapping (Eshan)
     @PutMapping("/employee/{id}")
-    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id,
+                                                      @RequestPart ("employeeForm") EmployeeDto employeeDto,
+                                                      @RequestPart(value = "profileImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                employeeDto.setProfileImage(file.getBytes());
+                employeeDto.setProfileImageName(file.getOriginalFilename());
+                employeeDto.setProfileImageType(file.getContentType());
+            }
             EmployeeDto responseEmployeeDto = employeeServiceI.updateEmployee(id, employeeDto);
             return ResponseEntity.ok(responseEmployeeDto);
         } catch (Exception e) {

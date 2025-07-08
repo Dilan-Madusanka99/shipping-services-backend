@@ -47,6 +47,31 @@ public class EmployeeService implements EmployeeServiceI {
         }
     }
 
+//    @Override
+//    public EmployeeDto updateEmployee(long id, EmployeeDto employeeDto) {
+//
+//        try {
+//            Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findById(id);
+//
+//            if (!optionalEmployeeEntity.isPresent()) {
+//                throw new AppException("Employee Does Not Exists", HttpStatus.BAD_REQUEST);
+//            }
+//
+//            EmployeeEntity newEmployeeEntity = employeeMapper.toEmployeeEntity(employeeDto);
+//
+//            newEmployeeEntity.setId(id);
+//            EmployeeEntity savedEmployeeEntity = employeeRepository.save(newEmployeeEntity);
+//
+//            EmployeeDto responseEmployeeDto = employeeMapper.toEmployeeDto(savedEmployeeEntity);
+//            return responseEmployeeDto;
+//
+//        } catch (Exception e) {
+//            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+
+//    changes for edit - updateEmployee (Eshan)
     @Override
     public EmployeeDto updateEmployee(long id, EmployeeDto employeeDto) {
 
@@ -62,6 +87,12 @@ public class EmployeeService implements EmployeeServiceI {
             newEmployeeEntity.setId(id);
             EmployeeEntity savedEmployeeEntity = employeeRepository.save(newEmployeeEntity);
 
+            if (employeeDto.getProfileImage() != null && employeeDto.getProfileImage().length > 0){
+                newEmployeeEntity.setProfileImageName(employeeDto.getProfileImageName());
+                newEmployeeEntity.setProfileImage(employeeDto.getProfileImage());
+                newEmployeeEntity.setProfileImageType(employeeDto.getProfileImageType());
+            }
+
             EmployeeDto responseEmployeeDto = employeeMapper.toEmployeeDto(savedEmployeeEntity);
             return responseEmployeeDto;
 
@@ -69,6 +100,8 @@ public class EmployeeService implements EmployeeServiceI {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @Override
     public EmployeeDto deleteEmployee(long id) {

@@ -21,7 +21,7 @@ public class VesselRegistrationController {
         this.vesselRegistrationServiceI = vesselRegistrationServiceI;
     }
 
-    @PostMapping(value = {"/vessel_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = {"/vessel_Registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<VesselRegistrationDto> addVesselRegistration(@RequestPart ("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
 
         try {
@@ -29,29 +29,13 @@ public class VesselRegistrationController {
             vesselRegistrationDto.setProfileImageName(file.getOriginalFilename());
             vesselRegistrationDto.setProfileImageType(file.getContentType());
             VesselRegistrationDto vesselRegistrationDtoResponse = vesselRegistrationServiceI.addVesselRegistrationEntity(vesselRegistrationDto);
-            return ResponseEntity.created(URI.create("/vessel_registration"+vesselRegistrationDtoResponse.getImoNo())).body(vesselRegistrationDtoResponse);
+            return ResponseEntity.created(URI.create("/vessel_Registration"+vesselRegistrationDtoResponse.getImoNo())).body(vesselRegistrationDtoResponse);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    
 
-//    @PostMapping(value = {"/vessel_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-//    public ResponseEntity<VesselRegistrationDto> addVesselRegistration(@RequestPart("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
-//
-//        try {
-//            vesselRegistrationDto.setProfileImage(file.getBytes());
-//            vesselRegistrationDto.setProfileImageName(file.getOriginalFilename());
-//            vesselRegistrationDto.setProfileImageType(file.getContentType());
-//            VesselRegistrationDto vesselRegistrationDtoResponse = vesselRegistrationServiceI.addVesselRegistrationEntity(vesselRegistrationDto);
-//            return ResponseEntity.created(URI.create("/vessel_registration"+vesselRegistrationDtoResponse.getImoNo())).body(vesselRegistrationDtoResponse);
-//        } catch (Exception e) {
-//            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-    @GetMapping("/vessel_registration")
+    @GetMapping("/vessel_Registration")
     public ResponseEntity<List<VesselRegistrationDto>> getData() {
 
         try {
@@ -62,7 +46,7 @@ public class VesselRegistrationController {
         }
     }
 
-    @PutMapping("/vessel_registration/{id}")
+    @PutMapping("/vessel_Registration/{id}")
     public ResponseEntity<VesselRegistrationDto> updateVesselRegistration(@PathVariable Long id, @RequestBody VesselRegistrationDto vesselRegistrationDto) {
 
         try {
@@ -73,7 +57,7 @@ public class VesselRegistrationController {
         }
     }
 
-    @DeleteMapping("/vessel_registration/{id}")
+    @DeleteMapping("/vessel_Registration/{id}")
     public ResponseEntity<VesselRegistrationDto> deleteVesselRegistration(@PathVariable Long id) {
 
         try {
@@ -83,5 +67,4 @@ public class VesselRegistrationController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
 }
