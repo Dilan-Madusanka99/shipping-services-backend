@@ -87,11 +87,12 @@ public class EmployeeService implements EmployeeServiceI {
             newEmployeeEntity.setId(id);
             EmployeeEntity savedEmployeeEntity = employeeRepository.save(newEmployeeEntity);
 
-            if (employeeDto.getProfileImage() != null && employeeDto.getProfileImage().length > 0){
-                newEmployeeEntity.setProfileImageName(employeeDto.getProfileImageName());
-                newEmployeeEntity.setProfileImage(employeeDto.getProfileImage());
-                newEmployeeEntity.setProfileImageType(employeeDto.getProfileImageType());
-            }
+            /*below 5 lines Not required */
+//            if (employeeDto.getProfileImage() != null && employeeDto.getProfileImage().length > 0){
+//                newEmployeeEntity.setProfileImageName(employeeDto.getProfileImageName());
+//                newEmployeeEntity.setProfileImage(employeeDto.getProfileImage());
+//                newEmployeeEntity.setProfileImageType(employeeDto.getProfileImageType());
+//            }
 
             EmployeeDto responseEmployeeDto = employeeMapper.toEmployeeDto(savedEmployeeEntity);
             return responseEmployeeDto;
