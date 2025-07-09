@@ -46,18 +46,6 @@ public class EmployeeController {
         }
     }
 
-//    @PutMapping("/employee/{id}")
-//    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
-//
-//        try {
-//            EmployeeDto responseEmployeeDto = employeeServiceI.updateEmployee(id, employeeDto);
-//            return ResponseEntity.ok(responseEmployeeDto);
-//        } catch (Exception e) {
-//            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-
 // changes for edit - putMapping (Eshan)
     @PutMapping("/employee/{id}")
     public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id,
