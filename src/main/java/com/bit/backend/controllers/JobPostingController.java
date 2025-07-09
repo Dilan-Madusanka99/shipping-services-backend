@@ -20,7 +20,8 @@ public class JobPostingController {
     public JobPostingController(JobPostingServiceI jobPostingServiceI) {this.jobPostingServiceI = jobPostingServiceI;}
 
     @PostMapping(value = {"/job_posting"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<JobPostingDto> addJobPosting(@RequestPart("jobPostingForm") JobPostingDto jobPostingDto, @RequestPart("jobPostImage") MultipartFile file) {
+    public ResponseEntity<JobPostingDto> addJobPosting(@RequestPart("jobPostingForm") JobPostingDto jobPostingDto,
+                                                       @RequestPart("jobPostImage") MultipartFile file) {
 
         try {
             jobPostingDto.setJobPostImage(file.getBytes());
@@ -45,9 +46,16 @@ public class JobPostingController {
     }
 
     @PutMapping("/job_posting/{id}")
-    public ResponseEntity<JobPostingDto> updateJobPosting(@PathVariable Long id, @RequestBody JobPostingDto jobPostingDto) {
+    public ResponseEntity<JobPostingDto> updateJobPosting(@PathVariable Long id,
+                                                      @RequestPart ("jobPostingForm") JobPostingDto jobPostingDto,
+                                                      @RequestPart(value = "jobPostImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                jobPostingDto.setJobPostImage(file.getBytes());
+                jobPostingDto.setJobPostImageName(file.getOriginalFilename());
+                jobPostingDto.setJobPostImageType(file.getContentType());
+            }
             JobPostingDto responseJobPostingDto = jobPostingServiceI.updateJobPosting(id, jobPostingDto);
             return ResponseEntity.ok(responseJobPostingDto);
         } catch (Exception e) {

@@ -22,7 +22,8 @@ public class UserProfileController {
     }
 
     @PostMapping(value = {"/userProfile"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<UserProfileDto> addUserProfile(@RequestPart("userProfileForm") UserProfileDto userProfileDto, @RequestPart("userProfileImage") MultipartFile file) {
+    public ResponseEntity<UserProfileDto> addUserProfile(@RequestPart("userProfileForm") UserProfileDto userProfileDto,
+                                                         @RequestPart("userProfileImage") MultipartFile file) {
 
         try {
             userProfileDto.setUserProfileImage(file.getBytes());
@@ -47,9 +48,16 @@ public class UserProfileController {
     }
 
     @PutMapping("/userProfile/{id}")
-    public ResponseEntity<UserProfileDto> updateUserProfile(@PathVariable Long id, @RequestBody UserProfileDto userProfileDto) {
+    public ResponseEntity<UserProfileDto> updateUserProfile(@PathVariable Long id,
+                                                      @RequestPart ("userProfileForm") UserProfileDto userProfileDto,
+                                                      @RequestPart(value = "userProfileImage", required = false) MultipartFile file) {
 
         try {
+            if (file != null && !file.isEmpty()) {
+                userProfileDto.setUserProfileImage(file.getBytes());
+                userProfileDto.setUserProfileImageName(file.getOriginalFilename());
+                userProfileDto.setUserProfileImageType(file.getContentType());
+            }
             UserProfileDto responseUserProfileDto = userProfileServiceI.updateUserProfile(id, userProfileDto);
             return ResponseEntity.ok(responseUserProfileDto);
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.bit.backend.controllers;
 
+import com.bit.backend.dtos.EmployeeDto;
 import com.bit.backend.dtos.VesselRegistrationDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.VesselRegistrationServiceI;
@@ -47,12 +48,16 @@ public class VesselRegistrationController {
     }
 
     @PutMapping("/vessel_Registration/{id}")
-    public ResponseEntity<VesselRegistrationDto> updateVesselRegistration(@PathVariable Long id, @RequestPart ("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto, @RequestPart("profileImage") MultipartFile file) {
+    public ResponseEntity<VesselRegistrationDto> updateVesselRegistration(@PathVariable Long id,
+                                                      @RequestPart ("vesselRegistrationForm") VesselRegistrationDto vesselRegistrationDto,
+                                                      @RequestPart(value = "profileImage", required = false) MultipartFile file) {
 
         try {
-            vesselRegistrationDto.setProfileImage(file.getBytes());
-            vesselRegistrationDto.setProfileImageName(file.getOriginalFilename());
-            vesselRegistrationDto.setProfileImageType(file.getContentType());
+            if (file != null && !file.isEmpty()) {
+                vesselRegistrationDto.setProfileImage(file.getBytes());
+                vesselRegistrationDto.setProfileImageName(file.getOriginalFilename());
+                vesselRegistrationDto.setProfileImageType(file.getContentType());
+            }
             VesselRegistrationDto responseVesselRegistrationDto = vesselRegistrationServiceI.updateVesselRegistration(id, vesselRegistrationDto);
             return ResponseEntity.ok(responseVesselRegistrationDto);
         } catch (Exception e) {

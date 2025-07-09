@@ -28,7 +28,7 @@ public class VesselRegistrationEntity {
     private String yob;
 
     @Column(name = "grt")
-    private Date grt;
+    private String grt;
 
     @Column(name = "bhp")
     private String bhp;
@@ -48,7 +48,7 @@ public class VesselRegistrationEntity {
     public VesselRegistrationEntity() {
     }
 
-    public VesselRegistrationEntity(Long id, String vesselName, String imoNo, String vesselType, String flag, String yob, Date grt, String bhp, String roles, byte[] profileImage, String profileImageName, String profileImageType) {
+    public VesselRegistrationEntity(Long id, String vesselName, String imoNo, String vesselType, String flag, String yob, String grt, String bhp, String roles, byte[] profileImage, String profileImageName, String profileImageType) {
         this.id = id;
         this.vesselName = vesselName;
         this.imoNo = imoNo;
@@ -111,11 +111,11 @@ public class VesselRegistrationEntity {
         this.yob = yob;
     }
 
-    public Date getGrt() {
+    public String getGrt() {
         return grt;
     }
 
-    public void setGrt(Date grt) {
+    public void setGrt(String grt) {
         this.grt = grt;
     }
 

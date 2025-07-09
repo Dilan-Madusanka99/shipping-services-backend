@@ -47,8 +47,6 @@ public class EmployeeService implements EmployeeServiceI {
         }
     }
 
-
-//    changes for edit - updateEmployee (Eshan)
     @Override
     public EmployeeDto updateEmployee(long id, EmployeeDto employeeDto) {
 

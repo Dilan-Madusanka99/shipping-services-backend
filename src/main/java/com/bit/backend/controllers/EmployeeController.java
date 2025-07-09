@@ -46,7 +46,7 @@ public class EmployeeController {
         }
     }
 
-// changes for edit - putMapping (Eshan)
+// changes for edit - putMapping
     @PutMapping("/employee/{id}")
     public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Long id,
                                                       @RequestPart ("employeeForm") EmployeeDto employeeDto,
