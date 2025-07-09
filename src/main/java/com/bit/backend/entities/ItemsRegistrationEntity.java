@@ -11,16 +11,16 @@ public class ItemsRegistrationEntity {
     private Long id;
 
     @Column(name = "item_no")
-    private String empNo;
+    private String itemNo;
 
     @Column(name = "em_no")
-    private String firstName;
+    private String emNo;
 
     @Column(name = "item_name")
-    private String lastName;
+    private String itemName;
 
     @Column(name = "item_category")
-    private String callingName;
+    private String itemCategory;
 
     @Column(name = "profile_image")
     private byte[] profileImage;
@@ -34,12 +34,12 @@ public class ItemsRegistrationEntity {
     public ItemsRegistrationEntity() {
     }
 
-    public ItemsRegistrationEntity(Long id, String empNo, String firstName, String lastName, String callingName, byte[] profileImage, String profileImageName, String profileImageType) {
+    public ItemsRegistrationEntity(Long id, String itemNo, String emNo, String itemName, String itemCategory, byte[] profileImage, String profileImageName, String profileImageType) {
         this.id = id;
-        this.empNo = empNo;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.callingName = callingName;
+        this.itemNo = itemNo;
+        this.emNo = emNo;
+        this.itemName = itemName;
+        this.itemCategory = itemCategory;
         this.profileImage = profileImage;
         this.profileImageName = profileImageName;
         this.profileImageType = profileImageType;
@@ -53,36 +53,36 @@ public class ItemsRegistrationEntity {
         this.id = id;
     }
 
-    public String getEmpNo() {
-        return empNo;
+    public String getItemNo() {
+        return itemNo;
     }
 
-    public void setEmpNo(String empNo) {
-        this.empNo = empNo;
+    public void setItemNo(String itemNo) {
+        this.itemNo = itemNo;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getEmNo() {
+        return emNo;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setEmNo(String emNo) {
+        this.emNo = emNo;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getItemName() {
+        return itemName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
-    public String getCallingName() {
-        return callingName;
+    public String getItemCategory() {
+        return itemCategory;
     }
 
-    public void setCallingName(String callingName) {
-        this.callingName = callingName;
+    public void setItemCategory(String itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
     public byte[] getProfileImage() {
