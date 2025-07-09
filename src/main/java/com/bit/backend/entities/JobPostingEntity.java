@@ -10,14 +10,17 @@ public class JobPostingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "job_Post")
-    private String jobPost;
+    @Column(name = "vessel_name")
+    private String vesselName;
+
+    @Column(name = "position")
+    private String position;
+
+    @Column(name = "job_status")
+    private String jobStatus;
 
     @Column(name = "job_Description")
     private String jobDescription;
-
-    @Column(name = "job_PostingDate")
-    private String jobPostingDate;
 
     @Column(name = "job_Post_Image")
     private byte[] jobPostImage;
@@ -31,11 +34,12 @@ public class JobPostingEntity {
     public JobPostingEntity() {
     }
 
-    public JobPostingEntity(Long id, String jobPost, String jobDescription, String jobPostingDate, byte[] jobPostImage, String jobPostImageName, String jobPostImageType) {
+    public JobPostingEntity(Long id, String vesselName, String position, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType) {
         this.id = id;
-        this.jobPost = jobPost;
+        this.vesselName = vesselName;
+        this.position = position;
+        this.jobStatus = jobStatus;
         this.jobDescription = jobDescription;
-        this.jobPostingDate = jobPostingDate;
         this.jobPostImage = jobPostImage;
         this.jobPostImageName = jobPostImageName;
         this.jobPostImageType = jobPostImageType;
@@ -49,12 +53,28 @@ public class JobPostingEntity {
         this.id = id;
     }
 
-    public String getJobPost() {
-        return jobPost;
+    public String getVesselName() {
+        return vesselName;
     }
 
-    public void setJobPost(String jobPost) {
-        this.jobPost = jobPost;
+    public void setVesselName(String vesselName) {
+        this.vesselName = vesselName;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getJobStatus() {
+        return jobStatus;
+    }
+
+    public void setJobStatus(String jobStatus) {
+        this.jobStatus = jobStatus;
     }
 
     public String getJobDescription() {
@@ -63,14 +83,6 @@ public class JobPostingEntity {
 
     public void setJobDescription(String jobDescription) {
         this.jobDescription = jobDescription;
-    }
-
-    public String getJobPostingDate() {
-        return jobPostingDate;
-    }
-
-    public void setJobPostingDate(String jobPostingDate) {
-        this.jobPostingDate = jobPostingDate;
     }
 
     public byte[] getJobPostImage() {

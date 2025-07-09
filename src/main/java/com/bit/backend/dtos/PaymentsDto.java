@@ -11,6 +11,7 @@ public class PaymentsDto {
     private String itemName ;
     private String supplierName ;
     private String quantity ;
+    private String qtyMeasure;
     private String amount ;
     private Date paymentDate ;
     private String paymentStatus ;
@@ -24,12 +25,13 @@ public class PaymentsDto {
     public PaymentsDto() {
     }
 
-    public PaymentsDto(Long id, String paymentNo, String itemName, String supplierName, String quantity, String amount, Date paymentDate, String paymentStatus, byte[] paymentImage, String paymentImageName, String paymentImageType) {
+    public PaymentsDto(Long id, String paymentNo, String itemName, String supplierName, String quantity, String qtyMeasure, String amount, Date paymentDate, String paymentStatus, byte[] paymentImage, String paymentImageName, String paymentImageType) {
         this.id = id;
         this.paymentNo = paymentNo;
         this.itemName = itemName;
         this.supplierName = supplierName;
         this.quantity = quantity;
+        this.qtyMeasure = qtyMeasure;
         this.amount = amount;
         this.paymentDate = paymentDate;
         this.paymentStatus = paymentStatus;
@@ -76,6 +78,14 @@ public class PaymentsDto {
 
     public void setQuantity(String quantity) {
         this.quantity = quantity;
+    }
+
+    public String getQtyMeasure() {
+        return qtyMeasure;
+    }
+
+    public void setQtyMeasure(String qtyMeasure) {
+        this.qtyMeasure = qtyMeasure;
     }
 
     public String getAmount() {
