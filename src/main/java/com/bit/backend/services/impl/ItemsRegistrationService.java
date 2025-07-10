@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.ItemsRegistrationDto;
 import com.bit.backend.entities.ItemsRegistrationEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.ItemsRegistrationMapper;
 import com.bit.backend.repositories.ItemsRegistrationRepository;
@@ -26,6 +27,13 @@ public class ItemsRegistrationService implements ItemsRegistrationServiceI{
     public ItemsRegistrationDto addItemsRegistrationEntity(ItemsRegistrationDto itemsRegistrationDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<ItemsRegistrationEntity> optionalItemsRegistrationEntity = itemsRegistrationRepository.findByItemNo(itemsRegistrationDto.getItemNo());
+
+            if (optionalItemsRegistrationEntity.isPresent()) {
+                throw new AppException("Item Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             ItemsRegistrationEntity itemsRegistrationEntity = itemsRegistrationMapper.toItemsRegistrationEntity(itemsRegistrationDto);
             ItemsRegistrationEntity savedItem =  itemsRegistrationRepository.save(itemsRegistrationEntity);
             ItemsRegistrationDto savedDto = itemsRegistrationMapper.toItemsRegistrationDto(savedItem);

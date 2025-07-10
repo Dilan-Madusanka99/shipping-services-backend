@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.SeaServicesDto;
 import com.bit.backend.entities.SeaServicesEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.SeaServicesMapper;
 import com.bit.backend.repositories.SeaServicesRepository;
@@ -27,6 +28,13 @@ public class SeaServicesService implements SeaServicesServiceI {
     public SeaServicesDto addSeaServicesEntity(SeaServicesDto seaServicesDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<SeaServicesEntity> optionalSeaServicesEntity = seaServicesRepository.findBySidNo(seaServicesDto.getSidNo());
+
+            if (optionalSeaServicesEntity.isPresent()) {
+                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             SeaServicesEntity seaServicesEntity = seaServicesMapper.toSeaServicesEntity(seaServicesDto);
             SeaServicesEntity savedItem =  seaServicesRepository.save(seaServicesEntity);
             SeaServicesDto savedDto = seaServicesMapper.toSeaServicesDto(savedItem);

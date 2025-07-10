@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.PaymentsDto;
 import com.bit.backend.entities.PaymentsEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.PaymentsMapper;
 import com.bit.backend.repositories.PaymentsRepository;
@@ -26,6 +27,13 @@ public class PaymentsService implements PaymentsServiceI{
     public PaymentsDto addPaymentsEntity(PaymentsDto paymentsDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<PaymentsEntity> optionalPaymentsEntity = paymentsRepository.findByPaymentNo(paymentsDto.getPaymentNo());
+
+            if (optionalPaymentsEntity.isPresent()) {
+                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             PaymentsEntity paymentsEntity = paymentsMapper.toPaymentsEntity(paymentsDto);
             PaymentsEntity savedItem =  paymentsRepository.save(paymentsEntity);
             PaymentsDto savedDto = paymentsMapper.toPaymentsDto(savedItem);

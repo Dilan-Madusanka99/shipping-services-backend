@@ -14,7 +14,7 @@ public class SeafarersEntity {
     private Long id;
 
     @Column(name = "sidNo")
-    private String sidNo;
+    private String sidNo; // findBySidNo()
 
     @Column(name = "position")
     private String position;

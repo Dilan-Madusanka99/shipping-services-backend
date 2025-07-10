@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.CertificatesRegistrationDto;
 import com.bit.backend.entities.CertificatesRegistrationEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.CertificatesRegistrationMapper;
 import com.bit.backend.repositories.CertificatesRegistrationRepository;
@@ -26,7 +27,14 @@ public class CertificatesRegistrationService implements CertificatesRegistration
     @Override
     public CertificatesRegistrationDto addCertificatesRegistrationEntity(CertificatesRegistrationDto certificatesRegistrationDto) {
         try {
-            // System.out.println("***In Backend***");
+             System.out.println("***In Backend***");
+
+            Optional<CertificatesRegistrationEntity> optionalCertificatesRegistrationEntity = certificatesRegistrationRepository.findByCName(certificatesRegistrationDto.getcName());
+
+            if (optionalCertificatesRegistrationEntity.isPresent()) {
+                throw new AppException("Certificate Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             CertificatesRegistrationEntity certificatesRegistrationEntity = certificatesRegistrationMapper.toCertificatesRegistrationEntity(certificatesRegistrationDto);
             CertificatesRegistrationEntity savedItem =  certificatesRegistrationRepository.save(certificatesRegistrationEntity);
             CertificatesRegistrationDto savedDto = certificatesRegistrationMapper.toCertificatesRegistrationDto(savedItem);

@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.LoginDto;
 import com.bit.backend.entities.LoginEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.LoginMapper;
 import com.bit.backend.repositories.LoginRepository;
@@ -26,6 +27,12 @@ public class LoginService implements LoginServiceI {
     public LoginDto addLoginEntity(LoginDto loginDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<LoginEntity> optionalLoginEntity = loginRepository.findByUserName(loginDto.getUserName());
+
+            if (optionalLoginEntity.isPresent()) {
+                throw new AppException("User Name Already Exists", HttpStatus.BAD_REQUEST);
+            }
             LoginEntity loginEntity = loginMapper.toLoginEntity(loginDto);
             LoginEntity savedItem =  loginRepository.save(loginEntity);
             LoginDto savedDto = loginMapper.toLoginDto(savedItem);

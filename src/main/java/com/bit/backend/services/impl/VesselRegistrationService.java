@@ -1,6 +1,7 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.VesselRegistrationDto;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.entities.VesselRegistrationEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.VesselRegistrationMapper;
@@ -26,6 +27,13 @@ public class VesselRegistrationService implements VesselRegistrationServiceI{
     public VesselRegistrationDto addVesselRegistrationEntity(VesselRegistrationDto vesselRegistrationDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<VesselRegistrationEntity> optionalVesselRegistrationEntity = vesselRegistrationRepository.findByImoNo(vesselRegistrationDto.getImoNo());
+
+            if (optionalVesselRegistrationEntity.isPresent()) {
+                throw new AppException("Vessel Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             VesselRegistrationEntity vesselRegistrationEntity = vesselRegistrationMapper.toVesselRegistrationEntity(vesselRegistrationDto);
             VesselRegistrationEntity savedItem =  vesselRegistrationRepository.save(vesselRegistrationEntity);
             VesselRegistrationDto savedDto = vesselRegistrationMapper.toVesselRegistrationDto(savedItem);

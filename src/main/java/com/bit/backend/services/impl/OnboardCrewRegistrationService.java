@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.OnboardCrewRegistrationDto;
 import com.bit.backend.entities.OnboardCrewRegistrationEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.OnboardCrewRegistrationMapper;
 import com.bit.backend.repositories.OnboardCrewRegistrationRepository;
@@ -26,6 +27,13 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
     public OnboardCrewRegistrationDto addOnboardCrewRegistrationEntity(OnboardCrewRegistrationDto onboardCrewRegistrationDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<OnboardCrewRegistrationEntity> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySidNo(onboardCrewRegistrationDto.getSidNo());
+
+            if (optionalOnboardCrewRegistrationEntity.isPresent()) {
+                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             OnboardCrewRegistrationEntity onboardCrewRegistrationEntity = onboardCrewRegistrationMapper.toOnboardCrewRegistrationEntity(onboardCrewRegistrationDto);
             OnboardCrewRegistrationEntity savedItem =  onboardCrewRegistrationRepository.save(onboardCrewRegistrationEntity);
             OnboardCrewRegistrationDto savedDto = onboardCrewRegistrationMapper.toOnboardCrewRegistrationDto(savedItem);

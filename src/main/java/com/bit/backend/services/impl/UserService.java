@@ -46,7 +46,7 @@ public class UserService implements UserServiceI {
 
     @Override
     public UserDto register(SignUpDto signUpDto) {
-        Optional<User> oUser = userRepository.findByLogin(signUpDto.login());
+        Optional<User> oUser = userRepository.findByLogin(signUpDto.login()); // sidDto.getSidNo() -> findBySidNo(sidDto.getSidNo())
 
         if (oUser.isPresent()) {
             throw new AppException("User Already Exists", HttpStatus.BAD_REQUEST);

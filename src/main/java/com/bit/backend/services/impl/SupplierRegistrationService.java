@@ -1,6 +1,7 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.SupplierRegistrationDto;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.entities.SupplierRegistrationEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.SupplierRegistrationMapper;
@@ -26,6 +27,13 @@ public class SupplierRegistrationService implements SupplierRegistrationServiceI
     public SupplierRegistrationDto addSupplierRegistrationEntity(SupplierRegistrationDto supplierRegistrationDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<SupplierRegistrationEntity> optionalSupplierRegistrationEntity = supplierRegistrationRepository.findBySupplierNo(supplierRegistrationDto.getSupplierNo());
+
+            if (optionalSupplierRegistrationEntity.isPresent()) {
+                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             SupplierRegistrationEntity supplierRegistrationEntity = supplierRegistrationMapper.toSupplierRegistrationEntity(supplierRegistrationDto);
             SupplierRegistrationEntity savedItem =  supplierRegistrationRepository.save(supplierRegistrationEntity);
             SupplierRegistrationDto savedDto = supplierRegistrationMapper.toSupplierRegistrationDto(savedItem);

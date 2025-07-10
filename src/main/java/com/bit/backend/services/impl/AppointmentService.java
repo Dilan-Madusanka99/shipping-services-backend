@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.AppointmentDto;
 import com.bit.backend.entities.AppointmentEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.AppointmentMapper;
 import com.bit.backend.repositories.AppointmentRepository;
@@ -26,6 +27,13 @@ public class AppointmentService implements AppointmentServiceI{
     public AppointmentDto addAppointmentEntity(AppointmentDto appointmentDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySid(appointmentDto.getSid());
+
+            if (optionalAppointmentEntity.isPresent()) {
+                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             AppointmentEntity appointmentEntity = appointmentMapper.toAppointmentEntity(appointmentDto);
             AppointmentEntity savedItem =  appointmentRepository.save(appointmentEntity);
             AppointmentDto savedDto = appointmentMapper.toAppointmentDto(savedItem);

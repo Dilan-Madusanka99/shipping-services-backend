@@ -26,6 +26,13 @@ public class EmployeeService implements EmployeeServiceI {
     public EmployeeDto addEmployeeEntity(EmployeeDto employeeDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findByNic(employeeDto.getNic());
+
+            if (optionalEmployeeEntity.isPresent()) {
+                throw new AppException("Employee Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             EmployeeEntity employeeEntity = employeeMapper.toEmployeeEntity(employeeDto);
             EmployeeEntity savedItem =  employeeRepository.save(employeeEntity);
             EmployeeDto savedDto = employeeMapper.toEmployeeDto(savedItem);

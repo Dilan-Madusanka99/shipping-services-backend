@@ -2,6 +2,7 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.OtherDetailsRegistrationDto;
 import com.bit.backend.entities.OtherDetailsRegistrationEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.OtherDetailsRegistrationMapper;
 import com.bit.backend.repositories.OtherDetailsRegistrationRepository;
@@ -27,6 +28,13 @@ public class OtherDetailsRegistrationService implements OtherDetailsRegistration
     public OtherDetailsRegistrationDto addOtherDetailsRegistrationEntity(OtherDetailsRegistrationDto otherDetailsRegistrationDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<OtherDetailsRegistrationEntity> optionalOtherDetailsRegistrationEntity = otherDetailsRegistrationRepository.findByPpNo(otherDetailsRegistrationDto.getPpNo());
+
+            if (optionalOtherDetailsRegistrationEntity.isPresent()) {
+                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             OtherDetailsRegistrationEntity otherDetailsRegistrationEntity = otherDetailsRegistrationMapper.toOtherDetailsRegistrationEntity(otherDetailsRegistrationDto);
             OtherDetailsRegistrationEntity savedItem =  otherDetailsRegistrationRepository.save(otherDetailsRegistrationEntity);
             OtherDetailsRegistrationDto savedDto = otherDetailsRegistrationMapper.toOtherDetailsRegistrationDto(savedItem);
