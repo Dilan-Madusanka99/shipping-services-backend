@@ -23,17 +23,21 @@ public class EmployeeAttendenceEntity {
     @Column(name = "userName")
     private String userName;
 
+    @Column(name = "roles")
+    private String roles;
+
     @Column(name = "attandenceDate")
     private LocalDate attandenceDate = LocalDate.now();
 
     public EmployeeAttendenceEntity() {
     }
 
-    public EmployeeAttendenceEntity(Long id, String users, String attendenceStatus, String userName, LocalDate attandenceDate) {
+    public EmployeeAttendenceEntity(Long id, String users, String attendenceStatus, String userName, String roles, LocalDate attandenceDate) {
         this.id = id;
         this.users = users;
         this.attendenceStatus = attendenceStatus;
         this.userName = userName;
+        this.roles = roles;
         this.attandenceDate = attandenceDate;
     }
 
@@ -67,6 +71,14 @@ public class EmployeeAttendenceEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public LocalDate getAttandenceDate() {
