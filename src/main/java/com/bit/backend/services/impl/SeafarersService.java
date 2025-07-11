@@ -55,6 +55,18 @@ public class SeafarersService implements SeafarersServiceI {
         }
     }
 
+    public List<SeafarersDto> seafarersRegisteredByMonth() {
+
+        try {
+            List<SeafarersEntity>  seafarersEntityList = seafarersRepository.findAll();
+            List<SeafarersDto> seafarersDtoList = seafarersMapper.toSeafarersDtoList(seafarersEntityList);
+            return seafarersDtoList;
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @Override
     public SeafarersDto updateSeafarers(long id, SeafarersDto seafarersDto) {
 

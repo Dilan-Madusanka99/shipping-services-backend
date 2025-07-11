@@ -48,6 +48,17 @@ public class SeafarersController {
         }
     }
 
+    public ResponseEntity<List<SeafarersDto>> seafarersRegisteredByMonth() {
+
+        try {
+            List<SeafarersDto> seafarersRegisteredByMonthList = seafarersServiceI.seafarersRegisteredByMonth();
+            return ResponseEntity.ok(seafarersRegisteredByMonthList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @PutMapping("/seafarers_registration/{id}")
     public ResponseEntity<SeafarersDto> updateSeafarers(@PathVariable Long id,
                                                       @RequestPart ("seafarersForm") SeafarersDto seafarersDto,

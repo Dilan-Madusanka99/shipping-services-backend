@@ -7,6 +7,7 @@ import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.AppointmentMapper;
 import com.bit.backend.repositories.AppointmentRepository;
+import com.bit.backend.services.NotificationServiceI;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,12 @@ public class AppointmentService implements AppointmentServiceI{
 
     private final AppointmentRepository appointmentRepository;
     private final AppointmentMapper appointmentMapper;
+    private final NotificationServiceI notificationServiceI;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper) {
+    public AppointmentService(AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper, NotificationServiceI notificationServiceI) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentMapper = appointmentMapper;
+        this.notificationServiceI = notificationServiceI;
     }
 
     @Override
@@ -39,6 +42,9 @@ public class AppointmentService implements AppointmentServiceI{
             AppointmentEntity appointmentEntity = appointmentMapper.toAppointmentEntity(appointmentDto);
             AppointmentEntity savedItem =  appointmentRepository.save(appointmentEntity);
             AppointmentDto savedDto = appointmentMapper.toAppointmentDto(savedItem);
+
+            AppointmentDto notified = this.notificationServiceI.sendAppointmentNotification(savedDto,"schedule");
+
             return savedDto;
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -73,6 +79,7 @@ public class AppointmentService implements AppointmentServiceI{
             AppointmentEntity savedAppointmentEntity = appointmentRepository.save(newAppointmentEntity);
 
             AppointmentDto responseAppointmentDto = appointmentMapper.toAppointmentDto(savedAppointmentEntity);
+            AppointmentDto notified = this.notificationServiceI.sendAppointmentNotification(responseAppointmentDto,"reschedule");
             return responseAppointmentDto;
 
         } catch (Exception e) {
