@@ -28,13 +28,6 @@ public class SeaServicesService implements SeaServicesServiceI {
     public SeaServicesDto addSeaServicesEntity(SeaServicesDto seaServicesDto) {
         try {
             System.out.println("***In Backend***");
-
-            Optional<SeaServicesEntity> optionalSeaServicesEntity = seaServicesRepository.findBySidNo(seaServicesDto.getSidNo());
-
-            if (optionalSeaServicesEntity.isPresent()) {
-                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
-            }
-
             SeaServicesEntity seaServicesEntity = seaServicesMapper.toSeaServicesEntity(seaServicesDto);
             SeaServicesEntity savedItem =  seaServicesRepository.save(seaServicesEntity);
             SeaServicesDto savedDto = seaServicesMapper.toSeaServicesDto(savedItem);
