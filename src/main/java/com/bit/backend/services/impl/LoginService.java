@@ -3,9 +3,11 @@ package com.bit.backend.services.impl;
 import com.bit.backend.dtos.LoginDto;
 import com.bit.backend.entities.LoginEntity;
 import com.bit.backend.entities.SeafarersEntity;
+import com.bit.backend.entities.User;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.LoginMapper;
 import com.bit.backend.repositories.LoginRepository;
+import com.bit.backend.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +19,30 @@ public class LoginService implements LoginServiceI {
 
     private final LoginRepository loginRepository;
     private final LoginMapper loginMapper;
+    private final UserRepository userRepository;
 
-    public LoginService(LoginRepository loginRepository, LoginMapper loginMapper) {
+    public LoginService(LoginRepository loginRepository, LoginMapper loginMapper, UserRepository userRepository) {
         this.loginRepository = loginRepository;
         this.loginMapper = loginMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
     public LoginDto addLoginEntity(LoginDto loginDto) {
         try {
             System.out.println("***In Backend***");
+
+            Optional<LoginEntity> newLoginEntity = loginRepository.findByUserId(loginDto.getUserId());
+
+            if (newLoginEntity.isPresent()) {
+                throw new AppException("Login already exist for the employee", HttpStatus.BAD_REQUEST);
+            }
+
+            Optional<User> oUser = userRepository.findByLogin(loginDto.getUserName());
+
+            if (oUser.isPresent()) {
+                throw new AppException("User Already Exists", HttpStatus.BAD_REQUEST);
+            }
 
             Optional<LoginEntity> optionalLoginEntity = loginRepository.findByUserName(loginDto.getUserName());
 

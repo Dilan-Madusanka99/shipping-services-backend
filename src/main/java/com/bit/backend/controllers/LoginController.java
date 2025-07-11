@@ -25,10 +25,12 @@ public class LoginController {
     @PostMapping("/Login")
     public ResponseEntity<LoginDto> addLogin(@RequestBody LoginDto loginDto) {
         LoginDto updatedLoginDto = loginDto;
+        String newPassword = "";
         try {
-            SignUpDto signUpDto = new SignUpDto(loginDto.getFirstName(), loginDto.getLastName(), loginDto.getUserName(), loginDto.getPassword().toCharArray(), loginDto.getRole());
+            newPassword = new String(loginDto.getPassword());
             loginDto.setPassword(null);
             LoginDto loginDtoResponse = loginServiceI.addLoginEntity(loginDto);
+            SignUpDto signUpDto = new SignUpDto(loginDto.getFirstName(), loginDto.getLastName(), loginDto.getUserName(), newPassword.toCharArray(), loginDto.getRole(), loginDtoResponse.getId());
             UserDto user = userServiceI.register(signUpDto);
 
             if (user.getId() != null) {
@@ -59,7 +61,7 @@ public class LoginController {
     public ResponseEntity<LoginDto> updateLogin(@PathVariable Long id, @RequestBody LoginDto loginDto) {
 
         try {
-            String password = loginDto.getPassword();
+            String password = new String(loginDto.getPassword());
             loginDto.setPassword(null);
             LoginDto responseLoginDto = loginServiceI.updateLogin(id, loginDto);
             boolean value = userServiceI.updatePassword(responseLoginDto, password);
