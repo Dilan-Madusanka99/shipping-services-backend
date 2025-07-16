@@ -12,4 +12,7 @@ public interface CommonDataServiceI {
     List<CommonDataDto> getAvailableUsersByGroupID(int id);
     List<CommonDataDto> getAssignedUsersByGroupID(int id);
     CommonDataListDto saveGroupUserData(int id, CommonDataListDto commonDataListDto);
+
+//    Dilan
+    List<CommonDataDto> getSeafarersRegisteredByMonth(int id);
 }
