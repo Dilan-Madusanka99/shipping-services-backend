@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface OtherDetailsRegistrationRepository extends JpaRepository<OtherDetailsRegistrationEntity, Long> {
-    Optional<OtherDetailsRegistrationEntity> findByPpNo(String ppNo);
+    Optional<OtherDetailsRegistrationEntity> findBySidNo(String sidNo);
 }

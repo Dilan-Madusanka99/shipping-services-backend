@@ -35,7 +35,7 @@ public class SeafarersService implements SeafarersServiceI {
             }
 
             if (seafarersDto.getSidNo() == null || seafarersDto.getSidNo().isEmpty()) {
-                throw new AppException("Seafarer Number Is Empty", HttpStatus.BAD_REQUEST);
+                throw new AppException("Seafarer ID No is Empty", HttpStatus.BAD_REQUEST);
             }
 
             SeafarersEntity seafarersEntity = seafarersMapper.toSeafarersEntity(seafarersDto);

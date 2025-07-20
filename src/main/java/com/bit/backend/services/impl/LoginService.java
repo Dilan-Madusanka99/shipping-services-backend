@@ -49,6 +49,18 @@ public class LoginService implements LoginServiceI {
             if (optionalLoginEntity.isPresent()) {
                 throw new AppException("User Name Already Exists", HttpStatus.BAD_REQUEST);
             }
+
+            // not null
+            if (loginDto.getUsers() == null || loginDto.getUsers().isEmpty()) {
+                throw new AppException("User Is Empty", HttpStatus.BAD_REQUEST);
+            }
+            if (loginDto.getUserName() == null || loginDto.getUserName().isEmpty()) {
+                throw new AppException("User Name Is Empty", HttpStatus.BAD_REQUEST);
+            }
+            if (loginDto.getPassword() == null || loginDto.getPassword().isEmpty()) {
+                throw new AppException("Password Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
             LoginEntity loginEntity = loginMapper.toLoginEntity(loginDto);
             LoginEntity savedItem =  loginRepository.save(loginEntity);
             LoginDto savedDto = loginMapper.toLoginDto(savedItem);

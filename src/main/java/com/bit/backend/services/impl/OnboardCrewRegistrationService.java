@@ -34,6 +34,10 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
             }
 
+            if (onboardCrewRegistrationDto.getSidNo() == null || onboardCrewRegistrationDto.getSidNo().isEmpty()) {
+                throw new AppException("Password Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
             OnboardCrewRegistrationEntity onboardCrewRegistrationEntity = onboardCrewRegistrationMapper.toOnboardCrewRegistrationEntity(onboardCrewRegistrationDto);
             OnboardCrewRegistrationEntity savedItem =  onboardCrewRegistrationRepository.save(onboardCrewRegistrationEntity);
             OnboardCrewRegistrationDto savedDto = onboardCrewRegistrationMapper.toOnboardCrewRegistrationDto(savedItem);

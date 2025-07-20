@@ -1,6 +1,7 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.StocksDto;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.entities.StocksEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.StocksMapper;
@@ -25,6 +26,16 @@ public class StocksService implements StocksServiceI{
     @Override
     public StocksDto addStocksEntity(StocksDto stocksDto) {
         try {
+            Optional<StocksEntity> optionalStocksEntity = stocksRepository.findById(stocksDto.getId());
+
+            if (optionalStocksEntity.isPresent()) {
+                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            if (stocksDto.getQuantity() == null || stocksDto.getQuantity().isEmpty()) {
+                throw new AppException("Quantity Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
             System.out.println("***In Backend***");
             StocksEntity stocksEntity = stocksMapper.toStocksEntity(stocksDto);
             StocksEntity savedItem =  stocksRepository.save(stocksEntity);

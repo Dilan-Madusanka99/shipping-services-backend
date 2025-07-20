@@ -35,11 +35,16 @@ public class PaymentsService implements PaymentsServiceI{
             Optional<PaymentsEntity> optionalPaymentsEntity = paymentsRepository.findByPaymentNo(paymentsDto.getPaymentNo());
 
             if (optionalPaymentsEntity.isPresent()) {
-                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Payment No Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            if (paymentsDto.getPaymentNo() == null || paymentsDto.getPaymentNo().isEmpty()) {
+                throw new AppException("Payment No is Empty", HttpStatus.BAD_REQUEST);
             }
 
             PaymentsEntity paymentsEntity = paymentsMapper.toPaymentsEntity(paymentsDto);
             PaymentsEntity savedItem =  paymentsRepository.save(paymentsEntity);
+
             // updated quantity
             StocksEntity stocksEntity = stocksRepository.findByItemNo(paymentsDto.getItemNo().toString());
 
@@ -49,7 +54,6 @@ public class PaymentsService implements PaymentsServiceI{
                 stocksEntity.setQuantity(Double.toString(fullQty));
                 StocksEntity savedStockEntity = stocksRepository.save(stocksEntity);
             }
-
 
             PaymentsDto savedDto = paymentsMapper.toPaymentsDto(savedItem);
 

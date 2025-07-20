@@ -25,6 +25,10 @@ public class CrewComplaintsService implements CrewComplaintsServiceI{
     @Override
     public CrewComplaintsDto addCrewComplaintsEntity(CrewComplaintsDto crewComplaintsDto) {
         try {
+            if (crewComplaintsDto.getSidNo() == null || crewComplaintsDto.getSidNo().isEmpty()) {
+                throw new AppException("Seafarer ID No Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
             System.out.println("***In Backend***");
             CrewComplaintsEntity crewComplaintsEntity = crewComplaintsMapper.toCrewComplaintsEntity(crewComplaintsDto);
             CrewComplaintsEntity savedItem =  crewComplaintsRepository.save(crewComplaintsEntity);

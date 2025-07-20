@@ -36,6 +36,9 @@ public class EmployeeAttendenceService implements EmployeeAttendenceServiceI {
                 throw new AppException("Attendance already marked for the employee for today", HttpStatus.BAD_REQUEST);
             }
 
+            if (employeeAttendenceDto.getUsers() == null || employeeAttendenceDto.getUsers().isEmpty()) {
+                throw new AppException("User Name Is Empty", HttpStatus.BAD_REQUEST);
+            }
 
             EmployeeAttendenceEntity employeeAttendenceEntity = employeeAttendenceMapper.toEmployeeAttendenceEntity(employeeAttendenceDto);
             employeeAttendenceEntity.setAttandenceDate(LocalDate.now());

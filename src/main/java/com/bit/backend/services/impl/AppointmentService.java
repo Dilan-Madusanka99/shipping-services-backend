@@ -38,6 +38,10 @@ public class AppointmentService implements AppointmentServiceI{
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
             }
 
+            if (appointmentDto.getSid() == null || appointmentDto.getSid().isEmpty()) {
+                throw new AppException("Seafarer ID No Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
 
             AppointmentEntity appointmentEntity = appointmentMapper.toAppointmentEntity(appointmentDto);
             AppointmentEntity savedItem =  appointmentRepository.save(appointmentEntity);

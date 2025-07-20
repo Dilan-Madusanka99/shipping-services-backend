@@ -35,6 +35,10 @@ public class CertificatesRegistrationService implements CertificatesRegistration
                 throw new AppException("Certificate Already Exists", HttpStatus.BAD_REQUEST);
             }
 
+            if (certificatesRegistrationDto.getSidNo() == null || certificatesRegistrationDto.getSidNo().isEmpty()) {
+                throw new AppException("Seafarer ID No Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
             CertificatesRegistrationEntity certificatesRegistrationEntity = certificatesRegistrationMapper.toCertificatesRegistrationEntity(certificatesRegistrationDto);
             CertificatesRegistrationEntity savedItem =  certificatesRegistrationRepository.save(certificatesRegistrationEntity);
             CertificatesRegistrationDto savedDto = certificatesRegistrationMapper.toCertificatesRegistrationDto(savedItem);

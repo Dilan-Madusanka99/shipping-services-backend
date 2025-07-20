@@ -31,7 +31,11 @@ public class SupplierRegistrationService implements SupplierRegistrationServiceI
             Optional<SupplierRegistrationEntity> optionalSupplierRegistrationEntity = supplierRegistrationRepository.findBySupplierNo(supplierRegistrationDto.getSupplierNo());
 
             if (optionalSupplierRegistrationEntity.isPresent()) {
-                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Supplier No Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            if (supplierRegistrationDto.getSupplierNo() == null || supplierRegistrationDto.getSupplierNo().isEmpty()) {
+                throw new AppException("Supplier No is Empty", HttpStatus.BAD_REQUEST);
             }
 
             SupplierRegistrationEntity supplierRegistrationEntity = supplierRegistrationMapper.toSupplierRegistrationEntity(supplierRegistrationDto);

@@ -25,7 +25,11 @@ public class JobPostingService implements JobPostingServiceI {
     @Override
     public JobPostingDto addJobPostingEntity(JobPostingDto jobPostingDto) {
         try {
-            // System.out.println("***In Backend***");
+            if (jobPostingDto.getVesselName() == null || jobPostingDto.getVesselName().isEmpty()) {
+                throw new AppException("Vessel Name Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
+             System.out.println("***In Backend***");
             JobPostingEntity jobPostingEntity = jobPostingMapper.toJobPostingEntity(jobPostingDto);
             JobPostingEntity savedItem =  jobPostingRepository.save(jobPostingEntity);
             JobPostingDto savedDto = jobPostingMapper.toJobPostingDto(savedItem);

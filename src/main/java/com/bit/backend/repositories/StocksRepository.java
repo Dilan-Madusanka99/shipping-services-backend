@@ -4,5 +4,6 @@ import com.bit.backend.entities.StocksEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StocksRepository extends JpaRepository<StocksEntity, Long> {
-    StocksEntity findByItemNo(String itemNo);
+    StocksEntity findById(String itemNo);
+    StocksEntity findByItemNo(String string);
 }

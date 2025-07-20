@@ -59,6 +59,10 @@ public class SeaServicesService implements SeaServicesServiceI {
                 throw new AppException("SeaServices Does Not Exists", HttpStatus.BAD_REQUEST);
             }
 
+            if (seaServicesDto.getSidNo() == null || seaServicesDto.getSidNo().isEmpty()) {
+                throw new AppException("Seafarer No is Empty", HttpStatus.BAD_REQUEST);
+            }
+
             SeaServicesEntity newSeaServicesEntity = seaServicesMapper.toSeaServicesEntity(seaServicesDto);
 
             newSeaServicesEntity.setId(id);

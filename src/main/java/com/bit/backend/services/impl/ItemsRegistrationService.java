@@ -31,7 +31,11 @@ public class ItemsRegistrationService implements ItemsRegistrationServiceI{
             Optional<ItemsRegistrationEntity> optionalItemsRegistrationEntity = itemsRegistrationRepository.findByItemNo(itemsRegistrationDto.getItemNo());
 
             if (optionalItemsRegistrationEntity.isPresent()) {
-                throw new AppException("Item Already Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Item No Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            if (itemsRegistrationDto.getItemNo() == null || itemsRegistrationDto.getItemNo().isEmpty()) {
+                throw new AppException("Item No Is Empty", HttpStatus.BAD_REQUEST);
             }
 
             ItemsRegistrationEntity itemsRegistrationEntity = itemsRegistrationMapper.toItemsRegistrationEntity(itemsRegistrationDto);

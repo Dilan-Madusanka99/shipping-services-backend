@@ -33,6 +33,10 @@ public class EmployeeService implements EmployeeServiceI {
                 throw new AppException("Employee Already Exists", HttpStatus.BAD_REQUEST);
             }
 
+            if (employeeDto.getEmpNo() == null || employeeDto.getEmpNo().isEmpty()) {
+                throw new AppException("Employee No Is Empty", HttpStatus.BAD_REQUEST);
+            }
+
             EmployeeEntity employeeEntity = employeeMapper.toEmployeeEntity(employeeDto);
             EmployeeEntity savedItem =  employeeRepository.save(employeeEntity);
             EmployeeDto savedDto = employeeMapper.toEmployeeDto(savedItem);

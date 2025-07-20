@@ -31,7 +31,15 @@ public class VesselRegistrationService implements VesselRegistrationServiceI{
             Optional<VesselRegistrationEntity> optionalVesselRegistrationEntity = vesselRegistrationRepository.findByImoNo(vesselRegistrationDto.getImoNo());
 
             if (optionalVesselRegistrationEntity.isPresent()) {
-                throw new AppException("Vessel Already Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Vessel IMO Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            if (vesselRegistrationDto.getImoNo() == null || vesselRegistrationDto.getImoNo().isEmpty()) {
+                throw new AppException("Vessel IMO is Empty", HttpStatus.BAD_REQUEST);
+            }
+
+            if (vesselRegistrationDto.getVesselName() == null || vesselRegistrationDto.getVesselName().isEmpty()) {
+                throw new AppException("Vessel Name is Empty", HttpStatus.BAD_REQUEST);
             }
 
             VesselRegistrationEntity vesselRegistrationEntity = vesselRegistrationMapper.toVesselRegistrationEntity(vesselRegistrationDto);

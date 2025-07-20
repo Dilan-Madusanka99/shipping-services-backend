@@ -29,10 +29,14 @@ public class OtherDetailsRegistrationService implements OtherDetailsRegistration
         try {
             System.out.println("***In Backend***");
 
-            Optional<OtherDetailsRegistrationEntity> optionalOtherDetailsRegistrationEntity = otherDetailsRegistrationRepository.findByPpNo(otherDetailsRegistrationDto.getPpNo());
+            Optional<OtherDetailsRegistrationEntity> optionalOtherDetailsRegistrationEntity = otherDetailsRegistrationRepository.findBySidNo(otherDetailsRegistrationDto.getSidNo());
 
             if (optionalOtherDetailsRegistrationEntity.isPresent()) {
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            if (otherDetailsRegistrationDto.getSidNo() == null || otherDetailsRegistrationDto.getSidNo().isEmpty()) {
+                throw new AppException("Seafarer ID Is Empty", HttpStatus.BAD_REQUEST);
             }
 
             OtherDetailsRegistrationEntity otherDetailsRegistrationEntity = otherDetailsRegistrationMapper.toOtherDetailsRegistrationEntity(otherDetailsRegistrationDto);
