@@ -48,10 +48,11 @@ public class SeafarersController {
         }
     }
 
+    @GetMapping("/seafarers_registration")
     public ResponseEntity<List<SeafarersDto>> seafarersRegisteredByMonth() {
 
         try {
-            List<SeafarersDto> seafarersRegisteredByMonthList = seafarersServiceI.seafarersRegisteredByMonth();
+            List<SeafarersDto> seafarersRegisteredByMonthList = seafarersServiceI.getseafarersRegisteredByMonth();
             return ResponseEntity.ok(seafarersRegisteredByMonthList);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);

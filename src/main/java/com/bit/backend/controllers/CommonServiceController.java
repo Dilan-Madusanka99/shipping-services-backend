@@ -1,13 +1,18 @@
 package com.bit.backend.controllers;
 
+
 import com.bit.backend.dtos.CommonDataDto;
 import com.bit.backend.dtos.CommonDataListDto;
 import com.bit.backend.entities.CommonDataEntity;
+import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.CommonDataServiceI;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.objenesis.ObjenesisHelper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/common-data-service")
@@ -31,6 +36,7 @@ public class CommonServiceController {
         return availablePrivileges;
     }
 
+
     @PostMapping("/group-privileges/{id}")
     public CommonDataListDto saveData(@RequestBody CommonDataListDto commonDataListDto, @PathVariable int id) {
         CommonDataListDto savedData = commonDataServiceI.saveData(id, commonDataListDto);
@@ -53,5 +59,16 @@ public class CommonServiceController {
     public CommonDataListDto saveGroupUserData(@RequestBody CommonDataListDto commonDataListDto, @PathVariable int id) {
         CommonDataListDto savedData = commonDataServiceI.saveGroupUserData(id, commonDataListDto);
         return savedData;
+    }
+
+//    Dilan
+    @GetMapping("/seafarers_registeredByMonth")
+    public ResponseEntity<List<Map<String, Object>>> getSeafarersRegisteredByMonth() {
+        try{
+            List<Map<String, Object>> seafarersRegisteredByMonth = commonDataServiceI.getSeafarersRegisteredByMonth();
+            return ResponseEntity.ok(seafarersRegisteredByMonth);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

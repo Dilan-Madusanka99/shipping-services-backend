@@ -59,7 +59,7 @@ public class SeafarersService implements SeafarersServiceI {
         }
     }
 
-    public List<SeafarersDto> seafarersRegisteredByMonth() {
+    public List<SeafarersDto> getseafarersRegisteredByMonth() {
 
         try {
             List<SeafarersEntity>  seafarersEntityList = seafarersRepository.findAll();

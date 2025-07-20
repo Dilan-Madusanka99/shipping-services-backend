@@ -13,6 +13,8 @@ import com.bit.backend.services.CommonDataServiceI;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class CommonDataService implements CommonDataServiceI {
@@ -30,6 +32,7 @@ public class CommonDataService implements CommonDataServiceI {
         this.commonDataMapper = commonDataMapper;
         this.privilegeGroupAuthRepository = privilegeGroupAuthRepository;
         this.privilegeGroupUserRepository = privilegeGroupUserRepository;
+
     }
 
     @Override
@@ -116,5 +119,11 @@ public class CommonDataService implements CommonDataServiceI {
 
         }
         return commonDataListDto;
+    }
+
+//    Dilan
+    @Override
+    public List<Map<String, Object>> getSeafarersRegisteredByMonth(int id) {
+        return commonDataRepository.getSeafarersRegisteredByMonth(id);
     }
 }

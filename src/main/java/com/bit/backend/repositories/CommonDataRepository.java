@@ -1,10 +1,12 @@
 package com.bit.backend.repositories;
 
 import com.bit.backend.entities.CommonDataEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CommonDataRepository extends JpaRepository<CommonDataEntity, Long> {
 
@@ -24,4 +26,11 @@ public interface CommonDataRepository extends JpaRepository<CommonDataEntity, Lo
 
     @Query(nativeQuery = true, value = "SELECT id, description FROM get_auth_group_user_details WHERE auth_group_id = :groupId")
     List<CommonDataEntity> getAssignedUsersByGroupId(int groupId);
+
+
+//    Dilan
+    List<CommonDataEntity> getSeafarersRegisteredByMonth (int id);
+
+    @Query("SELECT taskName as name, count(taskName) as cnt FROM CommonDataEntity group by month")
+    List<Map<String, Object>> getSeafarersRegisteredByMonth();
 }
