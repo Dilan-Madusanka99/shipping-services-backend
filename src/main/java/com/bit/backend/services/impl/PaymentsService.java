@@ -3,9 +3,11 @@ package com.bit.backend.services.impl;
 import com.bit.backend.dtos.PaymentsDto;
 import com.bit.backend.entities.PaymentsEntity;
 import com.bit.backend.entities.SeafarersEntity;
+import com.bit.backend.entities.StocksEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.PaymentsMapper;
 import com.bit.backend.repositories.PaymentsRepository;
+import com.bit.backend.repositories.StocksRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +19,12 @@ public class PaymentsService implements PaymentsServiceI{
 
     private final PaymentsRepository paymentsRepository;
     private final PaymentsMapper paymentsMapper;
+    private final StocksRepository stocksRepository;
 
-    public PaymentsService(PaymentsRepository paymentsRepository, PaymentsMapper paymentsMapper) {
+    public PaymentsService(PaymentsRepository paymentsRepository, PaymentsMapper paymentsMapper, StocksRepository stocksRepository) {
         this.paymentsRepository = paymentsRepository;
         this.paymentsMapper = paymentsMapper;
+        this.stocksRepository = stocksRepository;
     }
 
     @Override
@@ -36,7 +40,19 @@ public class PaymentsService implements PaymentsServiceI{
 
             PaymentsEntity paymentsEntity = paymentsMapper.toPaymentsEntity(paymentsDto);
             PaymentsEntity savedItem =  paymentsRepository.save(paymentsEntity);
+            // updated quantity
+            StocksEntity stocksEntity = stocksRepository.findByItemNo(paymentsDto.getItemNo().toString());
+
+            if (stocksEntity != null) {
+                String qty = stocksEntity.getQuantity();
+                double fullQty = Double.parseDouble(qty) + Double.parseDouble(paymentsDto.getQuantity());
+                stocksEntity.setQuantity(Double.toString(fullQty));
+                StocksEntity savedStockEntity = stocksRepository.save(stocksEntity);
+            }
+
+
             PaymentsDto savedDto = paymentsMapper.toPaymentsDto(savedItem);
+
             return savedDto;
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -30,6 +30,11 @@ public class EmployeeAttendenceService implements EmployeeAttendenceServiceI {
             System.out.println("***In Backend***");
 
             // validation to check if the same Employee has the attenadance marked for same date
+            EmployeeAttendenceEntity employeeAttendenceEntityValidation = employeeAttendenceRepository.findByUsersAndAttandenceDate(employeeAttendenceDto.getUsers(), LocalDate.now());
+
+            if (employeeAttendenceEntityValidation != null) {
+                throw new AppException("Attendance already marked for the employee for today", HttpStatus.BAD_REQUEST);
+            }
 
 
             EmployeeAttendenceEntity employeeAttendenceEntity = employeeAttendenceMapper.toEmployeeAttendenceEntity(employeeAttendenceDto);

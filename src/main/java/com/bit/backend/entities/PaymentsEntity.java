@@ -15,6 +15,9 @@ public class PaymentsEntity {
     @Column(name = "payment_no ")
     private String paymentNo ;
 
+    @Column(name = "item_no ")
+    private Long itemNo;
+
     @Column(name = "item_name ")
     private String itemName ;
 
@@ -48,9 +51,10 @@ public class PaymentsEntity {
     public PaymentsEntity() {
     }
 
-    public PaymentsEntity(Long id, String paymentNo, String itemName, String supplierName, String quantity, String qtyMeasure, String amount, Date paymentDate, String paymentStatus, byte[] paymentImage, String paymentImageName, String paymentImageType) {
+    public PaymentsEntity(Long id, String paymentNo, Long itemNo, String itemName, String supplierName, String quantity, String qtyMeasure, String amount, Date paymentDate, String paymentStatus, byte[] paymentImage, String paymentImageName, String paymentImageType) {
         this.id = id;
         this.paymentNo = paymentNo;
+        this.itemNo = itemNo;
         this.itemName = itemName;
         this.supplierName = supplierName;
         this.quantity = quantity;
@@ -77,6 +81,14 @@ public class PaymentsEntity {
 
     public void setPaymentNo(String paymentNo) {
         this.paymentNo = paymentNo;
+    }
+
+    public Long getItemNo() {
+        return itemNo;
+    }
+
+    public void setItemNo(Long itemNo) {
+        this.itemNo = itemNo;
     }
 
     public String getItemName() {

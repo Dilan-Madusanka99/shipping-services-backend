@@ -8,6 +8,7 @@ public class PaymentsDto {
 
     private Long id;
     private String paymentNo ;
+    private Long itemNo;
     private String itemName ;
     private String supplierName ;
     private String quantity ;
@@ -25,9 +26,10 @@ public class PaymentsDto {
     public PaymentsDto() {
     }
 
-    public PaymentsDto(Long id, String paymentNo, String itemName, String supplierName, String quantity, String qtyMeasure, String amount, Date paymentDate, String paymentStatus, byte[] paymentImage, String paymentImageName, String paymentImageType) {
+    public PaymentsDto(Long id, String paymentNo, Long itemNo, String itemName, String supplierName, String quantity, String qtyMeasure, String amount, Date paymentDate, String paymentStatus, byte[] paymentImage, String paymentImageName, String paymentImageType) {
         this.id = id;
         this.paymentNo = paymentNo;
+        this.itemNo = itemNo;
         this.itemName = itemName;
         this.supplierName = supplierName;
         this.quantity = quantity;
@@ -54,6 +56,14 @@ public class PaymentsDto {
 
     public void setPaymentNo(String paymentNo) {
         this.paymentNo = paymentNo;
+    }
+
+    public Long getItemNo() {
+        return itemNo;
+    }
+
+    public void setItemNo(Long itemNo) {
+        this.itemNo = itemNo;
     }
 
     public String getItemName() {
