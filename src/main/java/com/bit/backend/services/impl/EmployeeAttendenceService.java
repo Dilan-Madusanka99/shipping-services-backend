@@ -8,6 +8,8 @@ import com.bit.backend.repositories.EmployeeAttendenceRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,12 @@ public class EmployeeAttendenceService implements EmployeeAttendenceServiceI {
     public EmployeeAttendenceDto addEmployeeAttendenceEntity(EmployeeAttendenceDto employeeAttendenceDto) {
         try {
             System.out.println("***In Backend***");
+
+            // validation to check if the same Employee has the attenadance marked for same date
+
+
             EmployeeAttendenceEntity employeeAttendenceEntity = employeeAttendenceMapper.toEmployeeAttendenceEntity(employeeAttendenceDto);
+            employeeAttendenceEntity.setAttandenceDate(LocalDate.now());
             EmployeeAttendenceEntity savedItem =  employeeAttendenceRepository.save(employeeAttendenceEntity);
             EmployeeAttendenceDto savedDto = employeeAttendenceMapper.toEmployeeAttendenceDto(savedItem);
             return savedDto;

@@ -27,7 +27,7 @@ public class EmployeeAttendenceEntity {
     private String roles;
 
     @Column(name = "attandenceDate")
-    private LocalDate attandenceDate = LocalDate.now();
+    private LocalDate attandenceDate;
 
     public EmployeeAttendenceEntity() {
     }
