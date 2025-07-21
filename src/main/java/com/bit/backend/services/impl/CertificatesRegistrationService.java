@@ -29,11 +29,13 @@ public class CertificatesRegistrationService implements CertificatesRegistration
         try {
              System.out.println("***In Backend***");
 
-            Optional<CertificatesRegistrationEntity> optionalCertificatesRegistrationEntity = certificatesRegistrationRepository.findByCName(certificatesRegistrationDto.getcName());
-
-            if (optionalCertificatesRegistrationEntity.isPresent()) {
-                throw new AppException("Certificate Already Exists", HttpStatus.BAD_REQUEST);
-            }
+             // sid no & certificate name not be same
+//            Optional<CertificatesRegistrationEntity> optionalCertificatesRegistrationEntity1 = certificatesRegistrationRepository.findBySidNo(certificatesRegistrationDto.getSidNo());
+//            Optional<CertificatesRegistrationEntity> optionalCertificatesRegistrationEntity2 = certificatesRegistrationRepository.findByCName(certificatesRegistrationDto.getcName());
+//
+//            if (optionalCertificatesRegistrationEntity1.isPresent() && optionalCertificatesRegistrationEntity2.isPresent()) {
+//                    throw new AppException("Certificate Already Exists of this Seafarer", HttpStatus.BAD_REQUEST);
+//            }
 
             if (certificatesRegistrationDto.getSidNo() == null || certificatesRegistrationDto.getSidNo().isEmpty()) {
                 throw new AppException("Seafarer ID No Is Empty", HttpStatus.BAD_REQUEST);

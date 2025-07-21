@@ -5,11 +5,14 @@ import com.bit.backend.dtos.CommonDataListDto;
 import com.bit.backend.entities.CommonDataEntity;
 import com.bit.backend.entities.PrivilegeGroupAuth;
 import com.bit.backend.entities.PrivilegeGroupUser;
+import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.CommonDataMapper;
 import com.bit.backend.repositories.CommonDataRepository;
 import com.bit.backend.repositories.PrivilegeGroupAuthRepository;
 import com.bit.backend.repositories.PrivilegeGroupUserRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import com.bit.backend.services.CommonDataServiceI;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,15 +26,18 @@ public class CommonDataService implements CommonDataServiceI {
     private final CommonDataMapper commonDataMapper;
     private final PrivilegeGroupAuthRepository privilegeGroupAuthRepository;
     private final PrivilegeGroupUserRepository privilegeGroupUserRepository;
+    private final SeafarersRepository seafarersRepository;
 
     CommonDataService(CommonDataRepository commonDataRepository,
                       CommonDataMapper commonDataMapper,
                       PrivilegeGroupAuthRepository privilegeGroupAuthRepository,
-                      PrivilegeGroupUserRepository privilegeGroupUserRepository) {
+                      PrivilegeGroupUserRepository privilegeGroupUserRepository,
+                      SeafarersRepository seafarersRepository) {
         this.commonDataRepository = commonDataRepository;
         this.commonDataMapper = commonDataMapper;
         this.privilegeGroupAuthRepository = privilegeGroupAuthRepository;
         this.privilegeGroupUserRepository = privilegeGroupUserRepository;
+        this.seafarersRepository = seafarersRepository;
 
     }
 
@@ -122,8 +128,12 @@ public class CommonDataService implements CommonDataServiceI {
     }
 
 //    Dilan
-//    @Override
-//    public List<Map<String, Object>> getSeafarersRegisteredByMonth(int id) {
-//        return commonDataRepository.getSeafarersRegisteredByMonth(id);
-//    }
+    @Override
+    public List<Map<String, Object>> getSeafarersRegisteredByMonth() {
+        try {
+            return seafarersRepository.getSeafarersRegisteredByMonth();
+        } catch (Exception e) {
+            throw new AppException("Request failed with error while getting data to stat charts: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

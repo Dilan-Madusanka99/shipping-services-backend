@@ -62,13 +62,13 @@ public class CommonServiceController {
     }
 
 //    Dilan
-//    @GetMapping("/seafarers_registeredByMonth")
-//    public ResponseEntity<List<Map<String, Object>>> getSeafarersRegisteredByMonth() {
-//        try{
-//            List<Map<String, Object>> seafarersRegisteredByMonth = commonDataServiceI.getSeafarersRegisteredByMonth();
-//            return ResponseEntity.ok(seafarersRegisteredByMonth);
-//        } catch (Exception e) {
-//            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @GetMapping("/seafarers_registeredByMonth")
+    public ResponseEntity<List<Map<String, Object>>> getSeafarersRegisteredByMonth() {
+        try{
+            List<Map<String, Object>> seafarersRegisteredByMonth = commonDataServiceI.getSeafarersRegisteredByMonth();
+            return ResponseEntity.ok(seafarersRegisteredByMonth);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

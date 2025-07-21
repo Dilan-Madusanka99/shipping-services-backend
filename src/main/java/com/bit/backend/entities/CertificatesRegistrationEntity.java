@@ -30,9 +30,6 @@ public class CertificatesRegistrationEntity {
     @Column(name = "cExpiredDate")
     private Date cExpiredDate;
 
-    @Column(name = "verificationStatus")
-    private String verificationStatus;
-
     @Column(name = "certificate_image")
     private byte[] certificateImage;
 
@@ -45,7 +42,7 @@ public class CertificatesRegistrationEntity {
     public CertificatesRegistrationEntity() {
     }
 
-    public CertificatesRegistrationEntity(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, String verificationStatus, byte[] certificateImage, String certificateImageName, String certificateImageType) {
+    public CertificatesRegistrationEntity(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, byte[] certificateImage, String certificateImageName, String certificateImageType) {
         this.id = id;
         this.sidNo = sidNo;
         this.cName = cName;
@@ -53,7 +50,6 @@ public class CertificatesRegistrationEntity {
         this.cIssuedPlace = cIssuedPlace;
         this.cIssuedDate = cIssuedDate;
         this.cExpiredDate = cExpiredDate;
-        this.verificationStatus = verificationStatus;
         this.certificateImage = certificateImage;
         this.certificateImageName = certificateImageName;
         this.certificateImageType = certificateImageType;
@@ -113,14 +109,6 @@ public class CertificatesRegistrationEntity {
 
     public void setcExpiredDate(Date cExpiredDate) {
         this.cExpiredDate = cExpiredDate;
-    }
-
-    public String getVerificationStatus() {
-        return verificationStatus;
-    }
-
-    public void setVerificationStatus(String verificationStatus) {
-        this.verificationStatus = verificationStatus;
     }
 
     public byte[] getCertificateImage() {

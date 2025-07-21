@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface CertificatesRegistrationRepository extends JpaRepository<CertificatesRegistrationEntity, Long> {
     Optional<CertificatesRegistrationEntity> findByCName(String cName);
-
+    Optional<CertificatesRegistrationEntity> findBySidNo(String sidNo);
 }

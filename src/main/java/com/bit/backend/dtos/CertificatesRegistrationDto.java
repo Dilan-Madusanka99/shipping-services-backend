@@ -13,7 +13,6 @@ public class CertificatesRegistrationDto {
     private String cIssuedPlace;
     private Date cIssuedDate;
     private Date cExpiredDate;
-    private String verificationStatus;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private byte[] certificateImage;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -24,7 +23,7 @@ public class CertificatesRegistrationDto {
     public CertificatesRegistrationDto() {
     }
 
-    public CertificatesRegistrationDto(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, String verificationStatus, byte[] certificateImage, String certificateImageName, String certificateImageType) {
+    public CertificatesRegistrationDto(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, byte[] certificateImage, String certificateImageName, String certificateImageType) {
         this.id = id;
         this.sidNo = sidNo;
         this.cName = cName;
@@ -32,7 +31,6 @@ public class CertificatesRegistrationDto {
         this.cIssuedPlace = cIssuedPlace;
         this.cIssuedDate = cIssuedDate;
         this.cExpiredDate = cExpiredDate;
-        this.verificationStatus = verificationStatus;
         this.certificateImage = certificateImage;
         this.certificateImageName = certificateImageName;
         this.certificateImageType = certificateImageType;
@@ -92,14 +90,6 @@ public class CertificatesRegistrationDto {
 
     public void setcExpiredDate(Date cExpiredDate) {
         this.cExpiredDate = cExpiredDate;
-    }
-
-    public String getVerificationStatus() {
-        return verificationStatus;
-    }
-
-    public void setVerificationStatus(String verificationStatus) {
-        this.verificationStatus = verificationStatus;
     }
 
     public byte[] getCertificateImage() {
