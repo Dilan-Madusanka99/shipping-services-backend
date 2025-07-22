@@ -61,7 +61,7 @@ public class CommonServiceController {
         return savedData;
     }
 
-//    Dilan
+//    chart seafarer
     @GetMapping("/seafarers_registeredByMonth")
     public ResponseEntity<List<Map<String, Object>>> getSeafarersRegisteredByMonth() {
         try{
