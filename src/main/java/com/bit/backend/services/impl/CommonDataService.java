@@ -127,7 +127,7 @@ public class CommonDataService implements CommonDataServiceI {
         return commonDataListDto;
     }
 
-//    Dilan
+// charts
     @Override
     public List<Map<String, Object>> getSeafarersRegisteredByMonth() {
         try {
