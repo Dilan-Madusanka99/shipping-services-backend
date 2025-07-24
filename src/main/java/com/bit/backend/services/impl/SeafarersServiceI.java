@@ -8,7 +8,6 @@ public interface SeafarersServiceI {
 
     SeafarersDto addSeafarersEntity(SeafarersDto seafarersDto);
     List<SeafarersDto> getData();
-//    List<SeafarersDto> getseafarersRegisteredByMonth();
     SeafarersDto updateSeafarers(long id, SeafarersDto seafarersDto);
     SeafarersDto deleteSeafarers(long id);
 }
