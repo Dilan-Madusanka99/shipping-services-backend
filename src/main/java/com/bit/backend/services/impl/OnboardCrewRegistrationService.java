@@ -35,7 +35,7 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
             }
 
             if (onboardCrewRegistrationDto.getSidNo() == null || onboardCrewRegistrationDto.getSidNo().isEmpty()) {
-                throw new AppException("Password Is Empty", HttpStatus.BAD_REQUEST);
+                throw new AppException("SID No is Empty", HttpStatus.BAD_REQUEST);
             }
 
             OnboardCrewRegistrationEntity onboardCrewRegistrationEntity = onboardCrewRegistrationMapper.toOnboardCrewRegistrationEntity(onboardCrewRegistrationDto);

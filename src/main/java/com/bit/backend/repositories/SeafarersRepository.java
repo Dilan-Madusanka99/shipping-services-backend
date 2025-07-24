@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface SeafarersRepository extends JpaRepository<SeafarersEntity, Long> {
     Optional<SeafarersEntity> findBySidNo(String sidNo);
-    @Query(nativeQuery = true, value = "select DATE_FORMAT(applied_date, '%Y-%m') as month, count(*) as cnt from ems.seafarers_registration group by month")
+
+    @Query(nativeQuery = true, value = "select DATE_FORMAT(applied_date, '%Y-%m') as month, count(*) as cnt from ems.seafarers_registration group by month order by month")
     List<Map<String, Object>> getSeafarersRegisteredByMonth();
 }

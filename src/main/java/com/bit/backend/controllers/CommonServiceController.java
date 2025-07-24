@@ -61,12 +61,23 @@ public class CommonServiceController {
         return savedData;
     }
 
-        // charts
+    // seafarer chart
     @GetMapping("/seafarers_registeredByMonth")
     public ResponseEntity<List<Map<String, Object>>> getSeafarersRegisteredByMonth() {
         try{
             List<Map<String, Object>> seafarersRegisteredByMonth = commonDataServiceI.getSeafarersRegisteredByMonth();
             return ResponseEntity.ok(seafarersRegisteredByMonth);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // vessel chart
+    @GetMapping("/vessel_RegisteredByType")
+    public ResponseEntity<List<Map<String, Object>>> getVesselRegisteredByType() {
+        try{
+            List<Map<String, Object>> vesselRegisteredByType = commonDataServiceI.getVesselRegisteredByType();
+            return ResponseEntity.ok(vesselRegisteredByType);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
