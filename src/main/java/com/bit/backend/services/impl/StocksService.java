@@ -1,11 +1,13 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.StocksDto;
+import com.bit.backend.entities.ItemsRegistrationEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.entities.StocksEntity;
 import com.bit.backend.entities.SupplierRegistrationEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.StocksMapper;
+import com.bit.backend.repositories.ItemsRegistrationRepository;
 import com.bit.backend.repositories.StocksRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,12 @@ public class StocksService implements StocksServiceI{
 
     private final StocksRepository stocksRepository;
     private final StocksMapper stocksMapper;
+    private final ItemsRegistrationRepository itemsRegistrationRepository;
 
-    public StocksService(StocksRepository stocksRepository, StocksMapper stocksMapper) {
+    public StocksService(StocksRepository stocksRepository, StocksMapper stocksMapper, ItemsRegistrationRepository itemsRegistrationRepository) {
         this.stocksRepository = stocksRepository;
         this.stocksMapper = stocksMapper;
+        this.itemsRegistrationRepository = itemsRegistrationRepository;
     }
 
     @Override
