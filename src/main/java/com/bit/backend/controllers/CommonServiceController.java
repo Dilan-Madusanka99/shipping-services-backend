@@ -82,4 +82,14 @@ public class CommonServiceController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    // Employee attendance chart
+    @GetMapping("/employee_AttendanceByMonth")
+    public ResponseEntity<List<Map<String, Object>>> getEmployeeAttendanceByMonth() {
+        try{
+            List<Map<String, Object>> employeeAttendanceByMonth = commonDataServiceI.getEmployeeAttendanceByMonth();
+            return ResponseEntity.ok(employeeAttendanceByMonth);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

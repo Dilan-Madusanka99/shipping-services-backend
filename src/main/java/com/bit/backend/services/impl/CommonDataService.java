@@ -25,19 +25,21 @@ public class CommonDataService implements CommonDataServiceI {
     private final PrivilegeGroupUserRepository privilegeGroupUserRepository;
     private final SeafarersRepository seafarersRepository;
     private final VesselRegistrationRepository vesselRegistrationRepository;
+    private final EmployeeAttendenceRepository employeeAttendenceRepository;
 
     CommonDataService(CommonDataRepository commonDataRepository,
                       CommonDataMapper commonDataMapper,
                       PrivilegeGroupAuthRepository privilegeGroupAuthRepository,
                       PrivilegeGroupUserRepository privilegeGroupUserRepository,
                       SeafarersRepository seafarersRepository,
-                      VesselRegistrationRepository vesselRegistrationRepository) {
+                      VesselRegistrationRepository vesselRegistrationRepository, EmployeeAttendenceRepository employeeAttendenceRepository) {
         this.commonDataRepository = commonDataRepository;
         this.commonDataMapper = commonDataMapper;
         this.privilegeGroupAuthRepository = privilegeGroupAuthRepository;
         this.privilegeGroupUserRepository = privilegeGroupUserRepository;
         this.seafarersRepository = seafarersRepository;
         this.vesselRegistrationRepository = vesselRegistrationRepository;
+        this.employeeAttendenceRepository = employeeAttendenceRepository;
     }
 
     @Override
@@ -141,6 +143,16 @@ public class CommonDataService implements CommonDataServiceI {
     public List<Map<String, Object>> getVesselRegisteredByType() {
         try {
             return vesselRegistrationRepository.getVesselRegisteredByType();
+        } catch (Exception e) {
+            throw new AppException("Request failed with error while getting data to stat charts: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Employee attendance charts
+    @Override
+    public List<Map<String, Object>> getEmployeeAttendanceByMonth() {
+        try {
+            return employeeAttendenceRepository.getEmployeeAttendanceByMonth();
         } catch (Exception e) {
             throw new AppException("Request failed with error while getting data to stat charts: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

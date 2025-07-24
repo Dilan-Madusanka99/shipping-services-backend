@@ -17,16 +17,16 @@ public class EmployeeAttendenceEntity {
     @Column(name = "users")
     private String users;
 
-    @Column(name = "attendenceStatus")
+    @Column(name = "attendence_Status")
     private String attendenceStatus;
 
-    @Column(name = "userName")
+    @Column(name = "user_Name")
     private String userName;
 
     @Column(name = "roles")
     private String roles;
 
-    @Column(name = "attandenceDate")
+    @Column(name = "attandence_Date")
     private LocalDate attandenceDate;
 
     public EmployeeAttendenceEntity() {

@@ -11,7 +11,8 @@ import java.util.Optional;
 
 public interface VesselRegistrationRepository extends JpaRepository<VesselRegistrationEntity, Long> {
     Optional<VesselRegistrationEntity> findByImoNo(String imoNo);
-    @Query(nativeQuery = true, value = "select DATE_FORMAT(vessel_Type, '%Y-%m') as type, count(*) as cnt from ems.vessel_registration group by vessel_type order by vessel_type")
+
+    @Query(nativeQuery = true, value = "select vessel_Type as type, count(*) as cnt from ems.vessel_registration group by vessel_type order by vessel_type")
     List<Map<String, Object>> getVesselRegisteredByType();
 }
 

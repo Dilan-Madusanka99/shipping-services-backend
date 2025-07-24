@@ -27,10 +27,4 @@ public interface CommonDataRepository extends JpaRepository<CommonDataEntity, Lo
     @Query(nativeQuery = true, value = "SELECT id, description FROM get_auth_group_user_details WHERE auth_group_id = :groupId")
     List<CommonDataEntity> getAssignedUsersByGroupId(int groupId);
 
-
-//    Dilan
-//    List<CommonDataEntity> getSeafarersRegisteredByMonth (int id);
-//
-//    @Query("SELECT taskName as name, count(taskName) as cnt FROM CommonDataEntity group by month")
-//    List<Map<String, Object>> getSeafarersRegisteredByMonth();
 }
