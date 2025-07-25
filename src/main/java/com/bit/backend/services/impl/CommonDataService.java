@@ -26,13 +26,17 @@ public class CommonDataService implements CommonDataServiceI {
     private final SeafarersRepository seafarersRepository;
     private final VesselRegistrationRepository vesselRegistrationRepository;
     private final EmployeeAttendenceRepository employeeAttendenceRepository;
+    private final PaymentsRepository paymentsRepository;
 
     CommonDataService(CommonDataRepository commonDataRepository,
                       CommonDataMapper commonDataMapper,
                       PrivilegeGroupAuthRepository privilegeGroupAuthRepository,
                       PrivilegeGroupUserRepository privilegeGroupUserRepository,
                       SeafarersRepository seafarersRepository,
-                      VesselRegistrationRepository vesselRegistrationRepository, EmployeeAttendenceRepository employeeAttendenceRepository) {
+                      VesselRegistrationRepository vesselRegistrationRepository,
+                      EmployeeAttendenceRepository employeeAttendenceRepository,
+                      PaymentsRepository paymentsRepository)
+    {
         this.commonDataRepository = commonDataRepository;
         this.commonDataMapper = commonDataMapper;
         this.privilegeGroupAuthRepository = privilegeGroupAuthRepository;
@@ -40,6 +44,7 @@ public class CommonDataService implements CommonDataServiceI {
         this.seafarersRepository = seafarersRepository;
         this.vesselRegistrationRepository = vesselRegistrationRepository;
         this.employeeAttendenceRepository = employeeAttendenceRepository;
+        this.paymentsRepository = paymentsRepository;
     }
 
     @Override
@@ -153,6 +158,16 @@ public class CommonDataService implements CommonDataServiceI {
     public List<Map<String, Object>> getEmployeeAttendanceByMonth() {
         try {
             return employeeAttendenceRepository.getEmployeeAttendanceByMonth();
+        } catch (Exception e) {
+            throw new AppException("Request failed with error while getting data to stat charts: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // payments charts
+    @Override
+    public List<Map<String, Object>> getPaymentsByMonth() {
+        try {
+            return paymentsRepository.getPaymentsByMonth();
         } catch (Exception e) {
             throw new AppException("Request failed with error while getting data to stat charts: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

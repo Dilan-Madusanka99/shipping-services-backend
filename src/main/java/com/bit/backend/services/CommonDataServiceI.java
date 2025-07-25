@@ -16,4 +16,5 @@ public interface CommonDataServiceI {
     List<Map<String, Object>> getSeafarersRegisteredByMonth();
     List<Map<String, Object>> getVesselRegisteredByType();
     List<Map<String, Object>> getEmployeeAttendanceByMonth();
+    List<Map<String, Object>> getPaymentsByMonth();
 }
