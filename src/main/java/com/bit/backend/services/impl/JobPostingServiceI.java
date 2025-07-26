@@ -10,4 +10,5 @@ public interface JobPostingServiceI {
     List<JobPostingDto> getData();
     JobPostingDto updateJobPosting(long id, JobPostingDto jobPostingDto);
     JobPostingDto deleteJobPosting(long id);
+    List<JobPostingDto> getOpenJobs();
 }
