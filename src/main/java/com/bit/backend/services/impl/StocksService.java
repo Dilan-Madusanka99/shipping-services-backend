@@ -31,6 +31,11 @@ public class StocksService implements StocksServiceI{
     @Override
     public StocksDto addStocksEntity(StocksDto stocksDto) {
         try {
+            Optional<StocksEntity> oStocksEntity = stocksRepository.findByitemNo(stocksDto.getItemNo());
+
+            if (oStocksEntity.isPresent()) {
+                throw new AppException("Item No Already Exists", HttpStatus.BAD_REQUEST);
+            }
 
             if (stocksDto.getQuantity() == null || stocksDto.getQuantity().isEmpty()) {
                 throw new AppException("Quantity Is Empty", HttpStatus.BAD_REQUEST);
