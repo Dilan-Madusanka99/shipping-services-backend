@@ -32,11 +32,11 @@ public class LoginService implements LoginServiceI {
         try {
             System.out.println("***In Backend***");
 
-            Optional<LoginEntity> newLoginEntity = loginRepository.findByUserId(loginDto.getUserId());
-
-            if (newLoginEntity.isPresent()) {
-                throw new AppException("Login already exist for the employee", HttpStatus.BAD_REQUEST);
-            }
+//            Optional<LoginEntity> newLoginEntity = loginRepository.findByUserId(loginDto.getUserId());
+//
+//            if (newLoginEntity.isPresent()) {
+//                throw new AppException("Login already exist for the employee", HttpStatus.BAD_REQUEST);
+//            }
 
             Optional<User> oUser = userRepository.findByLogin(loginDto.getUserName());
 
@@ -51,15 +51,12 @@ public class LoginService implements LoginServiceI {
             }
 
             // not null
-            if (loginDto.getUsers() == null || loginDto.getUsers().isEmpty()) {
-                throw new AppException("User Is Empty", HttpStatus.BAD_REQUEST);
-            }
-            if (loginDto.getUserName() == null || loginDto.getUserName().isEmpty()) {
-                throw new AppException("User Name Is Empty", HttpStatus.BAD_REQUEST);
-            }
-            if (loginDto.getPassword() == null || loginDto.getPassword().isEmpty()) {
-                throw new AppException("Password Is Empty", HttpStatus.BAD_REQUEST);
-            }
+//            if (loginDto.getUsers() == null || loginDto.getUsers().isEmpty()) {
+//                throw new AppException("User Is Empty", HttpStatus.BAD_REQUEST);
+//            }
+//            if (loginDto.getUserName() == null || loginDto.getUserName().isEmpty()) {
+//                throw new AppException("User Name Is Empty", HttpStatus.BAD_REQUEST);
+//            }
 
             LoginEntity loginEntity = loginMapper.toLoginEntity(loginDto);
             LoginEntity savedItem =  loginRepository.save(loginEntity);
