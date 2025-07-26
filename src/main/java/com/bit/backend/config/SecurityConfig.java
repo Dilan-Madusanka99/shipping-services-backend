@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // to handle csrf so you don't have to worry about session id
                 .authorizeHttpRequests((request) ->
                         request.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/job_posting/open").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

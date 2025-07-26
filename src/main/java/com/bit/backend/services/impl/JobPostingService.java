@@ -90,4 +90,15 @@ public class JobPostingService implements JobPostingServiceI {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public List<JobPostingDto> getOpenJobs() {
+        try {
+            List<JobPostingEntity>  jobPostingEntityList = jobPostingRepository.findByJobStatus("Open");
+            List<JobPostingDto> jobPostingDtoList = jobPostingMapper.toJobPostingDtoList(jobPostingEntityList);
+            return jobPostingDtoList;
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

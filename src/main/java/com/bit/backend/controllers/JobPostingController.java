@@ -73,4 +73,15 @@ public class JobPostingController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/job_posting/open")
+    public ResponseEntity<List<JobPostingDto>> getOpenJobs() {
+
+        try {
+            List<JobPostingDto> jobPostingDtoList = jobPostingServiceI.getOpenJobs();
+            return ResponseEntity.ok(jobPostingDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
