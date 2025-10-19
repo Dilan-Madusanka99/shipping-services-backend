@@ -30,7 +30,7 @@ public class LoginController {
             newPassword = new String(loginDto.getPassword());
             loginDto.setPassword(null);
             LoginDto loginDtoResponse = loginServiceI.addLoginEntity(loginDto);
-            SignUpDto signUpDto = new SignUpDto(loginDto.getFirstName(), loginDto.getLastName(), loginDto.getUserName(), newPassword.toCharArray(), loginDto.getRole(), loginDtoResponse.getId());
+            SignUpDto signUpDto = new SignUpDto(loginDto.getFirstName(), loginDto.getLastName(), null, loginDto.getUserName(), newPassword.toCharArray(), loginDto.getRole(), loginDtoResponse.getId());
             UserDto user = userServiceI.register(signUpDto);
 
             if (user.getId() != null) {

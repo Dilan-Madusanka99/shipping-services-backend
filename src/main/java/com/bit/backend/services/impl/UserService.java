@@ -54,6 +54,7 @@ public class UserService implements UserServiceI {
         User user = userMapper.signUpToUser(signUpDto);
 
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
+        user.setRole("SEAFARER"); /* only seafarers can register through the system*/
         User savedUser = userRepository.save(user);
         return userMapper.toUserDto(savedUser);
     }

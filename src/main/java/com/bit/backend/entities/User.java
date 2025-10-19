@@ -9,13 +9,14 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String login, String password, String role) {
+    public User(Long id, String firstName, String lastName, String sid, String login, String password, String role) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;
         this.password = password;
         this.role = role;
+        this.sid = sid;
     }
 
     @Id
@@ -30,6 +31,9 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    @Column(name = "sid", nullable = false)
+    private String sid;
 
     @Column(nullable = false)
     private String login;
@@ -94,5 +98,13 @@ public class User {
 
     public void setLoginId(Long loginId) {
         this.loginId = loginId;
+    }
+
+    public String getSid() {
+        return sid;
+    }
+
+    public void setSid(String sid) {
+        this.sid = sid;
     }
 }
