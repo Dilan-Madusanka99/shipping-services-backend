@@ -48,6 +48,17 @@ public class SeafarersController {
         }
     }
 
+    /* Get seafarer details related to SID */
+    @GetMapping("/seafarers_registration/{sid}")
+    public ResponseEntity<SeafarersDto> getSeafarerData(@PathVariable String sid) {
+        try {
+            SeafarersDto seafarersDto = seafarersServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(seafarersDto);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/seafarers_registration/{id}")
     public ResponseEntity<SeafarersDto> updateSeafarers(@PathVariable Long id,
                                                       @RequestPart ("seafarersForm") SeafarersDto seafarersDto,
