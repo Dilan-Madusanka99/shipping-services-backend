@@ -1,6 +1,7 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.OtherDetailsRegistrationDto;
+import com.bit.backend.dtos.SeafarersDto;
 import com.bit.backend.entities.OtherDetailsRegistrationEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
@@ -94,6 +95,20 @@ public class OtherDetailsRegistrationService implements OtherDetailsRegistration
             }
 
             otherDetailsRegistrationRepository.deleteById(id);
+            return otherDetailsRegistrationMapper.toOtherDetailsRegistrationDto(optionalOtherDetailsRegistrationEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public OtherDetailsRegistrationDto getSeafarerData(String sid) {
+        try {
+            Optional<OtherDetailsRegistrationEntity> optionalOtherDetailsRegistrationEntity = otherDetailsRegistrationRepository.findBySidNo(sid);
+
+            if (!optionalOtherDetailsRegistrationEntity.isPresent()) {
+                throw new AppException("Other Details Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
             return otherDetailsRegistrationMapper.toOtherDetailsRegistrationDto(optionalOtherDetailsRegistrationEntity.get());
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);

@@ -1,6 +1,7 @@
 package com.bit.backend.controllers;
 
 import com.bit.backend.dtos.OtherDetailsRegistrationDto;
+import com.bit.backend.dtos.SeafarersDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.OtherDetailsRegistrationServiceI;
 import org.springframework.http.HttpStatus;
@@ -56,6 +57,17 @@ public class OtherDetailsRegistrationController {
         try {
             List<OtherDetailsRegistrationDto> otherDetailsRegistrationDtoList = otherDetailsRegistrationServiceI.getData();
             return ResponseEntity.ok(otherDetailsRegistrationDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /* Get seafarer other details related to SID */
+    @GetMapping("/other_details_registration/{sid}")
+    public ResponseEntity<OtherDetailsRegistrationDto> getSeafarerData(@PathVariable String sid) {
+        try {
+            OtherDetailsRegistrationDto otherDetailsRegistrationDto = otherDetailsRegistrationServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(otherDetailsRegistrationDto);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
