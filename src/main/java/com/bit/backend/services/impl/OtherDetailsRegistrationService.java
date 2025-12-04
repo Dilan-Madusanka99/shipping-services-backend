@@ -7,6 +7,7 @@ import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.OtherDetailsRegistrationMapper;
 import com.bit.backend.repositories.OtherDetailsRegistrationRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,13 @@ public class OtherDetailsRegistrationService implements OtherDetailsRegistration
 
     private final OtherDetailsRegistrationRepository otherDetailsRegistrationRepository;
     private final OtherDetailsRegistrationMapper otherDetailsRegistrationMapper;
+    private final SeafarersRepository seafarersRepository;
 
-    public OtherDetailsRegistrationService(OtherDetailsRegistrationRepository otherDetailsRegistrationRepository, OtherDetailsRegistrationMapper otherDetailsRegistrationMapper) {
+    public OtherDetailsRegistrationService(OtherDetailsRegistrationRepository otherDetailsRegistrationRepository, OtherDetailsRegistrationMapper otherDetailsRegistrationMapper, SeafarersRepository seafarersRepository) {
         this.otherDetailsRegistrationRepository = otherDetailsRegistrationRepository;
         this.otherDetailsRegistrationMapper = otherDetailsRegistrationMapper;
+        this.seafarersRepository = seafarersRepository;
     }
-
 
     @Override
     public OtherDetailsRegistrationDto addOtherDetailsRegistrationEntity(OtherDetailsRegistrationDto otherDetailsRegistrationDto) {
