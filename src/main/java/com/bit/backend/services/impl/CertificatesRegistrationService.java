@@ -1,11 +1,14 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.CertificatesRegistrationDto;
+import com.bit.backend.dtos.OtherDetailsRegistrationDto;
 import com.bit.backend.entities.CertificatesRegistrationEntity;
+import com.bit.backend.entities.OtherDetailsRegistrationEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.CertificatesRegistrationMapper;
 import com.bit.backend.repositories.CertificatesRegistrationRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -13,29 +16,30 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CertificatesRegistrationService implements CertificatesRegistrationServiceI{
+public class CertificatesRegistrationService implements CertificatesRegistrationServiceI {
 
     private final CertificatesRegistrationRepository certificatesRegistrationRepository;
     private final CertificatesRegistrationMapper certificatesRegistrationMapper;
+    private final SeafarersRepository seafarersRepository;
 
-    public CertificatesRegistrationService(CertificatesRegistrationRepository certificatesRegistrationRepository, CertificatesRegistrationMapper certificatesRegistrationMapper) {
+    public CertificatesRegistrationService(CertificatesRegistrationRepository certificatesRegistrationRepository, CertificatesRegistrationMapper certificatesRegistrationMapper, SeafarersRepository seafarersRepository) {
         this.certificatesRegistrationRepository = certificatesRegistrationRepository;
         this.certificatesRegistrationMapper = certificatesRegistrationMapper;
+        this.seafarersRepository = seafarersRepository;
     }
-
 
     @Override
     public CertificatesRegistrationDto addCertificatesRegistrationEntity(CertificatesRegistrationDto certificatesRegistrationDto) {
         try {
-             System.out.println("***In Backend***");
+            System.out.println("***In Backend***");
 
-             // sid no & certificate name not be same
+            // sid no & certificate name not be same
             Optional<List<CertificatesRegistrationEntity>> optionalCertificatesRegistrationEntity1 = certificatesRegistrationRepository.findBysidNo(certificatesRegistrationDto.getSidNo());
             Optional<List<CertificatesRegistrationEntity>> optionalCertificatesRegistrationEntity2 = certificatesRegistrationRepository.findBycName(certificatesRegistrationDto.getcName());
 
             if (optionalCertificatesRegistrationEntity1.isPresent() && optionalCertificatesRegistrationEntity1.get().size() > 0
                     && optionalCertificatesRegistrationEntity2.isPresent() && optionalCertificatesRegistrationEntity2.get().size() > 0) {
-                    throw new AppException("Certificate Already Exists of this Seafarer", HttpStatus.BAD_REQUEST);
+                throw new AppException("Certificate Already Exists of this Seafarer", HttpStatus.BAD_REQUEST);
             }
 
             if (certificatesRegistrationDto.getSidNo() == null || certificatesRegistrationDto.getSidNo().isEmpty()) {
@@ -50,7 +54,7 @@ public class CertificatesRegistrationService implements CertificatesRegistration
             }
 
             CertificatesRegistrationEntity certificatesRegistrationEntity = certificatesRegistrationMapper.toCertificatesRegistrationEntity(certificatesRegistrationDto);
-            CertificatesRegistrationEntity savedItem =  certificatesRegistrationRepository.save(certificatesRegistrationEntity);
+            CertificatesRegistrationEntity savedItem = certificatesRegistrationRepository.save(certificatesRegistrationEntity);
             CertificatesRegistrationDto savedDto = certificatesRegistrationMapper.toCertificatesRegistrationDto(savedItem);
             return savedDto;
         } catch (Exception e) {
@@ -62,7 +66,7 @@ public class CertificatesRegistrationService implements CertificatesRegistration
     public List<CertificatesRegistrationDto> getData() {
 
         try {
-            List<CertificatesRegistrationEntity>  certificatesRegistrationEntityList = certificatesRegistrationRepository.findAll();
+            List<CertificatesRegistrationEntity> certificatesRegistrationEntityList = certificatesRegistrationRepository.findAll();
             List<CertificatesRegistrationDto> certificatesRegistrationDtoList = certificatesRegistrationMapper.toCertificatesRegistrationDtoList(certificatesRegistrationEntityList);
             return certificatesRegistrationDtoList;
         } catch (Exception e) {
@@ -109,4 +113,28 @@ public class CertificatesRegistrationService implements CertificatesRegistration
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public CertificatesRegistrationDto getSeafarerData(String sid) {
+        try {
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarer Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<List<CertificatesRegistrationEntity>> optionalCertificatesRegistrationEntity = certificatesRegistrationRepository.findBySidNo(seafarersEntity.getId().toString());
+
+            if (!optionalCertificatesRegistrationEntity.isPresent()) {
+                throw new AppException("Certificate Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            return certificatesRegistrationMapper.toCertificatesRegistrationDto((CertificatesRegistrationEntity) optionalCertificatesRegistrationEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

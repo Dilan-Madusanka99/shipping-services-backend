@@ -106,7 +106,16 @@ public class OtherDetailsRegistrationService implements OtherDetailsRegistration
     @Override
     public OtherDetailsRegistrationDto getSeafarerData(String sid) {
         try {
-            Optional<OtherDetailsRegistrationEntity> optionalOtherDetailsRegistrationEntity = otherDetailsRegistrationRepository.findBySidNo(sid);
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarer Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<OtherDetailsRegistrationEntity> optionalOtherDetailsRegistrationEntity = otherDetailsRegistrationRepository.findBySidNo(seafarersEntity.getId().toString());
 
             if (!optionalOtherDetailsRegistrationEntity.isPresent()) {
                 throw new AppException("Other Details Registration Does Not Exists", HttpStatus.BAD_REQUEST);

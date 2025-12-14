@@ -1,6 +1,7 @@
 package com.bit.backend.repositories;
 
 import com.bit.backend.entities.CertificatesRegistrationEntity;
+import com.bit.backend.entities.OtherDetailsRegistrationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface CertificatesRegistrationRepository extends JpaRepository<Certif
     Optional<List<CertificatesRegistrationEntity>> findBycName(String cName);
     Optional<List<CertificatesRegistrationEntity>> findBysidNo(String sidNo);
     List<CertificatesRegistrationEntity> findBycNo(String cNo);
+    Optional<List<CertificatesRegistrationEntity>> findBySidNo(String sidNo);
 }

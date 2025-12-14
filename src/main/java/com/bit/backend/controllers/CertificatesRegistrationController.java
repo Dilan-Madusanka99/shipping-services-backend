@@ -1,6 +1,8 @@
 package com.bit.backend.controllers;
 
 import com.bit.backend.dtos.CertificatesRegistrationDto;
+import com.bit.backend.dtos.OtherDetailsRegistrationDto;
+import com.bit.backend.dtos.SeafarersDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.CertificatesRegistrationServiceI;
 import org.springframework.http.HttpStatus;
@@ -40,6 +42,17 @@ public class CertificatesRegistrationController {
         try {
             List<CertificatesRegistrationDto> certificatesRegistrationDtoList = certificatesRegistrationServiceI.getData();
             return ResponseEntity.ok(certificatesRegistrationDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /* Get seafarer details related to SID */
+    @GetMapping("/certificates_registration/{sid}")
+    public ResponseEntity<CertificatesRegistrationDto> getSeafarerData(@PathVariable String sid) {
+        try {
+            CertificatesRegistrationDto certificatesRegistrationDto = certificatesRegistrationServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(certificatesRegistrationDto);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
