@@ -1,11 +1,14 @@
 package com.bit.backend.services.impl;
 
+import com.bit.backend.dtos.OtherDetailsRegistrationDto;
 import com.bit.backend.dtos.SeaServicesDto;
+import com.bit.backend.entities.OtherDetailsRegistrationEntity;
 import com.bit.backend.entities.SeaServicesEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.SeaServicesMapper;
 import com.bit.backend.repositories.SeaServicesRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +20,13 @@ public class SeaServicesService implements SeaServicesServiceI {
 
     private final SeaServicesRepository seaServicesRepository;
     private final SeaServicesMapper seaServicesMapper;
+    private final SeafarersRepository seafarersRepository;
 
 
-    public SeaServicesService(SeaServicesRepository seaServicesRepository, SeaServicesMapper seaServicesMapper) {
+    public SeaServicesService(SeaServicesRepository seaServicesRepository, SeaServicesMapper seaServicesMapper, SeafarersRepository seafarersRepository) {
         this.seaServicesRepository = seaServicesRepository;
         this.seaServicesMapper = seaServicesMapper;
+        this.seafarersRepository = seafarersRepository;
     }
 
     @Override
@@ -87,6 +92,29 @@ public class SeaServicesService implements SeaServicesServiceI {
             }
 
             seaServicesRepository.deleteById(id);
+            return seaServicesMapper.toSeaServicesDto(optionalSeaServicesEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public SeaServicesDto getSeafarerData(String sid) {
+        try {
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<SeaServicesEntity> optionalSeaServicesEntity = seaServicesRepository.findBySidNo(seafarersEntity.getId().toString());
+
+            if (!optionalSeaServicesEntity.isPresent()) {
+                throw new AppException("Sea Service Details Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
             return seaServicesMapper.toSeaServicesDto(optionalSeaServicesEntity.get());
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);

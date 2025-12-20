@@ -1,5 +1,6 @@
 package com.bit.backend.controllers;
 
+import com.bit.backend.dtos.OtherDetailsRegistrationDto;
 import com.bit.backend.dtos.SeaServicesDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.SeaServicesServiceI;
@@ -34,6 +35,17 @@ public class SeaServicesController {
         try {
             List<SeaServicesDto> seaServicesDtoList = seaServicesServiceI.getData();
             return ResponseEntity.ok(seaServicesDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /* Get seafarer Sea Service details related to SID */
+    @GetMapping("/seaServices/{sid}")
+    public ResponseEntity<SeaServicesDto> getSeafarerData(@PathVariable String sid) {
+        try {
+            SeaServicesDto seaServicesDto = seaServicesServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(seaServicesDto);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
