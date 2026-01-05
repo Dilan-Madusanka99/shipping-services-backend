@@ -49,10 +49,10 @@ public class CertificatesRegistrationController {
 
     /* Get seafarer details related to SID */
     @GetMapping("/certificates_registration/{sid}")
-    public ResponseEntity<CertificatesRegistrationDto> getSeafarerData(@PathVariable String sid) {
+    public ResponseEntity<List<CertificatesRegistrationDto>> getSeafarerData(@PathVariable String sid) {
         try {
-            CertificatesRegistrationDto certificatesRegistrationDto = certificatesRegistrationServiceI.getSeafarerData(sid);
-            return ResponseEntity.ok(certificatesRegistrationDto);
+            List<CertificatesRegistrationDto> certificatesRegistrationDtoList = certificatesRegistrationServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(certificatesRegistrationDtoList);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

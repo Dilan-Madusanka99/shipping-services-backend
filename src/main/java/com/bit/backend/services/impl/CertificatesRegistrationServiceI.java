@@ -13,5 +13,5 @@ public interface CertificatesRegistrationServiceI {
     List<CertificatesRegistrationDto> getData();
     CertificatesRegistrationDto updateCertificatesRegistration(long id, CertificatesRegistrationDto certificatesRegistrationDto);
     CertificatesRegistrationDto deleteCertificatesRegistration(long id);
-    CertificatesRegistrationDto getSeafarerData(String sid);
+    List<CertificatesRegistrationDto> getSeafarerData(String sid);
 }
