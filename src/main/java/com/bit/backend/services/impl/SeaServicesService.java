@@ -99,7 +99,7 @@ public class SeaServicesService implements SeaServicesServiceI {
     }
 
     @Override
-    public SeaServicesDto getSeafarerData(String sid) {
+    public List<SeaServicesDto> getSeafarerData(String sid) {
         try {
 
             Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
@@ -110,12 +110,12 @@ public class SeaServicesService implements SeaServicesServiceI {
 
             SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
 
-            Optional<SeaServicesEntity> optionalSeaServicesEntity = seaServicesRepository.findBySidNo(seafarersEntity.getId().toString());
+            Optional<List<SeaServicesEntity>> optionalSeaServicesEntity = seaServicesRepository.findBySidNo(seafarersEntity.getId().toString());
 
             if (!optionalSeaServicesEntity.isPresent()) {
                 throw new AppException("Sea Service Details Does Not Exists", HttpStatus.BAD_REQUEST);
             }
-            return seaServicesMapper.toSeaServicesDto(optionalSeaServicesEntity.get());
+            return seaServicesMapper.toSeaServicesDtoList(optionalSeaServicesEntity.get());
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

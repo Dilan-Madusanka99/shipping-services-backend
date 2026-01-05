@@ -42,10 +42,10 @@ public class SeaServicesController {
 
     /* Get seafarer Sea Service details related to SID */
     @GetMapping("/seaServices/{sid}")
-    public ResponseEntity<SeaServicesDto> getSeafarerData(@PathVariable String sid) {
+    public ResponseEntity<List<SeaServicesDto>> getSeafarerData(@PathVariable String sid) {
         try {
-            SeaServicesDto seaServicesDto = seaServicesServiceI.getSeafarerData(sid);
-            return ResponseEntity.ok(seaServicesDto);
+            List<SeaServicesDto> seaServicesDtoList = seaServicesServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(seaServicesDtoList);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
