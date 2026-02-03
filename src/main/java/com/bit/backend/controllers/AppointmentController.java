@@ -39,6 +39,17 @@ public class AppointmentController {
         }
     }
 
+        /* Get seafarer appointment details related to SID */
+    @GetMapping("/appointment/{sid}")
+    public ResponseEntity<AppointmentDto> getSeafarerData(@PathVariable String sid) {
+        try {
+            AppointmentDto appointmentDto = appointmentServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(appointmentDto);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/appointment/{id}")
     public ResponseEntity<AppointmentDto> updateAppointment(@PathVariable Long id, @RequestBody AppointmentDto appointmentDto) {
 

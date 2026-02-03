@@ -5,8 +5,9 @@ import com.bit.backend.entities.SeaServicesEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface SeaServicesRepository extends JpaRepository<SeaServicesEntity, Long> {
-    Optional<SeaServicesEntity> findBySidNo(String sidNo);
+    Optional<List<SeaServicesEntity>> findBySidNo(String sidNo);
 }

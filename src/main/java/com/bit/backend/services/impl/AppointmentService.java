@@ -7,6 +7,7 @@ import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.AppointmentMapper;
 import com.bit.backend.repositories.AppointmentRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import com.bit.backend.services.NotificationServiceI;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,13 @@ public class AppointmentService implements AppointmentServiceI{
     private final AppointmentRepository appointmentRepository;
     private final AppointmentMapper appointmentMapper;
     private final NotificationServiceI notificationServiceI;
+    private final SeafarersRepository seafarersRepository;
 
-    public AppointmentService(AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper, NotificationServiceI notificationServiceI) {
+    public AppointmentService(AppointmentRepository appointmentRepository, AppointmentMapper appointmentMapper, NotificationServiceI notificationServiceI, SeafarersRepository seafarersRepository) {
         this.appointmentRepository = appointmentRepository;
         this.appointmentMapper = appointmentMapper;
         this.notificationServiceI = notificationServiceI;
+        this.seafarersRepository = seafarersRepository;
     }
 
     @Override
@@ -135,7 +138,7 @@ public class AppointmentService implements AppointmentServiceI{
     
                 SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
     
-                Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySidNo(seafarersEntity.getId().toString());
+                Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySid(seafarersEntity.getId().toString());
     
                 if (!optionalAppointmentEntity.isPresent()) {
                     throw new AppException("Appointments Does Not Exists", HttpStatus.BAD_REQUEST);
