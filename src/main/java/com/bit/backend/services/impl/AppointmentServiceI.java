@@ -10,4 +10,5 @@ public interface AppointmentServiceI {
     List<AppointmentDto> getData();
     AppointmentDto updateAppointment(long id, AppointmentDto appointmentDto);
     AppointmentDto deleteAppointment(long id);
+    AppointmentDto getSeafarerData(String sid);
 }
