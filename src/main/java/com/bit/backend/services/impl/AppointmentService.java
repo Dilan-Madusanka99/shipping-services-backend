@@ -107,4 +107,44 @@ public class AppointmentService implements AppointmentServiceI{
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // @Override
+    // public SeafarersDto getSeafarerData(String sid) {
+    //     try {
+    //         Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+
+    //         if (!optionalSeafarersEntity.isPresent()) {
+    //             throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+    //         }
+    //         return seafarersMapper.toSeafarersDto(optionalSeafarersEntity.get());
+    //     } catch (Exception e) {
+    //         throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
+
+
+        @Override
+        public AppointmentDto getSeafarerData(String sid) {
+            try {
+    
+                Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+    
+                if (!optionalSeafarersEntity.isPresent()) {
+                    throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+                }
+    
+                SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+    
+                Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySidNo(seafarersEntity.getId().toString());
+    
+                if (!optionalAppointmentEntity.isPresent()) {
+                    throw new AppException("Appointments Does Not Exists", HttpStatus.BAD_REQUEST);
+                }
+                return appointmentMapper.toAppointmentDto(optionalAppointmentEntity.get());
+            } catch (Exception e) {
+                throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+    
 }
