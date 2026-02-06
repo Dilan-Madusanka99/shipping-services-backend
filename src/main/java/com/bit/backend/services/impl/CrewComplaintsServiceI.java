@@ -10,4 +10,5 @@ public interface CrewComplaintsServiceI {
     List<CrewComplaintsDto> getData();
     CrewComplaintsDto updateCrewComplaints(long id, CrewComplaintsDto crewComplaintsDto);
     CrewComplaintsDto deleteCrewComplaints(long id);
+    List<CrewComplaintsDto> getSeafarerData(String sid);
 }
