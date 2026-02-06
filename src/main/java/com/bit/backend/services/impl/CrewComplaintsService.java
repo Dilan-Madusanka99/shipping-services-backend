@@ -90,4 +90,27 @@ public class CrewComplaintsService implements CrewComplaintsServiceI{
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+  @Override
+    public List<CrewComplaintsDto> getSeafarerData(String sid) {
+        try {
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarer Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<List<CrewComplaintsEntity>> optionalCrewComplaintsEntity = crewComplaintsRepository.findBySidNo(seafarersEntity.getId().toString());
+
+            if (!optionalCrewComplaintsEntity.isPresent()) {
+                throw new AppException("Crew Complaints Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            return crewComplaintsMapper.toCrewComplaintsDtoList(optionalCrewComplaintsEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
