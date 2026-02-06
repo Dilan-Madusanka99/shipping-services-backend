@@ -41,6 +41,17 @@ public class CrewComplaintsController {
         }
     }
 
+       /* Get seafarer details related to SID */
+    @GetMapping("/crewComplaints/{sid}")
+    public ResponseEntity<List<CrewComplaintsDto>> getSeafarerData(@PathVariable String sid) {
+        try {
+            List<CrewComplaintsDto> crewComplaintsDtoList = crewComplaintsServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(crewComplaintsDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/crewComplaints/{id}")
     public ResponseEntity<CrewComplaintsDto> updateCrewComplaints(@PathVariable Long id, @RequestBody CrewComplaintsDto crewComplaintsDto) {
 
