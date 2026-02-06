@@ -41,6 +41,17 @@ public class OnboardCrewRegistrationController {
         }
     }
 
+        /* Get seafarer details related to SID */
+    @GetMapping("/onboardCrewRegistration/{sid}")
+    public ResponseEntity<List<OnboardCrewRegistrationDto>> getSeafarerData(@PathVariable String sid) {
+        try {
+            List<OnboardCrewRegistrationDto> onboardCrewRegistrationDtoList = onboardCrewRegistrationServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(onboardCrewRegistrationDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/onboardCrewRegistration/{id}")
     public ResponseEntity<OnboardCrewRegistrationDto> updateOnboardCrewRegistration(@PathVariable Long id, @RequestBody OnboardCrewRegistrationDto onboardCrewRegistrationDto) {
 
