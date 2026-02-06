@@ -6,6 +6,7 @@ import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.OnboardCrewRegistrationMapper;
 import com.bit.backend.repositories.OnboardCrewRegistrationRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +18,12 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
 
     private final OnboardCrewRegistrationRepository onboardCrewRegistrationRepository;
     private final OnboardCrewRegistrationMapper onboardCrewRegistrationMapper;
+    private final SeafarersRepository seafarersRepository;
 
-    public OnboardCrewRegistrationService(OnboardCrewRegistrationRepository onboardCrewRegistrationRepository, OnboardCrewRegistrationMapper onboardCrewRegistrationMapper) {
+    public OnboardCrewRegistrationService(OnboardCrewRegistrationRepository onboardCrewRegistrationRepository, OnboardCrewRegistrationMapper onboardCrewRegistrationMapper, SeafarersRepository seafarersRepository) {
         this.onboardCrewRegistrationRepository = onboardCrewRegistrationRepository;
         this.onboardCrewRegistrationMapper = onboardCrewRegistrationMapper;
+        this.seafarersRepository = seafarersRepository;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
         try {
             System.out.println("***In Backend***");
 
-            Optional<OnboardCrewRegistrationEntity> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySidNo(onboardCrewRegistrationDto.getSidNo());
+            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySidNo(onboardCrewRegistrationDto.getSidNo());
 
             if (optionalOnboardCrewRegistrationEntity.isPresent()) {
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
@@ -111,7 +114,7 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
 
             SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
 
-            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySid(seafarersEntity.getId().toString());
+            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySidNo(seafarersEntity.getId().toString());
 
             if (!optionalOnboardCrewRegistrationEntity.isPresent()) {
                 throw new AppException("Onboard Crew Registration Does Not Exists", HttpStatus.BAD_REQUEST);

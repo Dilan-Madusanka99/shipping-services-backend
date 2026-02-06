@@ -2,9 +2,11 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.CrewComplaintsDto;
 import com.bit.backend.entities.CrewComplaintsEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.CrewComplaintsMapper;
 import com.bit.backend.repositories.CrewComplaintsRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,12 @@ public class CrewComplaintsService implements CrewComplaintsServiceI{
 
     private final CrewComplaintsRepository crewComplaintsRepository;
     private final CrewComplaintsMapper crewComplaintsMapper;
+    private final SeafarersRepository seafarersRepository;
 
-    public CrewComplaintsService(CrewComplaintsRepository crewComplaintsRepository, CrewComplaintsMapper crewComplaintsMapper) {
+    public CrewComplaintsService(CrewComplaintsRepository crewComplaintsRepository, CrewComplaintsMapper crewComplaintsMapper, SeafarersRepository seafarersRepository) {
         this.crewComplaintsRepository = crewComplaintsRepository;
         this.crewComplaintsMapper = crewComplaintsMapper;
+        this.seafarersRepository = seafarersRepository;
     }
 
     @Override
