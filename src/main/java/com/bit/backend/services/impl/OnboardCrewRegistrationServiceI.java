@@ -10,4 +10,5 @@ public interface OnboardCrewRegistrationServiceI {
     List<OnboardCrewRegistrationDto> getData();
     OnboardCrewRegistrationDto updateOnboardCrewRegistration(long id, OnboardCrewRegistrationDto onboardCrewRegistrationDto);
     OnboardCrewRegistrationDto deleteOnboardCrewRegistration(long id);
+    List<OnboardCrewRegistrationDto> getSeafarerData(String sid);
 }
