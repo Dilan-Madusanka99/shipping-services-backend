@@ -9,4 +9,5 @@ public interface CertificateVerificationServiceI {
     List<CertificateVerificationDto> getData();
     CertificateVerificationDto updateCertificateVerification(long id, CertificateVerificationDto certificateVerificationDto);
     CertificateVerificationDto deleteCertificateVerification(long id);
+    List<CertificateVerificationDto> getSeafarerData (String sid);
 }
