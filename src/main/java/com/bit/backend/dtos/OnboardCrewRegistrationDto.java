@@ -11,11 +11,12 @@ public class OnboardCrewRegistrationDto {
     private String vesselName;
     private Date signOnDate;
     private Date signOffDate;
+    private String status;
 
     public OnboardCrewRegistrationDto() {
     }
 
-    public OnboardCrewRegistrationDto(Long id, String sidNo, String position, String imoNo, String vesselName, Date signOnDate, Date signOffDate) {
+    public OnboardCrewRegistrationDto(Long id, String sidNo, String position, String imoNo, String vesselName, Date signOnDate, Date signOffDate, String status) {
         this.id = id;
         this.sidNo = sidNo;
         this.position = position;
@@ -23,6 +24,7 @@ public class OnboardCrewRegistrationDto {
         this.vesselName = vesselName;
         this.signOnDate = signOnDate;
         this.signOffDate = signOffDate;
+        this.status = status;
     }
 
     public Long getId() {
@@ -79,5 +81,13 @@ public class OnboardCrewRegistrationDto {
 
     public void setSignOffDate(Date signOffDate) {
         this.signOffDate = signOffDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

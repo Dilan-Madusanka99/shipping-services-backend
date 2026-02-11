@@ -30,10 +30,13 @@ public class OnboardCrewRegistrationEntity {
     @Column(name = "signOffDate")
     private Date signOffDate;
 
+    @Column(name = "status")
+    private String status;
+
     public OnboardCrewRegistrationEntity() {
     }
 
-    public OnboardCrewRegistrationEntity(Long id, String sidNo, String position, String imoNo, String vesselName, Date signOnDate, Date signOffDate) {
+    public OnboardCrewRegistrationEntity(Long id, String sidNo, String position, String imoNo, String vesselName, Date signOnDate, Date signOffDate, String status) {
         this.id = id;
         this.sidNo = sidNo;
         this.position = position;
@@ -41,6 +44,7 @@ public class OnboardCrewRegistrationEntity {
         this.vesselName = vesselName;
         this.signOnDate = signOnDate;
         this.signOffDate = signOffDate;
+        this.status = status;
     }
 
     public Long getId() {
@@ -97,5 +101,13 @@ public class OnboardCrewRegistrationEntity {
 
     public void setSignOffDate(Date signOffDate) {
         this.signOffDate = signOffDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

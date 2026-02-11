@@ -1,6 +1,7 @@
 package com.bit.backend.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Date;
 
 public class JobPostingDto {
 
@@ -15,11 +16,12 @@ public class JobPostingDto {
     private String jobPostImageName;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String jobPostImageType;
+    private Date jobClosingDate;
 
     public JobPostingDto() {
     }
 
-    public JobPostingDto(Long id, String vesselName, String position, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType) {
+    public JobPostingDto(Long id, String vesselName, String position, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType, Date jobClosingDate) {
         this.id = id;
         this.vesselName = vesselName;
         this.position = position;
@@ -28,6 +30,7 @@ public class JobPostingDto {
         this.jobPostImage = jobPostImage;
         this.jobPostImageName = jobPostImageName;
         this.jobPostImageType = jobPostImageType;
+        this.jobClosingDate = jobClosingDate;
     }
 
     public Long getId() {
@@ -92,5 +95,13 @@ public class JobPostingDto {
 
     public void setJobPostImageType(String jobPostImageType) {
         this.jobPostImageType = jobPostImageType;
+    }
+
+    public Date getJobClosingDate() {
+        return jobClosingDate;
+    }
+
+    public void setJobClosingDate(Date jobClosingDate) {
+        this.jobClosingDate = jobClosingDate;
     }
 }

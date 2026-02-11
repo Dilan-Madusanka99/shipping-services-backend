@@ -31,10 +31,13 @@ public class JobPostingEntity {
     @Column(name = "jobPost_Image_Type")
     private String jobPostImageType;
 
+    @Column(name = "job_Closing_Date")
+    private String jobClosingDate;
+
     public JobPostingEntity() {
     }
 
-    public JobPostingEntity(Long id, String vesselName, String position, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType) {
+    public JobPostingEntity(Long id, String vesselName, String position, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType, String jobClosingDate) {
         this.id = id;
         this.vesselName = vesselName;
         this.position = position;
@@ -43,6 +46,7 @@ public class JobPostingEntity {
         this.jobPostImage = jobPostImage;
         this.jobPostImageName = jobPostImageName;
         this.jobPostImageType = jobPostImageType;
+        this.jobClosingDate = jobClosingDate;
     }
 
     public Long getId() {
@@ -107,5 +111,13 @@ public class JobPostingEntity {
 
     public void setJobPostImageType(String jobPostImageType) {
         this.jobPostImageType = jobPostImageType;
+    }
+
+    public String getJobClosingDate() {
+        return jobClosingDate;
+    }
+
+    public void setJobClosingDate(String jobClosingDate) {
+        this.jobClosingDate = jobClosingDate;
     }
 }
