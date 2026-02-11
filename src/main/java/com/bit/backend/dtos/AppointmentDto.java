@@ -3,7 +3,7 @@ package com.bit.backend.dtos;
 public class AppointmentDto {
 
     private Long id;
-    private String sid;
+    private String sidNo;
     private String firstName;
     private String lastName;
     private String position;
@@ -16,9 +16,9 @@ public class AppointmentDto {
     public AppointmentDto() {
     }
 
-    public AppointmentDto(Long id, String sid, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus) {
+    public AppointmentDto(Long id, String sidNo, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus) {
         this.id = id;
-        this.sid = sid;
+        this.sidNo = sidNo;
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
@@ -37,12 +37,12 @@ public class AppointmentDto {
         this.id = id;
     }
 
-    public String getSid() {
-        return sid;
+    public String getSidNo() {
+        return sidNo;
     }
 
-    public void setSid(String sid) {
-        this.sid = sid;
+    public void setSidNo(String sidNo) {
+        this.sidNo = sidNo;
     }
 
     public String getFirstName() {

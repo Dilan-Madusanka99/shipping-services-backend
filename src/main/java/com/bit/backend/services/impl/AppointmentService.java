@@ -35,13 +35,13 @@ public class AppointmentService implements AppointmentServiceI{
         try {
             System.out.println("***In Backend***");
 
-            Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySid(appointmentDto.getSid());
+            Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySidNo(appointmentDto.getSidNo());
 
             if (optionalAppointmentEntity.isPresent()) {
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
             }
 
-            if (appointmentDto.getSid() == null || appointmentDto.getSid().isEmpty()) {
+            if (appointmentDto.getSidNo() == null || appointmentDto.getSidNo().isEmpty()) {
                 throw new AppException("Seafarer ID No Is Empty", HttpStatus.BAD_REQUEST);
             }
 
@@ -123,7 +123,7 @@ public class AppointmentService implements AppointmentServiceI{
     
                 SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
     
-                Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySid(seafarersEntity.getId().toString());
+                Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySidNo(seafarersEntity.getId().toString());
     
                 if (!optionalAppointmentEntity.isPresent()) {
                     throw new AppException("Appointments Does Not Exists", HttpStatus.BAD_REQUEST);

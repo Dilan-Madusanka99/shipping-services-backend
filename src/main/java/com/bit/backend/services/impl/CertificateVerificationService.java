@@ -2,9 +2,11 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.CertificateVerificationDto;
 import com.bit.backend.entities.CertificateVerificationEntity;
+import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.CertificateVerificationMapper;
 import com.bit.backend.repositories.CertificateVerificationRepository;
+import com.bit.backend.repositories.SeafarersRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,12 @@ public class CertificateVerificationService implements CertificateVerificationSe
 
     private final CertificateVerificationRepository certificateVerificationRepository;
     private final CertificateVerificationMapper certificateVerificationMapper;
+    private final SeafarersRepository seafarersRepository;
 
-    public CertificateVerificationService(CertificateVerificationRepository certificateVerificationRepository, CertificateVerificationMapper certificateVerificationMapper) {
+    public CertificateVerificationService(CertificateVerificationRepository certificateVerificationRepository, CertificateVerificationMapper certificateVerificationMapper, SeafarersRepository seafarersRepository) {
         this.certificateVerificationRepository = certificateVerificationRepository;
         this.certificateVerificationMapper = certificateVerificationMapper;
+        this.seafarersRepository = seafarersRepository;
     }
 
     @Override
@@ -104,7 +108,7 @@ public class CertificateVerificationService implements CertificateVerificationSe
             if (!optionalCertificateVerificationEntity.isPresent()) {
                 throw new AppException("Certificate Verification Details Does Not Exists", HttpStatus.BAD_REQUEST);
             }
-            return certificateVerificationMapper.toSeaServicesDtoList(optionalCertificateVerificationEntity.get());
+            return certificateVerificationMapper.toCertificateVerificationDtoList(optionalCertificateVerificationEntity.get());
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

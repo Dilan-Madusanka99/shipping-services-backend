@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, Long> {
-    Optional<AppointmentEntity> findBySid(String sid);
+    Optional<AppointmentEntity> findBySidNo(String sid);
 
 }

@@ -12,8 +12,8 @@ public class AppointmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "sid")
-    private String sid;
+    @Column(name = "sidNo")
+    private String sidNo;
 
     @Column(name = "firstName")
     private String firstName;
@@ -42,9 +42,9 @@ public class AppointmentEntity {
     public AppointmentEntity() {
     }
 
-    public AppointmentEntity(Long id, String sid, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus) {
+    public AppointmentEntity(Long id, String sidNo, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus) {
         this.id = id;
-        this.sid = sid;
+        this.sidNo = sidNo;
         this.firstName = firstName;
         this.lastName = lastName;
         this.position = position;
@@ -63,12 +63,12 @@ public class AppointmentEntity {
         this.id = id;
     }
 
-    public String getSid() {
-        return sid;
+    public String getSidNo() {
+        return sidNo;
     }
 
-    public void setSid(String sid) {
-        this.sid = sid;
+    public void setSidNo(String sidNo) {
+        this.sidNo = sidNo;
     }
 
     public String getFirstName() {

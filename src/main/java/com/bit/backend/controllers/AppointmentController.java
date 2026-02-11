@@ -22,7 +22,7 @@ public class AppointmentController {
 
         try {
             AppointmentDto appointmentDtoResponse = appointmentServiceI.addAppointmentEntity(appointmentDto);
-            return ResponseEntity.created(URI.create("/appointment"+appointmentDtoResponse.getSid())).body(appointmentDtoResponse);
+            return ResponseEntity.created(URI.create("/appointment"+appointmentDtoResponse.getSidNo())).body(appointmentDtoResponse);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
