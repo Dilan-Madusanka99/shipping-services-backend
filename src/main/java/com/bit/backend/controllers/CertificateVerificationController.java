@@ -47,6 +47,17 @@ public class CertificateVerificationController {
         }
     }
 
+       /* Get Certificate verification details related to SID */
+    @GetMapping("/certificate_Verification/{sid}")
+    public ResponseEntity<List<CertificateVerificationDto>> getSeafarerData(@PathVariable String sid) {
+        try {
+            List<CertificateVerificationDto> certificateVerificationDtoList = certificateVerificationServiceI.getSeafarerData(sid);
+            return ResponseEntity.ok(certificateVerificationDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
     @PutMapping("/certificate_Verification/{id}")
     public ResponseEntity<CertificateVerificationDto> updateCertificateVerification(@PathVariable Long id,
                                                       @RequestPart ("certificateVerificationForm") CertificateVerificationDto certificateVerificationDto,
