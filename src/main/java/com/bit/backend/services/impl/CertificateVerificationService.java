@@ -86,4 +86,27 @@ public class CertificateVerificationService implements CertificateVerificationSe
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public List<CertificateVerificationDto> getSeafarerData(String sid) {
+        try {
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<List<CertificateVerificationEntity>> optionalCertificateVerificationEntity = certificateVerificationRepository.findBySidNo(seafarersEntity.getId().toString());
+
+            if (!optionalCertificateVerificationEntity.isPresent()) {
+                throw new AppException("Certificate Verification Details Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            return certificateVerificationMapper.toSeaServicesDtoList(optionalCertificateVerificationEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
