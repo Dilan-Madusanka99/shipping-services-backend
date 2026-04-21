@@ -8,7 +8,7 @@ public interface OnboardCrewRegistrationServiceI {
 
     OnboardCrewRegistrationDto addOnboardCrewRegistrationEntity(OnboardCrewRegistrationDto onboardCrewRegistrationDto);
     List<OnboardCrewRegistrationDto> getData();
-//    List<OnboardCrewRegistrationDto> getInactiveData();
+    List<OnboardCrewRegistrationDto> getInactiveData();
     OnboardCrewRegistrationDto updateOnboardCrewRegistration(long id, OnboardCrewRegistrationDto onboardCrewRegistrationDto);
     OnboardCrewRegistrationDto deleteOnboardCrewRegistration(long id);
     List<OnboardCrewRegistrationDto> getSeafarerData(String sid);

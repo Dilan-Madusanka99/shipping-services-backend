@@ -9,6 +9,6 @@ import java.util.Optional;
 public interface OnboardCrewRegistrationRepository extends JpaRepository<OnboardCrewRegistrationEntity, Long> {
 
     Optional<List<OnboardCrewRegistrationEntity>> findBySidNo(String sidNo);
-//    List<OnboardCrewRegistrationEntity> findByStatus(String status);
+    List<OnboardCrewRegistrationEntity> findByStatus(String status);
 
 }
