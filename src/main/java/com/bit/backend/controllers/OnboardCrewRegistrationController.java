@@ -42,7 +42,7 @@ public class OnboardCrewRegistrationController {
     }
 
     // active inactive status
-    @GetMapping("/onboardCrewRegistration")
+    @GetMapping("/inactiveOnboardCrewRegistration")
     public ResponseEntity<List<OnboardCrewRegistrationDto>> getInactiveData() {
 
         try {
