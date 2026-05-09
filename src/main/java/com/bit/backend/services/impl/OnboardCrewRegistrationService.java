@@ -63,6 +63,18 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
     }
 
     @Override
+    public List<OnboardCrewRegistrationDto> getInactiveData() {
+
+        try {
+            List<OnboardCrewRegistrationEntity> onboardCrewRegistrationEntityList = onboardCrewRegistrationRepository.findByStatus("Inactive");
+            List<OnboardCrewRegistrationDto> onboardCrewRegistrationDtoList = onboardCrewRegistrationMapper.toOnboardCrewRegistrationDtoList(onboardCrewRegistrationEntityList);
+            return onboardCrewRegistrationDtoList;
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
     public OnboardCrewRegistrationDto updateOnboardCrewRegistration(long id, OnboardCrewRegistrationDto onboardCrewRegistrationDto) {
 
         try {

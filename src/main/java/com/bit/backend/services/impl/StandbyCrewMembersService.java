@@ -33,9 +33,9 @@ public class StandbyCrewMembersService implements StandbyCrewMembersServiceI{
 
             Optional<List<StandbyCrewMembersEntity>> optionalStandbyCrewMembersEntity = standbyCrewMembersRepository.findBySidNo(standbyCrewMembersDto.getSidNo());
 
-            if (optionalStandbyCrewMembersEntity.isPresent()) {
-                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
-            }
+//            if (optionalStandbyCrewMembersEntity.isPresent()) {
+//                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+//            }
 
             if (standbyCrewMembersDto.getSidNo() == null || standbyCrewMembersDto.getSidNo().isEmpty()) {
                 throw new AppException("SID No is Empty", HttpStatus.BAD_REQUEST);
