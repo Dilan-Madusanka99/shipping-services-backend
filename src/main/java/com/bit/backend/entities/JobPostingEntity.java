@@ -13,8 +13,17 @@ public class JobPostingEntity {
     @Column(name = "vessel_name")
     private String vesselName;
 
+    @Column(name = "vessel_Type")
+    private String vesselType;
+
     @Column(name = "position")
     private String position;
+
+    @Column(name = "c_Name")
+    private String cName;
+
+    @Column(name = "minimumExp")
+    private String minimumExp;
 
     @Column(name = "job_status")
     private String jobStatus;
@@ -37,10 +46,13 @@ public class JobPostingEntity {
     public JobPostingEntity() {
     }
 
-    public JobPostingEntity(Long id, String vesselName, String position, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType, String jobClosingDate) {
+    public JobPostingEntity(Long id, String vesselName, String vesselType, String position, String cName, String minimumExp, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType, String jobClosingDate) {
         this.id = id;
         this.vesselName = vesselName;
+        this.vesselType = vesselType;
         this.position = position;
+        this.cName = cName;
+        this.minimumExp = minimumExp;
         this.jobStatus = jobStatus;
         this.jobDescription = jobDescription;
         this.jobPostImage = jobPostImage;
@@ -65,12 +77,36 @@ public class JobPostingEntity {
         this.vesselName = vesselName;
     }
 
+    public String getVesselType() {
+        return vesselType;
+    }
+
+    public void setVesselType(String vesselType) {
+        this.vesselType = vesselType;
+    }
+
     public String getPosition() {
         return position;
     }
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getcName() {
+        return cName;
+    }
+
+    public void setcName(String cName) {
+        this.cName = cName;
+    }
+
+    public String getMinimumExp() {
+        return minimumExp;
+    }
+
+    public void setMinimumExp(String minimumExp) {
+        this.minimumExp = minimumExp;
     }
 
     public String getJobStatus() {

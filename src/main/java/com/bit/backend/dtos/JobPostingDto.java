@@ -7,7 +7,10 @@ public class JobPostingDto {
 
     private Long id;
     private String vesselName;
+    private String vesselType;
     private String position;
+    private String cName;
+    private String minimumExp;
     private  String jobStatus;
     private String jobDescription;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -21,10 +24,13 @@ public class JobPostingDto {
     public JobPostingDto() {
     }
 
-    public JobPostingDto(Long id, String vesselName, String position, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType, Date jobClosingDate) {
+    public JobPostingDto(Long id, String vesselName, String vesselType, String position, String cName, String minimumExp, String jobStatus, String jobDescription, byte[] jobPostImage, String jobPostImageName, String jobPostImageType, Date jobClosingDate) {
         this.id = id;
         this.vesselName = vesselName;
+        this.vesselType = vesselType;
         this.position = position;
+        this.cName = cName;
+        this.minimumExp = minimumExp;
         this.jobStatus = jobStatus;
         this.jobDescription = jobDescription;
         this.jobPostImage = jobPostImage;
@@ -49,12 +55,36 @@ public class JobPostingDto {
         this.vesselName = vesselName;
     }
 
+    public String getVesselType() {
+        return vesselType;
+    }
+
+    public void setVesselType(String vesselType) {
+        this.vesselType = vesselType;
+    }
+
     public String getPosition() {
         return position;
     }
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getcName() {
+        return cName;
+    }
+
+    public void setcName(String cName) {
+        this.cName = cName;
+    }
+
+    public String getMinimumExp() {
+        return minimumExp;
+    }
+
+    public void setMinimumExp(String minimumExp) {
+        this.minimumExp = minimumExp;
     }
 
     public String getJobStatus() {
