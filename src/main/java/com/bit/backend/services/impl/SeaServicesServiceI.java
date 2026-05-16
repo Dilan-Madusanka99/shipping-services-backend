@@ -11,4 +11,5 @@ public interface SeaServicesServiceI {
     SeaServicesDto updateSeaServices(long id, SeaServicesDto seaServicesDto);
     SeaServicesDto deleteSeaServices(long id);
     List<SeaServicesDto> getSeafarerData (String sid);
+    Integer getSearServiceExperience (String sid);
 }

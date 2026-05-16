@@ -10,4 +10,5 @@ public interface VesselRegistrationServiceI {
     List<VesselRegistrationDto> getData();
     VesselRegistrationDto updateVesselRegistration(long id, VesselRegistrationDto vesselRegistrationDto);
     VesselRegistrationDto deleteVesselRegistration(long id);
+    VesselRegistrationDto getVessleById(long id);
 }

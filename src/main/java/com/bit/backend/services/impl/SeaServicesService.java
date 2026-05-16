@@ -120,4 +120,9 @@ public class SeaServicesService implements SeaServicesServiceI {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public Integer getSearServiceExperience(String sid) {
+        return this.seaServicesRepository.getSeafarersExp(sid);
+    }
 }

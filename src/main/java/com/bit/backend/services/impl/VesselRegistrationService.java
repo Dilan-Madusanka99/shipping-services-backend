@@ -102,4 +102,21 @@ public class VesselRegistrationService implements VesselRegistrationServiceI{
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public VesselRegistrationDto getVessleById(long id) {
+        try {
+            Optional<VesselRegistrationEntity> optionalVesselRegistrationEntity = vesselRegistrationRepository.findById(id);
+
+            if (!optionalVesselRegistrationEntity.isPresent()) {
+                throw new AppException("Vessel Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            VesselRegistrationDto responseVesselRegistrationDto = vesselRegistrationMapper.toVesselRegistrationDto(optionalVesselRegistrationEntity.get());
+            return responseVesselRegistrationDto;
+
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

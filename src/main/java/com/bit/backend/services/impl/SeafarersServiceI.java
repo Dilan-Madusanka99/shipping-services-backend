@@ -11,4 +11,5 @@ public interface SeafarersServiceI {
     SeafarersDto updateSeafarers(long id, SeafarersDto seafarersDto);
     SeafarersDto deleteSeafarers(long id);
     SeafarersDto getSeafarerData(String sid);
+    SeafarersDto getSeafarerDataById(long id);
 }

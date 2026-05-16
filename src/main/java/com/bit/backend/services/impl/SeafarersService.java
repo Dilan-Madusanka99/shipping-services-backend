@@ -124,4 +124,18 @@ public class SeafarersService implements SeafarersServiceI {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public SeafarersDto getSeafarerDataById(long id) {
+        try {
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findById(id);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            return seafarersMapper.toSeafarersDto(optionalSeafarersEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
