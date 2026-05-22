@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -42,6 +43,17 @@ public class JobPostingController {
             return ResponseEntity.ok(jobPostingDtoList);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-auth-ids/{id}")
+    public ResponseEntity<List<Integer>> getAuthDetails(@PathVariable long id) {
+        try {
+            List<Integer> authIds = jobPostingServiceI.getAuthIds(id);
+            return ResponseEntity.status(HttpStatus.OK).body(authIds);
+        } catch (Exception e) {
+            List<Integer> returnList = new ArrayList<>();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnList);
         }
     }
 

@@ -8,6 +8,7 @@ public interface JobPostingServiceI {
 
     JobPostingDto addJobPostingEntity(JobPostingDto jobPostingDto);
     List<JobPostingDto> getData();
+    List<Integer> getAuthIds(long jobId);
     JobPostingDto updateJobPosting(long id, JobPostingDto jobPostingDto);
     JobPostingDto deleteJobPosting(long id);
     List<JobPostingDto> getOpenJobs();

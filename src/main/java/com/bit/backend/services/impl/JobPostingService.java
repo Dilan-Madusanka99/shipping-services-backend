@@ -130,6 +130,15 @@ public class JobPostingService implements JobPostingServiceI {
     }
 
     @Override
+    public List<Integer> getAuthIds(long jobId) {
+        Optional<List<Integer>> optionalAuthIdLists = JobSuggestionsRepository.findByJobIdAndSeafarerId(jobId);
+        List<Integer> authIdLists = optionalAuthIdLists.get();
+
+        return authIdLists;
+    }
+
+
+    @Override
     public JobPostingDto updateJobPosting(long id, JobPostingDto jobPostingDto) {
 
         try {
