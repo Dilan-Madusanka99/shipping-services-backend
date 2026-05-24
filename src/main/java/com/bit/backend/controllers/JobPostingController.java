@@ -46,7 +46,7 @@ public class JobPostingController {
         }
     }
 
-    @GetMapping("/get-auth-ids/{id}")
+    @GetMapping("/get-job-ids/{id}")
     public ResponseEntity<List<Integer>> getAuthDetails(@PathVariable long id) {
         try {
             List<Integer> authIds = jobPostingServiceI.getAuthIds(id);

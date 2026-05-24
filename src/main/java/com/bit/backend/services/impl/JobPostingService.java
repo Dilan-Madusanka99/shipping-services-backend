@@ -131,7 +131,7 @@ public class JobPostingService implements JobPostingServiceI {
 
     @Override
     public List<Integer> getAuthIds(long jobId) {
-        Optional<List<Integer>> optionalAuthIdLists = JobSuggestionsRepository.findByJobIdAndSeafarerId(jobId);
+        Optional<List<Integer>> optionalAuthIdLists = jobSuggestionsRepository.findJobSuggestionDetailsById(jobId);
         List<Integer> authIdLists = optionalAuthIdLists.get();
 
         return authIdLists;
