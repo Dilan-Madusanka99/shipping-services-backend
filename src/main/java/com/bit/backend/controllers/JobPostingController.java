@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class JobPostingController {
@@ -47,12 +48,12 @@ public class JobPostingController {
     }
 
     @GetMapping("/get-job-ids/{id}")
-    public ResponseEntity<List<Integer>> getAuthDetails(@PathVariable long id) {
+    public ResponseEntity<List<Map<String, Object>>> getAuthDetails(@PathVariable long id) {
         try {
-            List<Integer> authIds = jobPostingServiceI.getAuthIds(id);
+            List<Map<String, Object>> authIds = jobPostingServiceI.getAuthIds(id);
             return ResponseEntity.status(HttpStatus.OK).body(authIds);
         } catch (Exception e) {
-            List<Integer> returnList = new ArrayList<>();
+            List<Map<String, Object>> returnList = new ArrayList<>();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(returnList);
         }
     }

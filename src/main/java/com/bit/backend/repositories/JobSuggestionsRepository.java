@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface JobSuggestionsRepository extends JpaRepository<JobSuggestionsEntity, Long> {
@@ -17,5 +18,5 @@ public interface JobSuggestionsRepository extends JpaRepository<JobSuggestionsEn
             "join ems.seafarers_registration sf\n" +
             "ON job.seafarer_id = sf.id\n" +
             "where job.job_id = :jobId")
-    Optional<List<Integer>> findJobSuggestionDetailsById(@Param("jobId") long jobId);
+    Optional<List<Map<String, Object>>> findJobSuggestionDetailsById(@Param("jobId") long jobId);
 }

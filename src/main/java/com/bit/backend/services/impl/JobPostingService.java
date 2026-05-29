@@ -11,10 +11,7 @@ import com.bit.backend.repositories.JobSuggestionsRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class JobPostingService implements JobPostingServiceI {
@@ -130,9 +127,9 @@ public class JobPostingService implements JobPostingServiceI {
     }
 
     @Override
-    public List<Integer> getAuthIds(long jobId) {
-        Optional<List<Integer>> optionalAuthIdLists = jobSuggestionsRepository.findJobSuggestionDetailsById(jobId);
-        List<Integer> authIdLists = optionalAuthIdLists.get();
+    public List<Map<String, Object>> getAuthIds(long jobId) {
+        Optional<List<Map<String, Object>>> optionalAuthIdLists = jobSuggestionsRepository.findJobSuggestionDetailsById(jobId);
+        List<Map<String, Object>> authIdLists = optionalAuthIdLists.get();
 
         return authIdLists;
     }
