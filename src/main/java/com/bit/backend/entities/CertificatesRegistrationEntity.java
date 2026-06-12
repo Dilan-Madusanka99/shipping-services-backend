@@ -39,10 +39,13 @@ public class CertificatesRegistrationEntity {
     @Column(name = "certificate_image_type")
     private String certificateImageType;
 
+    @Column(name = "verification_Status")
+    private String verificationStatus;
+
     public CertificatesRegistrationEntity() {
     }
 
-    public CertificatesRegistrationEntity(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, byte[] certificateImage, String certificateImageName, String certificateImageType) {
+    public CertificatesRegistrationEntity(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, byte[] certificateImage, String certificateImageName, String certificateImageType, String verificationStatus) {
         this.id = id;
         this.sidNo = sidNo;
         this.cName = cName;
@@ -53,6 +56,7 @@ public class CertificatesRegistrationEntity {
         this.certificateImage = certificateImage;
         this.certificateImageName = certificateImageName;
         this.certificateImageType = certificateImageType;
+        this.verificationStatus = verificationStatus;
     }
 
     public Long getId() {
@@ -133,5 +137,13 @@ public class CertificatesRegistrationEntity {
 
     public void setCertificateImageType(String certificateImageType) {
         this.certificateImageType = certificateImageType;
+    }
+
+    public String getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
     }
 }

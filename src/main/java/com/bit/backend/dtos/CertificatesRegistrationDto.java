@@ -19,11 +19,12 @@ public class CertificatesRegistrationDto {
     private String certificateImageName;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String certificateImageType;
+    private String verificationStatus;
 
     public CertificatesRegistrationDto() {
     }
 
-    public CertificatesRegistrationDto(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, byte[] certificateImage, String certificateImageName, String certificateImageType) {
+    public CertificatesRegistrationDto(Long id, String sidNo, String cName, String cNo, String cIssuedPlace, Date cIssuedDate, Date cExpiredDate, byte[] certificateImage, String certificateImageName, String certificateImageType, String verificationStatus) {
         this.id = id;
         this.sidNo = sidNo;
         this.cName = cName;
@@ -34,6 +35,7 @@ public class CertificatesRegistrationDto {
         this.certificateImage = certificateImage;
         this.certificateImageName = certificateImageName;
         this.certificateImageType = certificateImageType;
+        this.verificationStatus = verificationStatus;
     }
 
     public Long getId() {
@@ -114,5 +116,13 @@ public class CertificatesRegistrationDto {
 
     public void setCertificateImageType(String certificateImageType) {
         this.certificateImageType = certificateImageType;
+    }
+
+    public String getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
     }
 }
