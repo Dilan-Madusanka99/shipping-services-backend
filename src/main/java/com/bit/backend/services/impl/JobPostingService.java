@@ -75,6 +75,11 @@ public class JobPostingService implements JobPostingServiceI {
             Integer experience = seaServicesServiceI.getSearServiceExperience(sidNo);
             VesselRegistrationDto vesselRegistrationDto = vesselRegistrationServiceI.getVessleById(Long.parseLong(jobPostingDto.getVesselName()));
 
+            /* If user position and job position is different not adding to suggestions */
+            if (!jobPostingDto.getPosition().equals(position)) {
+                continue;
+            }
+
             if (jobPostingDto.getPosition().equals(position)) {
                 score = score + 40; /* 40 for position match */
             }
