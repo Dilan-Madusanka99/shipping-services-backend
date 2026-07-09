@@ -13,4 +13,5 @@ public interface EmployeeAttendenceRepository extends JpaRepository<EmployeeAtte
 
     @Query(nativeQuery = true, value = "select DATE_FORMAT(attandence_Date, '%Y-%m') as month, count(*) as cnt from ems.employee_attendence group by month order by month")
     List<Map<String, Object>> getEmployeeAttendanceByMonth();
+    boolean existsByUsersAndAttandenceDate(String id, LocalDate today);
 }
