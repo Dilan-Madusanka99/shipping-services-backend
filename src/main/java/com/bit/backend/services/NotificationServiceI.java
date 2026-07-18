@@ -14,4 +14,5 @@ public interface NotificationServiceI {
     boolean changeNotificationStatus(String id);
     AppointmentDto sendAppointmentNotification(AppointmentDto notificationDto, String message) throws MessagingException;
     NotificationDto sendToUser(String username, NotificationDto notificationDto);
+    Integer markAllAsRead(Integer userId);
 }

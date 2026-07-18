@@ -47,4 +47,9 @@ public class NotificationController {
         return notificationServiceI.sendToUser(
                 username, notificationDto);
     }
+
+    @PostMapping("/notification/mark-all-read")
+    public Integer markAllAsRead(@RequestBody Integer userId) {
+        return notificationServiceI.markAllAsRead(userId);
+    }
 }

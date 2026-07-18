@@ -195,4 +195,9 @@ public class NotificationService implements NotificationServiceI {
         messagingTemplate.convertAndSend("/topic/user." + username, savedNotificationDto);
         return savedNotificationDto;
     }
+
+    @Override
+    public Integer markAllAsRead(Integer userId) {
+        return notificationRepository.markAllAsRead(userId);
+    }
 }
