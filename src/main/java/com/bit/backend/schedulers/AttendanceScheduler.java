@@ -6,6 +6,8 @@ import com.bit.backend.repositories.EmployeeAttendenceRepository;
 import com.bit.backend.repositories.EmployeeRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +18,17 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Transactional
 public class AttendanceScheduler {
     private final EmployeeAttendenceRepository employeeAttendenceRepository;
     private final EmployeeRepository employeeRepository;
 
+    @EventListener(ApplicationReadyEvent.class)
+    public void runOnStartup() {
+        markDailyAttendance();
+    }
+
     @Scheduled(cron = "${attendance.cron:0 0 6 * * *}", zone = "Asia/Colombo")
-    @Transactional
     public void markDailyAttendance() {
         LocalDate today = LocalDate.now(ZoneId.of("Asia/Colombo"));
         DayOfWeek day = today.getDayOfWeek();

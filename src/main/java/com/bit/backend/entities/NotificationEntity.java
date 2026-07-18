@@ -36,10 +36,13 @@ public class NotificationEntity {
     @Column(name = "mobile")
     private String mobile;
 
+    @Column(name = "title")
+    private String title;
+
     public NotificationEntity() {
     }
 
-    public NotificationEntity(Long id, String message, String type, Date timeStamp, boolean readStatus, long targetUser, String other, String email, String mobile) {
+    public NotificationEntity(Long id, String message, String type, Date timeStamp, boolean readStatus, long targetUser, String other, String email, String mobile, String title) {
         this.id = id;
         this.message = message;
         this.type = type;
@@ -49,6 +52,7 @@ public class NotificationEntity {
         this.other = other;
         this.email = email;
         this.mobile = mobile;
+        this.title = title;
     }
 
     public Long getId() {
@@ -121,5 +125,13 @@ public class NotificationEntity {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

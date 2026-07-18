@@ -13,11 +13,12 @@ public class NotificationDto {
     private String other;
     private String email;
     private String mobile;
+    private String title;
 
     public NotificationDto() {
     }
 
-    public NotificationDto(long id, String message, String type, Date timeStamp, boolean readStatus, long targetUser, String other, String email, String mobile) {
+    public NotificationDto(long id, String message, String type, Date timeStamp, boolean readStatus, long targetUser, String other, String email, String mobile, String title) {
         this.id = id;
         this.message = message;
         this.type = type;
@@ -27,6 +28,7 @@ public class NotificationDto {
         this.other = other;
         this.email = email;
         this.mobile = mobile;
+        this.title = title;
     }
 
     public long getId() {
@@ -99,5 +101,13 @@ public class NotificationDto {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

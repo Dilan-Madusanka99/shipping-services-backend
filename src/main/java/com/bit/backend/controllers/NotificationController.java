@@ -40,4 +40,16 @@ public class NotificationController {
         boolean status = notificationServiceI.changeNotificationStatus(id);
         return ResponseEntity.ok(status);
     }
+
+    @PostMapping("/notification/user/{username}")
+    public NotificationDto sendToUser(@PathVariable String username,
+                                   @RequestBody NotificationDto notificationDto) {
+        return notificationServiceI.sendToUser(
+                username, notificationDto);
+    }
+
+    @PostMapping("/notification/mark-all-read")
+    public Integer markAllAsRead(@RequestBody Integer userId) {
+        return notificationServiceI.markAllAsRead(userId);
+    }
 }
