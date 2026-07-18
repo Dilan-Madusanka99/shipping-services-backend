@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +25,9 @@ public interface CertificatesRegistrationRepository extends JpaRepository<Certif
             "WHERE c.cExpiredDate < CURRENT_DATE " +
             "AND c.verificationStatus <> 'Expired'")
     int markExpiredCertificates();
+
+    @Query("SELECT c FROM CertificatesRegistrationEntity c " +
+            "WHERE c.cExpiredDate < :cutoff " +
+            "AND (c.verificationStatus IS NULL OR c.verificationStatus <> 'EXPIRED')")
+    List<CertificatesRegistrationEntity> findNewlyExpired(@Param("cutoff") Date cutoff);
 }
