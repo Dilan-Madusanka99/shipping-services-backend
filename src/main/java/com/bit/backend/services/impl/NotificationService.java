@@ -12,6 +12,7 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -25,11 +26,13 @@ public class NotificationService implements NotificationServiceI {
     private final NotificationRepository notificationRepository;
     private final NotificationMapper notificationMapper;
     private final JavaMailSender javaMailSender;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    public NotificationService(NotificationRepository notificationRepository, NotificationMapper notificationMapper, JavaMailSender javaMailSender) {
+    public NotificationService(NotificationRepository notificationRepository, NotificationMapper notificationMapper, JavaMailSender javaMailSender, SimpMessagingTemplate messagingTemplate) {
         this.notificationRepository = notificationRepository;
         this.notificationMapper = notificationMapper;
         this.javaMailSender = javaMailSender;
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Override
@@ -181,5 +184,15 @@ public class NotificationService implements NotificationServiceI {
         }
 
         return notificationDto;
+    }
+
+    @Override
+    public NotificationDto sendToUser(String username, NotificationDto notificationDto) {
+        NotificationEntity notificationEntity = notificationMapper.toNotificationEntity(notificationDto);
+        notificationEntity.setTimeStamp(new Date());
+        NotificationEntity savedNotification = notificationRepository.save(notificationEntity);
+        NotificationDto savedNotificationDto = notificationMapper.toNotificationDto(savedNotification);
+        messagingTemplate.convertAndSend("/topic/user." + username, savedNotificationDto);
+        return savedNotificationDto;
     }
 }

@@ -13,4 +13,5 @@ public interface NotificationServiceI {
     List<NotificationDto> getUserNotifications(long id);
     boolean changeNotificationStatus(String id);
     AppointmentDto sendAppointmentNotification(AppointmentDto notificationDto, String message) throws MessagingException;
+    NotificationDto sendToUser(String username, NotificationDto notificationDto);
 }

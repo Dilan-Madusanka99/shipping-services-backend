@@ -28,6 +28,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((request) ->
                         request.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
                                 .requestMatchers(HttpMethod.GET,"/job_posting/open").permitAll()
+                                .requestMatchers("/ws").permitAll()
+                                .requestMatchers("/ws/**").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
