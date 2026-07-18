@@ -2,6 +2,7 @@ package com.bit.backend.repositories;
 
 import com.bit.backend.entities.CertificatesRegistrationEntity;
 import com.bit.backend.entities.OtherDetailsRegistrationEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,7 @@ public interface CertificatesRegistrationRepository extends JpaRepository<Certif
     List<CertificatesRegistrationEntity> findBycNo(String cNo);
     Optional<List<CertificatesRegistrationEntity>> findBySidNo(String sidNo);
     @Modifying
+    @Transactional
     @Query("UPDATE CertificatesRegistrationEntity c " +
             "SET c.verificationStatus = 'Expired' " +
             "WHERE c.cExpiredDate < CURRENT_DATE " +

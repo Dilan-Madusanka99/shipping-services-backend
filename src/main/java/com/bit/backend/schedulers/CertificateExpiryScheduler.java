@@ -2,6 +2,8 @@ package com.bit.backend.schedulers;
 
 import com.bit.backend.repositories.CertificatesRegistrationRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +18,12 @@ public class CertificateExpiryScheduler {
         this.certificatesRegistrationRepository = certificatesRegistrationRepository;
     }
 
+    @EventListener(ApplicationReadyEvent.class)
+    public void runOnStartup() {
+        markExpiredCertificates();
+    }
+
     @Scheduled(cron = "${certificate.expiry.cron:0 59 0 * * *}", zone = "Asia/Colombo")
-    @Transactional
     public void markExpiredCertificates() {
         int updated = certificatesRegistrationRepository.markExpiredCertificates();
     }
