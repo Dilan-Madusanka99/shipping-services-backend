@@ -117,7 +117,7 @@ public class StandbyCrewMembersService implements StandbyCrewMembersServiceI{
             Optional<List<StandbyCrewMembersEntity>> optionalStandbyCrewMembersEntity = standbyCrewMembersRepository.findBySidNo(seafarersEntity.getId().toString());
 
             if (!optionalStandbyCrewMembersEntity.isPresent()) {
-                throw new AppException("Onboard Crew Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Standby Crew Registration Does Not Exists", HttpStatus.BAD_REQUEST);
             }
             return standbyCrewMembersMapper.toStandbyCrewMembersDtoList(optionalStandbyCrewMembersEntity.get());
         } catch (Exception e) {
