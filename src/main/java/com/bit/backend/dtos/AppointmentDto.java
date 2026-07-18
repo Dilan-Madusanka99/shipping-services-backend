@@ -12,11 +12,12 @@ public class AppointmentDto {
     private String appointmentDate;
     private String appointmentTime;
     private String appointmentStatus;
+    private String appointmentTypes;
 
     public AppointmentDto() {
     }
 
-    public AppointmentDto(Long id, String sidNo, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus) {
+    public AppointmentDto(Long id, String sidNo, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus, String appointmentTypes) {
         this.id = id;
         this.sidNo = sidNo;
         this.firstName = firstName;
@@ -27,6 +28,7 @@ public class AppointmentDto {
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.appointmentStatus = appointmentStatus;
+        this.appointmentTypes = appointmentTypes;
     }
 
     public Long getId() {
@@ -107,5 +109,13 @@ public class AppointmentDto {
 
     public void setAppointmentStatus(String appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
+    }
+
+    public String getAppointmentTypes() {
+        return appointmentTypes;
+    }
+
+    public void setAppointmentTypes(String appointmentTypes) {
+        this.appointmentTypes = appointmentTypes;
     }
 }

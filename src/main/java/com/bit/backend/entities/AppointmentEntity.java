@@ -39,10 +39,13 @@ public class AppointmentEntity {
     @Column(name = "appointmentStatus")
     private String appointmentStatus;
 
+    @Column(name = "appointmentTypes")
+    private String appointmentTypes;
+
     public AppointmentEntity() {
     }
 
-    public AppointmentEntity(Long id, String sidNo, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus) {
+    public AppointmentEntity(Long id, String sidNo, String firstName, String lastName, String position, String mobile, String email, String appointmentDate, String appointmentTime, String appointmentStatus, String appointmentTypes) {
         this.id = id;
         this.sidNo = sidNo;
         this.firstName = firstName;
@@ -53,6 +56,7 @@ public class AppointmentEntity {
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.appointmentStatus = appointmentStatus;
+        this.appointmentTypes = appointmentTypes;
     }
 
     public Long getId() {
@@ -133,5 +137,13 @@ public class AppointmentEntity {
 
     public void setAppointmentStatus(String appointmentStatus) {
         this.appointmentStatus = appointmentStatus;
+    }
+
+    public String getAppointmentTypes() {
+        return appointmentTypes;
+    }
+
+    public void setAppointmentTypes(String appointmentTypes) {
+        this.appointmentTypes = appointmentTypes;
     }
 }
