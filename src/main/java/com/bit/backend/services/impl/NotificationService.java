@@ -3,9 +3,11 @@ package com.bit.backend.services.impl;
 import com.bit.backend.dtos.AppointmentDto;
 import com.bit.backend.dtos.NotificationDto;
 import com.bit.backend.entities.NotificationEntity;
+import com.bit.backend.entities.User;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.NotificationMapper;
 import com.bit.backend.repositories.NotificationRepository;
+import com.bit.backend.repositories.UserRepository;
 import com.bit.backend.services.NotificationServiceI;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -27,12 +29,14 @@ public class NotificationService implements NotificationServiceI {
     private final NotificationMapper notificationMapper;
     private final JavaMailSender javaMailSender;
     private final SimpMessagingTemplate messagingTemplate;
+    private final UserRepository userRepository;
 
-    public NotificationService(NotificationRepository notificationRepository, NotificationMapper notificationMapper, JavaMailSender javaMailSender, SimpMessagingTemplate messagingTemplate) {
+    public NotificationService(NotificationRepository notificationRepository, NotificationMapper notificationMapper, JavaMailSender javaMailSender, SimpMessagingTemplate messagingTemplate, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
         this.notificationMapper = notificationMapper;
         this.javaMailSender = javaMailSender;
         this.messagingTemplate = messagingTemplate;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -190,6 +194,11 @@ public class NotificationService implements NotificationServiceI {
     public NotificationDto sendToUser(String username, NotificationDto notificationDto) {
         NotificationEntity notificationEntity = notificationMapper.toNotificationEntity(notificationDto);
         notificationEntity.setTimeStamp(new Date());
+
+        if (notificationDto.getTargetUser() == 0) {
+            Optional<User> optionalUser = this.userRepository.findByLogin(username);
+            optionalUser.ifPresent(user -> notificationEntity.setTargetUser(user.getId()));
+        }
         NotificationEntity savedNotification = notificationRepository.save(notificationEntity);
         NotificationDto savedNotificationDto = notificationMapper.toNotificationDto(savedNotification);
         messagingTemplate.convertAndSend("/topic/user." + username, savedNotificationDto);
