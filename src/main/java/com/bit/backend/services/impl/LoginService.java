@@ -38,7 +38,7 @@ public class LoginService implements LoginServiceI {
 //                throw new AppException("Login already exist for the employee", HttpStatus.BAD_REQUEST);
 //            }
 
-            Optional<User> oUser = userRepository.findByLogin(loginDto.getUserName());
+            Optional<User> oUser = userRepository.findByLogin(loginDto.getUsers());
 
             if (oUser.isPresent()) {
                 throw new AppException("User Already Exists", HttpStatus.BAD_REQUEST);
@@ -49,14 +49,6 @@ public class LoginService implements LoginServiceI {
             if (optionalLoginEntity.isPresent()) {
                 throw new AppException("User Name Already Exists", HttpStatus.BAD_REQUEST);
             }
-
-            // not null
-//            if (loginDto.getUsers() == null || loginDto.getUsers().isEmpty()) {
-//                throw new AppException("User Is Empty", HttpStatus.BAD_REQUEST);
-//            }
-//            if (loginDto.getUserName() == null || loginDto.getUserName().isEmpty()) {
-//                throw new AppException("User Name Is Empty", HttpStatus.BAD_REQUEST);
-//            }
 
             LoginEntity loginEntity = loginMapper.toLoginEntity(loginDto);
             LoginEntity savedItem =  loginRepository.save(loginEntity);
