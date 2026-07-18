@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(nativeQuery = true, value = "SELECT id, description FROM get_available_system_auth_details WHERE assigned = 1")
     List<Tuple> getAssignedSystemPrivileges();
+
+    Optional<User> findBySid(String sidNo);
 }
