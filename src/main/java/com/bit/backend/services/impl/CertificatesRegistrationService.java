@@ -34,12 +34,16 @@ public class CertificatesRegistrationService implements CertificatesRegistration
             System.out.println("***In Backend***");
 
             // sid no & certificate name not be same
-            Optional<List<CertificatesRegistrationEntity>> optionalCertificatesRegistrationEntity1 = certificatesRegistrationRepository.findBysidNo(certificatesRegistrationDto.getSidNo());
-            Optional<List<CertificatesRegistrationEntity>> optionalCertificatesRegistrationEntity2 = certificatesRegistrationRepository.findBycName(certificatesRegistrationDto.getcName());
+            Optional<List<CertificatesRegistrationEntity>> optionalCertificatesRegistrationEntity = certificatesRegistrationRepository.findBysidNo(certificatesRegistrationDto.getSidNo());
 
-            if (optionalCertificatesRegistrationEntity1.isPresent() && optionalCertificatesRegistrationEntity1.get().size() > 0
-                    && optionalCertificatesRegistrationEntity2.isPresent() && optionalCertificatesRegistrationEntity2.get().size() > 0) {
-                throw new AppException("Certificate Already Exists of this Seafarer", HttpStatus.BAD_REQUEST);
+            if (optionalCertificatesRegistrationEntity.isPresent()) {
+                for (CertificatesRegistrationEntity entity : optionalCertificatesRegistrationEntity.get()) {
+                    if (entity.getcName().equalsIgnoreCase(certificatesRegistrationDto.getcName())) {
+                        throw new AppException(
+                                "Certificate Already Exists of this Seafarer",
+                                HttpStatus.BAD_REQUEST);
+                    }
+                }
             }
 
             if (certificatesRegistrationDto.getSidNo() == null || certificatesRegistrationDto.getSidNo().isEmpty()) {
@@ -47,11 +51,11 @@ public class CertificatesRegistrationService implements CertificatesRegistration
             }
 
             // certificate no -  DB unique error
-            List<CertificatesRegistrationEntity> certificatesRegistrationEntityList = certificatesRegistrationRepository.findBycNo(certificatesRegistrationDto.getcNo());
+//            List<CertificatesRegistrationEntity> certificatesRegistrationEntityList = certificatesRegistrationRepository.findBycNo(certificatesRegistrationDto.getcNo());
+//
+//            if (certificatesRegistrationEntityList.size() > 0) {
+//                throw new AppException("Certificate Name Already Exists!", HttpStatus.BAD_REQUEST);
 
-            if (certificatesRegistrationEntityList.size() > 0) {
-                throw new AppException("Certificate Name Already Exists!", HttpStatus.BAD_REQUEST);
-            }
 
             CertificatesRegistrationEntity certificatesRegistrationEntity = certificatesRegistrationMapper.toCertificatesRegistrationEntity(certificatesRegistrationDto);
             CertificatesRegistrationEntity savedItem = certificatesRegistrationRepository.save(certificatesRegistrationEntity);

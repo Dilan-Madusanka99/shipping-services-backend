@@ -36,10 +36,10 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
             if (optionalOnboardCrewRegistrationEntity.isPresent()) {
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
             }
-
-            if (onboardCrewRegistrationDto.getSidNo() == null || onboardCrewRegistrationDto.getSidNo().isEmpty()) {
-                throw new AppException("SID No is Empty", HttpStatus.BAD_REQUEST);
-            }
+//
+//            if (onboardCrewRegistrationDto.getSidNo() == null || onboardCrewRegistrationDto.getSidNo().isEmpty()) {
+//                throw new AppException("SID No is Empty", HttpStatus.BAD_REQUEST);
+//            }
 
             OnboardCrewRegistrationEntity onboardCrewRegistrationEntity = onboardCrewRegistrationMapper.toOnboardCrewRegistrationEntity(onboardCrewRegistrationDto);
             OnboardCrewRegistrationEntity savedItem =  onboardCrewRegistrationRepository.save(onboardCrewRegistrationEntity);
@@ -81,7 +81,7 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
             Optional<OnboardCrewRegistrationEntity> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findById(id);
 
             if (!optionalOnboardCrewRegistrationEntity.isPresent()) {
-                throw new AppException("OnboardCrewRegistration Does Not Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Onboard Crew Registration Does Not Exists", HttpStatus.BAD_REQUEST);
             }
 
             OnboardCrewRegistrationEntity newOnboardCrewRegistrationEntity = onboardCrewRegistrationMapper.toOnboardCrewRegistrationEntity(onboardCrewRegistrationDto);

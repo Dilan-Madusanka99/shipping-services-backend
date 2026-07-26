@@ -34,9 +34,9 @@ public class SeafarersService implements SeafarersServiceI {
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
             }
 
-            if (seafarersDto.getSidNo() == null || seafarersDto.getSidNo().isEmpty()) {
-                throw new AppException("Seafarer ID No is Empty", HttpStatus.BAD_REQUEST);
-            }
+//            if (seafarersDto.getSidNo() == null || seafarersDto.getSidNo().isEmpty()) {
+//                throw new AppException("Seafarer ID No is Empty", HttpStatus.BAD_REQUEST);
+//            }
 
             SeafarersEntity seafarersEntity = seafarersMapper.toSeafarersEntity(seafarersDto);
             SeafarersEntity savedItem =  seafarersRepository.save(seafarersEntity);
