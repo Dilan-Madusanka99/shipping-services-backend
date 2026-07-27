@@ -1,5 +1,6 @@
 package com.bit.backend.services.impl;
 
+import com.bit.backend.dtos.JobApplyDto;
 import com.bit.backend.dtos.JobPostingDto;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface JobPostingServiceI {
     JobPostingDto updateJobPosting(long id, JobPostingDto jobPostingDto);
     JobPostingDto deleteJobPosting(long id);
     List<JobPostingDto> getOpenJobs();
+    JobApplyDto apply(JobApplyDto jobApplyDto);
 }

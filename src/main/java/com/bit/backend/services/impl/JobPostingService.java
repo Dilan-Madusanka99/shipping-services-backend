@@ -1,11 +1,14 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.*;
+import com.bit.backend.entities.JobApplyEntity;
 import com.bit.backend.entities.JobPostingEntity;
 import com.bit.backend.entities.JobSuggestionsEntity;
 import com.bit.backend.entities.VesselRegistrationEntity;
 import com.bit.backend.exceptions.AppException;
+import com.bit.backend.mappers.JobApplyMapper;
 import com.bit.backend.mappers.JobPostingMapper;
+import com.bit.backend.repositories.JobApplyRepository;
 import com.bit.backend.repositories.JobPostingRepository;
 import com.bit.backend.repositories.JobSuggestionsRepository;
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,8 @@ public class JobPostingService implements JobPostingServiceI {
     private final SeafarersServiceI seafarersServiceI;
     private final JobSuggestionsRepository jobSuggestionsRepository;
     private final VesselRegistrationServiceI vesselRegistrationServiceI;
+    private final JobApplyRepository jobApplyRepository;
+    private final JobApplyMapper jobApplyMapper;
 
     public JobPostingService(JobPostingRepository jobPostingRepository, JobPostingMapper jobPostingMapper,
                              OnboardCrewRegistrationServiceI onboardCrewRegistrationServiceI,
@@ -31,7 +36,9 @@ public class JobPostingService implements JobPostingServiceI {
                              SeaServicesServiceI seaServicesServiceI,
                              SeafarersServiceI seafarersServiceI,
                              JobSuggestionsRepository jobSuggestionsRepository,
-                             VesselRegistrationServiceI vesselRegistrationServiceI) {
+                             VesselRegistrationServiceI vesselRegistrationServiceI,
+                             JobApplyRepository jobApplyRepository,
+                             JobApplyMapper jobApplyMapper) {
         this.jobPostingRepository = jobPostingRepository;
         this.jobPostingMapper = jobPostingMapper;
         this.onboardCrewRegistrationServiceI = onboardCrewRegistrationServiceI;
@@ -40,6 +47,8 @@ public class JobPostingService implements JobPostingServiceI {
         this.seafarersServiceI = seafarersServiceI;
         this.jobSuggestionsRepository = jobSuggestionsRepository;
         this.vesselRegistrationServiceI = vesselRegistrationServiceI;
+        this.jobApplyRepository = jobApplyRepository;
+        this.jobApplyMapper = jobApplyMapper;
     }
 
     @Override
@@ -189,6 +198,24 @@ public class JobPostingService implements JobPostingServiceI {
             List<JobPostingEntity>  jobPostingEntityList = jobPostingRepository.findByJobStatus("Open");
             List<JobPostingDto> jobPostingDtoList = jobPostingMapper.toJobPostingDtoList(jobPostingEntityList);
             return jobPostingDtoList;
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public JobApplyDto apply(JobApplyDto jobApplyDto) {
+        try {
+            Optional<JobApplyEntity> optionalJobApplyEntity = jobApplyRepository.findByJobIdAndSeafarerId(jobApplyDto.getJobId(), jobApplyDto.getSeafarerId());
+
+            if (optionalJobApplyEntity.isPresent()) {
+                throw new AppException("Already Applied to this Job", HttpStatus.BAD_REQUEST);
+            }
+
+            JobApplyEntity jobApplyEntity = jobApplyMapper.toJobApplyEntity(jobApplyDto);
+            JobApplyEntity savedItem =  jobApplyRepository.save(jobApplyEntity);
+
+            return jobApplyMapper.toJobApplyDto(savedItem);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
