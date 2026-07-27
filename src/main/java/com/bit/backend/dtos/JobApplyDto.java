@@ -1,5 +1,7 @@
 package com.bit.backend.dtos;
 
+import java.util.Date;
+
 public class JobApplyDto {
 
     private Long id;
@@ -10,11 +12,13 @@ public class JobApplyDto {
     private String vesselType;
     private String position;
     private  String status;
+    private Date appliedDate;
+    private Date jobCloseDate;
 
     public JobApplyDto() {
     }
 
-    public JobApplyDto(Long id, Long jobId, Long seafarerId, String seafarerName, String vesselName, String vesselType, String position, String status) {
+    public JobApplyDto(Long id, Long jobId, Long seafarerId, String seafarerName, String vesselName, String vesselType, String position, String status, Date appliedDate, Date jobCloseDate) {
         this.id = id;
         this.jobId = jobId;
         this.seafarerId = seafarerId;
@@ -23,6 +27,8 @@ public class JobApplyDto {
         this.vesselType = vesselType;
         this.position = position;
         this.status = status;
+        this.appliedDate = appliedDate;
+        this.jobCloseDate = jobCloseDate;
     }
 
     public Long getId() {
@@ -87,5 +93,21 @@ public class JobApplyDto {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getAppliedDate() {
+        return appliedDate;
+    }
+
+    public void setAppliedDate(Date appliedDate) {
+        this.appliedDate = appliedDate;
+    }
+
+    public Date getJobCloseDate() {
+        return jobCloseDate;
+    }
+
+    public void setJobCloseDate(Date jobCloseDate) {
+        this.jobCloseDate = jobCloseDate;
     }
 }

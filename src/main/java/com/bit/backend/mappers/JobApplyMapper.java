@@ -14,4 +14,5 @@ public interface JobApplyMapper {
 
     JobApplyDto toJobApplyDto (JobApplyEntity jobApplyEntity);
     JobApplyEntity toJobApplyEntity (JobApplyDto jobApplyDto);
+    List<JobApplyDto> toJobApplyDtoList(List<JobApplyEntity> jobApplyEntityList);
 }

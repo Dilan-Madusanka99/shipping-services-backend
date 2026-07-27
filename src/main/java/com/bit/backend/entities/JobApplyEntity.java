@@ -2,6 +2,8 @@ package com.bit.backend.entities;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name="Job_Apply")
 public class JobApplyEntity {
@@ -31,10 +33,16 @@ public class JobApplyEntity {
     @Column(name = "seafarer_name")
     private String seafarerName;
 
+    @Column(name = "applied_date")
+    private Date appliedDate;
+
+    @Column(name = "job_close_date")
+    private Date jobCloseDate;
+
     public JobApplyEntity() {
     }
 
-    public JobApplyEntity(Long id, String vesselName, String vesselType, String position, String status, Long jobId, Long seafarerId, String seafarerName) {
+    public JobApplyEntity(Long id, String vesselName, String vesselType, String position, String status, Long jobId, Long seafarerId, String seafarerName, Date appliedDate, Date jobCloseDate) {
         this.id = id;
         this.vesselName = vesselName;
         this.vesselType = vesselType;
@@ -43,6 +51,8 @@ public class JobApplyEntity {
         this.jobId = jobId;
         this.seafarerId = seafarerId;
         this.seafarerName = seafarerName;
+        this.appliedDate = appliedDate;
+        this.jobCloseDate = jobCloseDate;
     }
 
     public Long getId() {
@@ -107,5 +117,21 @@ public class JobApplyEntity {
 
     public void setSeafarerName(String seafarerName) {
         this.seafarerName = seafarerName;
+    }
+
+    public Date getAppliedDate() {
+        return appliedDate;
+    }
+
+    public void setAppliedDate(Date appliedDate) {
+        this.appliedDate = appliedDate;
+    }
+
+    public Date getJobCloseDate() {
+        return jobCloseDate;
+    }
+
+    public void setJobCloseDate(Date jobCloseDate) {
+        this.jobCloseDate = jobCloseDate;
     }
 }

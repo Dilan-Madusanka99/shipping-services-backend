@@ -15,4 +15,7 @@ public interface JobPostingServiceI {
     JobPostingDto deleteJobPosting(long id);
     List<JobPostingDto> getOpenJobs();
     JobApplyDto apply(JobApplyDto jobApplyDto);
+    List<JobApplyDto> getAppliedJobsBySid(Long sid);
+    List<JobApplyDto> getAllAppliedJobs();
+    JobApplyDto updateAppliedJobStatus(Long id, JobApplyDto jobApplyDto);
 }

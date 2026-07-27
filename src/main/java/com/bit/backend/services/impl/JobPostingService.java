@@ -11,6 +11,7 @@ import com.bit.backend.mappers.JobPostingMapper;
 import com.bit.backend.repositories.JobApplyRepository;
 import com.bit.backend.repositories.JobPostingRepository;
 import com.bit.backend.repositories.JobSuggestionsRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -219,5 +220,31 @@ public class JobPostingService implements JobPostingServiceI {
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public List<JobApplyDto> getAppliedJobsBySid(Long sid) {
+        List<JobApplyEntity> jobApplyEntityList = jobApplyRepository.getJobAppliedDetailsBySeafarerId(sid);
+        return jobApplyMapper.toJobApplyDtoList(jobApplyEntityList);
+    }
+
+    @Override
+    public List<JobApplyDto> getAllAppliedJobs() {
+        List<JobApplyEntity> jobApplyEntityList = jobApplyRepository.findAll(Sort.by(Sort.Direction.DESC, "appliedDate"));
+        return jobApplyMapper.toJobApplyDtoList(jobApplyEntityList);
+    }
+
+    @Override
+    public JobApplyDto updateAppliedJobStatus(Long id, JobApplyDto jobApplyDto) {
+        Optional<JobApplyEntity> optionalJobApplyEntity = jobApplyRepository.findById(id);
+
+        if (!optionalJobApplyEntity.isPresent()) {
+            throw new AppException("Job does not exists!", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        JobApplyEntity jobApplyEntity = optionalJobApplyEntity.get();
+        jobApplyEntity.setStatus(jobApplyDto.getStatus());
+        JobApplyEntity savedJobApplyEntity = jobApplyRepository.save(jobApplyEntity);
+        return jobApplyMapper.toJobApplyDto(savedJobApplyEntity);
     }
 }

@@ -87,4 +87,14 @@ public class SeafarersController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/seafarers_by_id/{userId}")
+    public ResponseEntity<SeafarersDto> getSeafarerDataById(@PathVariable Long userId) {
+        try {
+            SeafarersDto seafarersDto = seafarersServiceI.getSeafarerDataByUserId(userId);
+            return ResponseEntity.ok(seafarersDto);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

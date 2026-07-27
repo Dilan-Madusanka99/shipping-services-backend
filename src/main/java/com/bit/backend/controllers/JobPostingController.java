@@ -108,4 +108,34 @@ public class JobPostingController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/job_posting/apply/{id}")
+    public ResponseEntity<List<JobApplyDto>> getAppliedJobsBySid(@PathVariable long id) {
+        try {
+            List<JobApplyDto> jobApplyDtoList = jobPostingServiceI.getAppliedJobsBySid(id);
+            return ResponseEntity.status(HttpStatus.OK).body(jobApplyDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/job_posting/apply/get_all")
+    public ResponseEntity<List<JobApplyDto>> getAllAppliedJobs() {
+        try {
+            List<JobApplyDto> jobApplyDtoList = jobPostingServiceI.getAllAppliedJobs();
+            return ResponseEntity.status(HttpStatus.OK).body(jobApplyDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/job_posting/apply/staus_update/{id}")
+    public ResponseEntity<JobApplyDto> updateAppliedJobStatus(@PathVariable Long id, @RequestBody JobApplyDto  jobApplyDto) {
+        try {
+            JobApplyDto responseJobApplyDto = jobPostingServiceI.updateAppliedJobStatus(id, jobApplyDto);
+            return ResponseEntity.ok(responseJobApplyDto);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
