@@ -31,11 +31,12 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
         try {
             System.out.println("***In Backend***");
 
-            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySidNo(onboardCrewRegistrationDto.getSidNo());
+//            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySidNo(onboardCrewRegistrationDto.getSidNo());
+//
+//            if (optionalOnboardCrewRegistrationEntity.isPresent()) {
+//                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+//            }
 
-            if (optionalOnboardCrewRegistrationEntity.isPresent()) {
-                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
-            }
 //
 //            if (onboardCrewRegistrationDto.getSidNo() == null || onboardCrewRegistrationDto.getSidNo().isEmpty()) {
 //                throw new AppException("SID No is Empty", HttpStatus.BAD_REQUEST);

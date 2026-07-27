@@ -27,14 +27,18 @@ public class EmployeeService implements EmployeeServiceI {
         try {
             System.out.println("***In Backend***");
 
+            // find unique employee from NIC No
             Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findByNic(employeeDto.getNic());
 
             if (optionalEmployeeEntity.isPresent()) {
                 throw new AppException("Employee Already Exists", HttpStatus.BAD_REQUEST);
             }
 
-            if (employeeDto.getEmpNo() == null || employeeDto.getEmpNo().isEmpty()) {
-                throw new AppException("Employee No Is Empty", HttpStatus.BAD_REQUEST);
+            // find unique employee from Emp No
+            Optional<EmployeeEntity> optionalEmployeeEntity1 = employeeRepository.findByEmpNo(employeeDto.getEmpNo());
+
+            if (optionalEmployeeEntity1.isPresent()) {
+                throw new AppException("Employee Number Already Exists", HttpStatus.BAD_REQUEST);
             }
 
             EmployeeEntity employeeEntity = employeeMapper.toEmployeeEntity(employeeDto);
@@ -67,6 +71,14 @@ public class EmployeeService implements EmployeeServiceI {
             if (!optionalEmployeeEntity.isPresent()) {
                 throw new AppException("Employee Does Not Exists", HttpStatus.BAD_REQUEST);
             }
+
+            // Check duplicate Employee Number
+//            Optional<EmployeeEntity> employeeByEmpNo = employeeRepository.findByEmpNo(employeeDto.getEmpNo());
+//
+//            if (employeeByEmpNo.isPresent() && employeeByEmpNo.get().getEmpNo() == employeeByEmpNo.get().getEmpNo()) {
+//                throw new AppException("Employee Number Already Exists", HttpStatus.BAD_REQUEST);
+//            }
+
 
             EmployeeEntity newEmployeeEntity = employeeMapper.toEmployeeEntity(employeeDto);
 

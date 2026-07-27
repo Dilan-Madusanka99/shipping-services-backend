@@ -37,9 +37,6 @@ public class StocksService implements StocksServiceI{
                 throw new AppException("Item No Already Exists", HttpStatus.BAD_REQUEST);
             }
 
-            if (stocksDto.getQuantity() == null || stocksDto.getQuantity().isEmpty()) {
-                throw new AppException("Quantity Is Empty", HttpStatus.BAD_REQUEST);
-            }
 
             System.out.println("***In Backend***");
             StocksEntity stocksEntity = stocksMapper.toStocksEntity(stocksDto);

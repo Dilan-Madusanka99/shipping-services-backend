@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
     Optional<EmployeeEntity> findByNic(String nic);
+    Optional<EmployeeEntity> findByEmpNo(String empNo);
 }

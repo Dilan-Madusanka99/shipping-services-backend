@@ -56,9 +56,7 @@ public class EmployeeDto {
         this.id = id;
     }
 
-    public String getEmpNo() {
-        return empNo;
-    }
+    public String getEmpNo() {return empNo; }
 
     public void setEmpNo(String empNo) {
         this.empNo = empNo;
