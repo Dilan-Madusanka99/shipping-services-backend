@@ -14,8 +14,8 @@ public interface JobSuggestionsRepository extends JpaRepository<JobSuggestionsEn
 
 
     @Query(nativeQuery = true, value = "select sf.id, job.seafarer_no, sf.surname, sf.other_names, sf.position, " +
-            "sf.mobile, sf.email, sf.profile_image, job.match_score from ems_dilan.job_suggestions job\n" +
-            "join ems_dilan.seafarers_registration sf\n" +
+            "sf.mobile, sf.email, sf.profile_image, job.match_score from ems.job_suggestions job\n" +
+            "join ems.seafarers_registration sf\n" +
             "ON job.seafarer_id = sf.id\n" +
             "where job.job_id = :jobId")
     Optional<List<Map<String, Object>>> findJobSuggestionDetailsById(@Param("jobId") long jobId);
