@@ -15,6 +15,6 @@ public interface CommonDataServiceI {
     CommonDataListDto saveGroupUserData(int id, CommonDataListDto commonDataListDto);
     List<Map<String, Object>> getSeafarersRegisteredByMonth();
     List<Map<String, Object>> getVesselRegisteredByType();
-    List<Map<String, Object>> getEmployeeAttendanceByEmployee();
+    List<Map<String, Object>> getEmployeeAttendanceByEmployee(String month);
     List<Map<String, Object>> getPaymentsByMonth();
 }

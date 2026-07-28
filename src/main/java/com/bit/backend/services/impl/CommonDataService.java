@@ -155,9 +155,9 @@ public class CommonDataService implements CommonDataServiceI {
 
     // Employee attendance charts
     @Override
-    public List<Map<String, Object>> getEmployeeAttendanceByEmployee() {
+    public List<Map<String, Object>> getEmployeeAttendanceByEmployee(String month) {
         try {
-            return employeeAttendenceRepository.getEmployeeAttendanceByEmployee();
+            return employeeAttendenceRepository.getEmployeeAttendanceByEmployee(month);
         } catch (Exception e) {
             throw new AppException("Request failed with error while getting data to stat charts: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
