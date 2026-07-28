@@ -4,6 +4,7 @@ import com.bit.backend.dtos.PaymentsDto;
 import com.bit.backend.entities.PaymentsEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.entities.StocksEntity;
+import com.bit.backend.entities.SupplierRegistrationEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.PaymentsMapper;
 import com.bit.backend.repositories.PaymentsRepository;
@@ -83,6 +84,13 @@ public class PaymentsService implements PaymentsServiceI{
 
             if (!optionalPaymentsEntity.isPresent()) {
                 throw new AppException("Payments Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            // check duplicate Payment No
+            Optional<PaymentsEntity> existingPayment = paymentsRepository.findByPaymentNo(paymentsDto.getPaymentNo());
+
+            if (existingPayment.isPresent() && existingPayment.get().getId() != id) {
+                throw new AppException("Payment No Already Exists", HttpStatus.BAD_REQUEST);
             }
 
             PaymentsEntity newPaymentsEntity = paymentsMapper.toPaymentsEntity(paymentsDto);

@@ -69,6 +69,13 @@ public class SupplierRegistrationService implements SupplierRegistrationServiceI
                 throw new AppException("Supplier Registration Does Not Exists", HttpStatus.BAD_REQUEST);
             }
 
+            // check duplicate Sup No
+            Optional<SupplierRegistrationEntity> existingSupplier = supplierRegistrationRepository.findBySupplierNo(supplierRegistrationDto.getSupplierNo());
+
+            if (existingSupplier.isPresent() && existingSupplier.get().getId() != id) {
+                throw new AppException("Supplier No Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
             SupplierRegistrationEntity newSupplierRegistrationEntity = supplierRegistrationMapper.toSupplierRegistrationEntity(supplierRegistrationDto);
 
             newSupplierRegistrationEntity.setId(id);
