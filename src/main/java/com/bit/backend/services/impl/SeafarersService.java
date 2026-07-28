@@ -7,6 +7,7 @@ import com.bit.backend.entities.User;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.SeafarersMapper;;
 import com.bit.backend.repositories.SeafarersRepository;
+import com.bit.backend.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,12 @@ public class SeafarersService implements SeafarersServiceI {
 
     private final SeafarersRepository seafarersRepository;
     private final SeafarersMapper seafarersMapper;
+    private final UserRepository userRepository;
 
-    public SeafarersService(SeafarersRepository seafarersRepository, SeafarersMapper seafarersMapper) {
+    public SeafarersService(SeafarersRepository seafarersRepository, SeafarersMapper seafarersMapper, UserRepository userRepository) {
         this.seafarersRepository = seafarersRepository;
         this.seafarersMapper = seafarersMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -146,5 +149,24 @@ public class SeafarersService implements SeafarersServiceI {
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public SeafarersDto getSeafarerDataByUserId(Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (!optionalUser.isPresent()) {
+            throw new AppException("Seafarer related User not found", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        User user = optionalUser.get();
+        String seafarerId = user.getSid();
+
+        Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(seafarerId);
+
+        if (!optionalSeafarersEntity.isPresent()) {
+            throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+        }
+        return seafarersMapper.toSeafarersDto(optionalSeafarersEntity.get());
     }
 }

@@ -12,4 +12,5 @@ public interface SeafarersServiceI {
     SeafarersDto deleteSeafarers(long id);
     SeafarersDto getSeafarerData(String sid);
     SeafarersDto getSeafarerDataById(long id);
+    SeafarersDto getSeafarerDataByUserId(Long userId);
 }

@@ -1,5 +1,6 @@
 package com.bit.backend.controllers;
 
+import com.bit.backend.dtos.JobApplyDto;
 import com.bit.backend.dtos.JobPostingDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.JobPostingServiceI;
@@ -93,6 +94,46 @@ public class JobPostingController {
         try {
             List<JobPostingDto> jobPostingDtoList = jobPostingServiceI.getOpenJobs();
             return ResponseEntity.ok(jobPostingDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = {"/job_posting/apply"})
+    public ResponseEntity<JobApplyDto> apply(@RequestBody JobApplyDto jobApplyDto) {
+        try {
+            JobApplyDto jobApplyDtoResponse = jobPostingServiceI.apply(jobApplyDto);
+            return ResponseEntity.created(URI.create("/job_posting/apply"+jobApplyDtoResponse.getId())).body(jobApplyDtoResponse);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/job_posting/apply/{id}")
+    public ResponseEntity<List<JobApplyDto>> getAppliedJobsBySid(@PathVariable long id) {
+        try {
+            List<JobApplyDto> jobApplyDtoList = jobPostingServiceI.getAppliedJobsBySid(id);
+            return ResponseEntity.status(HttpStatus.OK).body(jobApplyDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/job_posting/apply/get_all")
+    public ResponseEntity<List<JobApplyDto>> getAllAppliedJobs() {
+        try {
+            List<JobApplyDto> jobApplyDtoList = jobPostingServiceI.getAllAppliedJobs();
+            return ResponseEntity.status(HttpStatus.OK).body(jobApplyDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/job_posting/apply/staus_update/{id}")
+    public ResponseEntity<JobApplyDto> updateAppliedJobStatus(@PathVariable Long id, @RequestBody JobApplyDto  jobApplyDto) {
+        try {
+            JobApplyDto responseJobApplyDto = jobPostingServiceI.updateAppliedJobStatus(id, jobApplyDto);
+            return ResponseEntity.ok(responseJobApplyDto);
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
