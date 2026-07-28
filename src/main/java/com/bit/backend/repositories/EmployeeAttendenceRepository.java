@@ -9,9 +9,17 @@ import java.util.List;
 import java.util.Map;
 
 public interface EmployeeAttendenceRepository extends JpaRepository<EmployeeAttendenceEntity, Long> {
+
     EmployeeAttendenceEntity findByUsersAndAttandenceDate(String users, LocalDate now);
 
-    @Query(nativeQuery = true, value = "select DATE_FORMAT(attandence_Date, '%Y-%m') as month, count(*) as cnt from ems.employee_attendence group by month order by month")
-    List<Map<String, Object>> getEmployeeAttendanceByMonth();
+    @Query(nativeQuery = true, value =
+            "select concat(e.first_name, ' ', e.last_name) as employeeName, " +
+                    "count(*) as cnt " +
+                    "from ems.employee_attendence ea " +
+                    "inner join ems.employee e on e.id = ea.users " +
+                    "group by e.first_name, e.last_name " +
+                    "order by employeeName")
+    List<Map<String, Object>> getEmployeeAttendanceByEmployee();
+
     boolean existsByUsersAndAttandenceDate(String id, LocalDate today);
 }
