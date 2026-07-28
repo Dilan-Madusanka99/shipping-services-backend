@@ -1,6 +1,7 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.SeafarersDto;
+import com.bit.backend.entities.EmployeeEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.entities.User;
 import com.bit.backend.exceptions.AppException;
@@ -80,6 +81,14 @@ public class SeafarersService implements SeafarersServiceI {
             if (!optionalSeafarersEntity.isPresent()) {
                 throw new AppException("Seafarers Registration Does Not Exists", HttpStatus.BAD_REQUEST);
             }
+
+            // check duplicate SID No
+            Optional<SeafarersEntity> existingSeafarer = seafarersRepository.findBySidNo(seafarersDto.getSidNo());
+
+            if (existingSeafarer.isPresent() && existingSeafarer.get().getId() != id) {
+                throw new AppException("SID No Already Exists", HttpStatus.BAD_REQUEST);
+            }
+
 
             SeafarersEntity newSeafarersEntity = seafarersMapper.toSeafarersEntity(seafarersDto);
 

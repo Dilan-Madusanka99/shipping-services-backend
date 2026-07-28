@@ -72,12 +72,12 @@ public class EmployeeService implements EmployeeServiceI {
                 throw new AppException("Employee Does Not Exists", HttpStatus.BAD_REQUEST);
             }
 
-            // Check duplicate Employee Number
-//            Optional<EmployeeEntity> employeeByEmpNo = employeeRepository.findByEmpNo(employeeDto.getEmpNo());
-//
-//            if (employeeByEmpNo.isPresent() && employeeByEmpNo.get().getEmpNo() == employeeByEmpNo.get().getEmpNo()) {
-//                throw new AppException("Employee Number Already Exists", HttpStatus.BAD_REQUEST);
-//            }
+            // Check duplicate Employee No
+            Optional<EmployeeEntity> existingEmployee = employeeRepository.findByEmpNo(employeeDto.getEmpNo());
+
+            if (existingEmployee.isPresent() && existingEmployee.get().getId() != id) {
+                throw new AppException("Employee No Already Exists", HttpStatus.BAD_REQUEST);
+            }
 
 
             EmployeeEntity newEmployeeEntity = employeeMapper.toEmployeeEntity(employeeDto);

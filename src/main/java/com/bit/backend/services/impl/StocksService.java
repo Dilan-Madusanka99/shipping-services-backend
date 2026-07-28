@@ -31,20 +31,23 @@ public class StocksService implements StocksServiceI{
     @Override
     public StocksDto addStocksEntity(StocksDto stocksDto) {
         try {
-            Optional<StocksEntity> oStocksEntity = stocksRepository.findByitemNo(stocksDto.getItemNo());
+            Optional<StocksEntity> oStocksEntity = stocksRepository.findByItemNoAndSupplierName(stocksDto.getItemNo(),stocksDto.getSupplierName());
 
             if (oStocksEntity.isPresent()) {
-                throw new AppException("Item No Already Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Item already exists on same Supplier. So, Please Edit the Quantity. ", HttpStatus.BAD_REQUEST);
             }
 
-
-            System.out.println("***In Backend***");
             StocksEntity stocksEntity = stocksMapper.toStocksEntity(stocksDto);
-            StocksEntity savedItem =  stocksRepository.save(stocksEntity);
-            StocksDto savedDto = stocksMapper.toStocksDto(savedItem);
-            return savedDto;
+            StocksEntity savedItem = stocksRepository.save(stocksEntity);
+            return stocksMapper.toStocksDto(savedItem);
+
+        } catch (AppException e) {
+            throw e;
         } catch (Exception e) {
-            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new AppException(
+                    "Request failed with error: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
         }
     }
 
@@ -65,21 +68,36 @@ public class StocksService implements StocksServiceI{
 
         try {
             Optional<StocksEntity> optionalStocksEntity = stocksRepository.findById(id);
-
             if (!optionalStocksEntity.isPresent()) {
-                throw new AppException("Stocks Does Not Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException(
+                        "Stocks Does Not Exists",
+                        HttpStatus.BAD_REQUEST
+                );
             }
 
-            StocksEntity newStocksEntity = stocksMapper.toStocksEntity(stocksDto);
+            // Check duplicate item + supplier
+            Optional<StocksEntity> duplicateStock = stocksRepository.findByItemNoAndSupplierName(stocksDto.getItemNo(), stocksDto.getSupplierName());
 
+            if (duplicateStock.isPresent()
+                    && duplicateStock.get().getId() != id) {
+
+                throw new AppException("Item already exists on same Supplier", HttpStatus.BAD_REQUEST
+                );
+            }
+
+            StocksEntity newStocksEntity =
+                    stocksMapper.toStocksEntity(stocksDto);
             newStocksEntity.setId(id);
             StocksEntity savedStocksEntity = stocksRepository.save(newStocksEntity);
+            return stocksMapper.toStocksDto(savedStocksEntity);
 
-            StocksDto responseStocksDto = stocksMapper.toStocksDto(savedStocksEntity);
-            return responseStocksDto;
-
+        } catch (AppException e) {
+            throw e;
         } catch (Exception e) {
-            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new AppException(
+                    "Request failed with error: " + e.getMessage(),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
         }
     }
 
