@@ -14,13 +14,14 @@ public interface EmployeeAttendenceRepository extends JpaRepository<EmployeeAtte
     EmployeeAttendenceEntity findByUsersAndAttandenceDate(String users, LocalDate now);
 
     @Query(nativeQuery = true, value =
-            "select CONCAT(e.first_name,' ',e.last_name) as employeeName, count(*) as cnt " +
-                    "from ems.employee_attendence a " +
-                    "join ems.employee e on a.users = e.id " +
-                    "where DATE_FORMAT(a.attandence_Date, '%Y-%m') = :month " +
-                    "group by e.first_name, e.last_name " +
-                    "order by cnt")
-    List<Map<String, Object>> getEmployeeAttendanceByEmployee(@Param("month") String month);
+            "SELECT CONCAT(e.first_name, ' ', e.last_name) AS employeeName, COUNT(*) AS cnt " +
+                    "FROM ems.employee_attendence a " +
+                    "JOIN ems.employee e ON a.users = e.id " +
+                    "WHERE MONTH(a.attandence_Date) = :month " +
+                    "AND YEAR(a.attandence_Date) = :year " +
+                    "GROUP BY e.first_name, e.last_name " +
+                    "ORDER BY cnt DESC")
+    List<Map<String, Object>> getEmployeeAttendanceByEmployee(@Param("month") int month, @Param("year") int year);
 
     boolean existsByUsersAndAttandenceDate(String id, LocalDate today);
 }
