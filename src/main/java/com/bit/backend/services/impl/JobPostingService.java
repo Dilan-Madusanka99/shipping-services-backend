@@ -94,6 +94,10 @@ public class JobPostingService implements JobPostingServiceI {
                 score = score + 40; /* 40 for position match */
             }
 
+            if (experience == null) {
+                experience = 0;
+            }
+
             if (Integer.parseInt(jobPostingDto.getMinimumExp()) <= experience) {
                 score = score + 30;
             }
