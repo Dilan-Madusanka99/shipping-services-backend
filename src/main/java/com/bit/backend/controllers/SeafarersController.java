@@ -97,4 +97,24 @@ public class SeafarersController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/seafarers_registration/check-uniqueness/{sid}")
+    public ResponseEntity<Boolean> checkSeafarerIdUniqueness(@PathVariable String sid) {
+        try {
+            Boolean isExists = seafarersServiceI.checkSeafarerIdUniqueness(sid);
+            return ResponseEntity.ok(isExists);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/seafarers_registration/check-login-uniqueness/{login}")
+    public ResponseEntity<Boolean> checkLoginNameUniqueness(@PathVariable String login) {
+        try {
+            Boolean isExists = seafarersServiceI.checkLoginNameUniqueness(login);
+            return ResponseEntity.ok(isExists);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

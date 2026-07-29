@@ -42,4 +42,9 @@ public class PrivilegeGroupController {
     public ResponseEntity<PrivilegeGroupDto> deletePrivilegeGroup(@PathVariable long id, @RequestBody PrivilegeGroupDto privilegeGroupDto) {
         return ResponseEntity.ok(privilegeGroupServiceI.deletePrivilegeGroup(id, privilegeGroupDto));
     }
+
+    @PutMapping("/privilege-groups/set-seafarer-default/{id}")
+    public ResponseEntity<PrivilegeGroupDto> setSeafarerDefaultPrivilegeGroup(@PathVariable long id) {
+        return ResponseEntity.ok(privilegeGroupServiceI.setSeafarerDefaultPrivilegeGroup(id));
+    }
 }

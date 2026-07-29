@@ -169,4 +169,27 @@ public class SeafarersService implements SeafarersServiceI {
         }
         return seafarersMapper.toSeafarersDto(optionalSeafarersEntity.get());
     }
+
+    @Override
+    public Boolean checkSeafarerIdUniqueness(String sid) {
+        Optional<User> optionalUser = userRepository.findBySid(sid);
+
+        if (optionalUser.isPresent()) {
+            return true;
+        }
+//        User must be register even if there are data in seafarer registratin entity
+//        Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
+//
+//        if (optionalSeafarersEntity.isPresent()) {
+//            return true;
+//        }
+
+        return false;
+    }
+
+    @Override
+    public Boolean checkLoginNameUniqueness(String login) {
+        Optional<User> optionalUser = userRepository.findByLogin(login);
+        return optionalUser.isPresent();
+    }
 }

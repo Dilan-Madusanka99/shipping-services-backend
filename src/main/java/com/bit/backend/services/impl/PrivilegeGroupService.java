@@ -2,9 +2,11 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.PrivilegeGroupDto;
 import com.bit.backend.entities.PrivilegeGroup;
+import com.bit.backend.entities.PrivilegeGroupUser;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.PrivilegeGroupMapper;
 import com.bit.backend.repositories.PrivilegeGroupRepository;
+import com.bit.backend.repositories.PrivilegeGroupUserRepository;
 import com.bit.backend.services.PrivilegeGroupServiceI;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,13 @@ public class PrivilegeGroupService implements PrivilegeGroupServiceI {
 
     private final PrivilegeGroupRepository privilegeGroupRepository;
     private final PrivilegeGroupMapper privilegeGroupMapper;
+    private final PrivilegeGroupUserRepository privilegeGroupUserRepository;
 
     public PrivilegeGroupService(PrivilegeGroupRepository privilegeGroupRepository,
-                                                            PrivilegeGroupMapper privilegeGroupMapper) {
+                                 PrivilegeGroupMapper privilegeGroupMapper, PrivilegeGroupUserRepository privilegeGroupUserRepository) {
         this.privilegeGroupRepository = privilegeGroupRepository;
         this.privilegeGroupMapper = privilegeGroupMapper;
+        this.privilegeGroupUserRepository = privilegeGroupUserRepository;
     }
 
     @Override
@@ -77,8 +81,28 @@ public class PrivilegeGroupService implements PrivilegeGroupServiceI {
             throw new AppException("Privilege Group Not Exists", HttpStatus.BAD_REQUEST);
         }
 
+        List<PrivilegeGroupUser> privilegeGroupUserList = privilegeGroupUserRepository.findByAuthGroupId(id);
+
+        if (!privilegeGroupUserList.isEmpty()) {
+            throw new AppException("Can't Delete. There are users assigned to privilege group", HttpStatus.BAD_REQUEST);
+        }
+
         PrivilegeGroup privilegeGroup = oPrivilegeGroup.get();
         privilegeGroup.setStatus(0);
+        PrivilegeGroup savedPrivilegeGroup = privilegeGroupRepository.save(privilegeGroup);
+        return privilegeGroupMapper.toPrivilegeGroupDto(savedPrivilegeGroup);
+    }
+
+    @Override
+    public PrivilegeGroupDto setSeafarerDefaultPrivilegeGroup(long id) {
+        Optional<PrivilegeGroup> oPrivilegeGroup = privilegeGroupRepository.findById(id);
+
+        if (!oPrivilegeGroup.isPresent()) {
+            throw new AppException("Privilege Group Not Exists", HttpStatus.BAD_REQUEST);
+        }
+        privilegeGroupRepository.clearSeafarerDefault();
+        PrivilegeGroup privilegeGroup = oPrivilegeGroup.get();
+        privilegeGroup.setSeafarerDefault(1);
         PrivilegeGroup savedPrivilegeGroup = privilegeGroupRepository.save(privilegeGroup);
         return privilegeGroupMapper.toPrivilegeGroupDto(savedPrivilegeGroup);
     }

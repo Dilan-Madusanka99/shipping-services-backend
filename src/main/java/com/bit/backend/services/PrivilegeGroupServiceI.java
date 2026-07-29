@@ -10,4 +10,5 @@ public interface PrivilegeGroupServiceI {
     PrivilegeGroupDto addPrivilegeGroup(PrivilegeGroupDto privilegeGroupDto);
     PrivilegeGroupDto updatePrivilegeGroup(long id, PrivilegeGroupDto privilegeGroupDto);
     PrivilegeGroupDto deletePrivilegeGroup(long id, PrivilegeGroupDto privilegeGroupDto);
+    PrivilegeGroupDto setSeafarerDefaultPrivilegeGroup(long id);
 }

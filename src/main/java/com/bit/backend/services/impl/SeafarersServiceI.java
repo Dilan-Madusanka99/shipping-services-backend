@@ -13,4 +13,6 @@ public interface SeafarersServiceI {
     SeafarersDto getSeafarerData(String sid);
     SeafarersDto getSeafarerDataById(long id);
     SeafarersDto getSeafarerDataByUserId(Long userId);
+    Boolean checkSeafarerIdUniqueness(String sid);
+    Boolean checkLoginNameUniqueness(String login);
 }
