@@ -33,7 +33,8 @@ public class OnboardCrewRegistrationService implements OnboardCrewRegistrationSe
 
             Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntity = onboardCrewRegistrationRepository.findBySidNo(onboardCrewRegistrationDto.getSidNo());
 
-            if (optionalOnboardCrewRegistrationEntity.isPresent()) {
+            if (optionalOnboardCrewRegistrationEntity.isPresent() && !optionalOnboardCrewRegistrationEntity.get().isEmpty()) {
+                /* TODO:  update data instead of throwing error*/
                 throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
             }
 //
