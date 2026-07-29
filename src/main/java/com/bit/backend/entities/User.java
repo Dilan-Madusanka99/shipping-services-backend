@@ -32,7 +32,7 @@ public class User {
     @Column(name = "role")
     private String role;
 
-    @Column(name = "sid", nullable = false)
+    @Column(name = "sid") /* sid is nullable when creating logins for employees */
     private String sid;
 
     @Column(nullable = false)

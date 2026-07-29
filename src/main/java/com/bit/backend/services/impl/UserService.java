@@ -60,16 +60,20 @@ public class UserService implements UserServiceI {
             throw new AppException("User Already Exists", HttpStatus.BAD_REQUEST);
         }
 
-        Optional<User> optionalUser = userRepository.findBySid(signUpDto.sid());
+        if (signUpDto.role().equals("SEAFARER")) {
+            Optional<User> optionalUser = userRepository.findBySid(signUpDto.sid());
 
-        if (optionalUser.isPresent()) {
-            throw new AppException("Seafarer ID Already Registered", HttpStatus.BAD_REQUEST);
+            if (optionalUser.isPresent()) {
+                throw new AppException("Seafarer ID Already Registered", HttpStatus.BAD_REQUEST);
+            }
         }
 
         User user = userMapper.signUpToUser(signUpDto);
 
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
-        user.setRole("SEAFARER"); /* only seafarers can register through the system*/
+        if (signUpDto.role().equals("SEAFARER")) {
+            user.setRole("SEAFARER");
+        }
         User savedUser = userRepository.save(user);
 
         setDefaultAuthGroup(user.getId());
