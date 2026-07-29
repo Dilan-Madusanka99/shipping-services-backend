@@ -1,9 +1,13 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.*;
+import com.bit.backend.entities.PrivilegeGroup;
+import com.bit.backend.entities.PrivilegeGroupUser;
 import com.bit.backend.entities.User;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.UserMapper;
+import com.bit.backend.repositories.PrivilegeGroupRepository;
+import com.bit.backend.repositories.PrivilegeGroupUserRepository;
 import com.bit.backend.repositories.UserRepository;
 import com.bit.backend.services.UserServiceI;
 import jakarta.persistence.Tuple;
@@ -26,11 +30,15 @@ public class UserService implements UserServiceI {
     private final UserMapper userMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+    private final PrivilegeGroupRepository privilegeGroupRepository;
+    private final PrivilegeGroupUserRepository privilegeGroupUserRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper, PrivilegeGroupRepository privilegeGroupRepository, PrivilegeGroupUserRepository privilegeGroupUserRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userMapper = userMapper;
+        this.privilegeGroupRepository = privilegeGroupRepository;
+        this.privilegeGroupUserRepository = privilegeGroupUserRepository;
     }
 
     @Override
@@ -56,7 +64,25 @@ public class UserService implements UserServiceI {
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(signUpDto.password())));
         user.setRole("SEAFARER"); /* only seafarers can register through the system*/
         User savedUser = userRepository.save(user);
+
+        setDefaultAuthGroup(user.getId());
+
         return userMapper.toUserDto(savedUser);
+    }
+
+    private void setDefaultAuthGroup(Long userId) {
+        Optional<PrivilegeGroup> optionalPrivilegeGroup = privilegeGroupRepository.getDefaultSeafarerGroup();
+        if (optionalPrivilegeGroup.isEmpty()) {
+//            throw new AppException("Default Privilege Group Not Exists", HttpStatus.BAD_REQUEST);
+            return;
+        }
+
+        PrivilegeGroup privilegeGroup = optionalPrivilegeGroup.get();
+
+        PrivilegeGroupUser privilegeGroupUser = new PrivilegeGroupUser();
+        privilegeGroupUser.setAuthGroupId(privilegeGroup.getId().intValue());
+        privilegeGroupUser.setUserId(userId.intValue());
+        privilegeGroupUserRepository.save(privilegeGroupUser);
     }
 
     @Override

@@ -26,4 +26,6 @@ public interface PrivilegeGroupRepository extends JpaRepository<PrivilegeGroup, 
     @Transactional
     @Query("UPDATE PrivilegeGroup p SET p.seafarerDefault = 0")
     void clearSeafarerDefault();
+    @Query(nativeQuery = true, value = "SELECT * FROM auth_groups WHERE seafarer_default = 1")
+    Optional<PrivilegeGroup> getDefaultSeafarerGroup();
 }
