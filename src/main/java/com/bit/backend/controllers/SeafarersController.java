@@ -3,6 +3,7 @@ package com.bit.backend.controllers;
 import com.bit.backend.dtos.SeafarersDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.impl.SeafarersServiceI;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class SeafarersController {
     }
 
     //   // Photo upload [start]
+    @Transactional
     @PostMapping(value = {"/seafarers_registration"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<SeafarersDto> addSeafarers(@RequestPart("seafarersForm") SeafarersDto seafarersDto,
                                                      @RequestPart("profileImage") MultipartFile file) {
@@ -59,6 +61,7 @@ public class SeafarersController {
         }
     }
 
+    @Transactional
     @PutMapping("/seafarers_registration/{id}")
     public ResponseEntity<SeafarersDto> updateSeafarers(@PathVariable Long id,
                                                       @RequestPart ("seafarersForm") SeafarersDto seafarersDto,

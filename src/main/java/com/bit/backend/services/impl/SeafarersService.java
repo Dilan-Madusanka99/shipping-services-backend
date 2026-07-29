@@ -1,10 +1,12 @@
 package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.SeafarersDto;
+import com.bit.backend.entities.OnboardCrewRegistrationEntity;
 import com.bit.backend.entities.SeafarersEntity;
 import com.bit.backend.entities.User;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.SeafarersMapper;;
+import com.bit.backend.repositories.OnboardCrewRegistrationRepository;
 import com.bit.backend.repositories.SeafarersRepository;
 import com.bit.backend.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,13 @@ public class SeafarersService implements SeafarersServiceI {
     private final SeafarersRepository seafarersRepository;
     private final SeafarersMapper seafarersMapper;
     private final UserRepository userRepository;
+    private final OnboardCrewRegistrationRepository onboardCrewRegistrationRepository;
 
-    public SeafarersService(SeafarersRepository seafarersRepository, SeafarersMapper seafarersMapper, UserRepository userRepository) {
+    public SeafarersService(SeafarersRepository seafarersRepository, SeafarersMapper seafarersMapper, UserRepository userRepository, OnboardCrewRegistrationRepository onboardCrewRegistrationRepository) {
         this.seafarersRepository = seafarersRepository;
         this.seafarersMapper = seafarersMapper;
         this.userRepository = userRepository;
+        this.onboardCrewRegistrationRepository = onboardCrewRegistrationRepository;
     }
 
     @Override
@@ -43,6 +47,12 @@ public class SeafarersService implements SeafarersServiceI {
 
             SeafarersEntity seafarersEntity = seafarersMapper.toSeafarersEntity(seafarersDto);
             SeafarersEntity savedItem =  seafarersRepository.save(seafarersEntity);
+            /* Add to Standby Crew Details */
+            OnboardCrewRegistrationEntity onboardCrewRegistrationEntity = new OnboardCrewRegistrationEntity();
+            onboardCrewRegistrationEntity.setSidNo(seafarersEntity.getId().toString());
+            onboardCrewRegistrationEntity.setPosition(seafarersEntity.getPosition());
+            onboardCrewRegistrationEntity.setStatus("Inactive");
+            onboardCrewRegistrationRepository.save(onboardCrewRegistrationEntity);
             SeafarersDto savedDto = seafarersMapper.toSeafarersDto(savedItem);
             return savedDto;
         } catch (Exception e) {
@@ -89,6 +99,18 @@ public class SeafarersService implements SeafarersServiceI {
             newSeafarersEntity.setId(id);
             SeafarersEntity savedSeafarersEntity = seafarersRepository.save(newSeafarersEntity);
 
+            /* Edit Standby Crew Details */
+
+            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntityList = onboardCrewRegistrationRepository.findBySidNo(savedSeafarersEntity.getSidNo());
+
+            if (optionalOnboardCrewRegistrationEntityList.isPresent() && optionalOnboardCrewRegistrationEntityList.get().size() == 1) {
+                List<OnboardCrewRegistrationEntity> onboardCrewRegistrationEntityList = optionalOnboardCrewRegistrationEntityList.get();
+                OnboardCrewRegistrationEntity newOnboardCrewRegistrationEntity = onboardCrewRegistrationEntityList.get(0);
+                newOnboardCrewRegistrationEntity.setSidNo(savedSeafarersEntity.getId().toString());
+                newOnboardCrewRegistrationEntity.setPosition(savedSeafarersEntity.getPosition());
+                onboardCrewRegistrationRepository.save(newOnboardCrewRegistrationEntity);
+
+            }
             SeafarersDto responseSeafarersDto = seafarersMapper.toSeafarersDto(savedSeafarersEntity);
             return responseSeafarersDto;
 
