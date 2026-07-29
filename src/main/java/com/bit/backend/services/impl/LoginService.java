@@ -38,7 +38,7 @@ public class LoginService implements LoginServiceI {
 //                throw new AppException("Login already exist for the employee", HttpStatus.BAD_REQUEST);
 //            }
 
-            Optional<User> oUser = userRepository.findByLogin(loginDto.getUsers());
+            Optional<User> oUser = userRepository.findByLogin(loginDto.getUserName());
 
             if (oUser.isPresent()) {
                 throw new AppException("User Already Exists", HttpStatus.BAD_REQUEST);

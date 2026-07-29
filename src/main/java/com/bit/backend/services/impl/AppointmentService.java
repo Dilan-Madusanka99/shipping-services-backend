@@ -35,11 +35,11 @@ public class AppointmentService implements AppointmentServiceI{
         try {
             System.out.println("***In Backend***");
 
-            Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySidNo(appointmentDto.getSidNo());
-
-            if (optionalAppointmentEntity.isPresent()) {
-                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
-            }
+//            Optional<AppointmentEntity> optionalAppointmentEntity = appointmentRepository.findBySidNo(appointmentDto.getSidNo());
+//
+//            if (optionalAppointmentEntity.isPresent()) {
+//                throw new AppException("Seafarer Already Exists", HttpStatus.BAD_REQUEST);
+//            }
 
             if (appointmentDto.getSidNo() == null || appointmentDto.getSidNo().isEmpty()) {
                 throw new AppException("Seafarer ID No Is Empty", HttpStatus.BAD_REQUEST);
@@ -50,7 +50,7 @@ public class AppointmentService implements AppointmentServiceI{
             AppointmentEntity savedItem =  appointmentRepository.save(appointmentEntity);
             AppointmentDto savedDto = appointmentMapper.toAppointmentDto(savedItem);
 
-            AppointmentDto notified = this.notificationServiceI.sendAppointmentNotification(savedDto,"schedule");
+//            AppointmentDto notified = this.notificationServiceI.sendAppointmentNotification(savedDto,"schedule");
 
             return savedDto;
         } catch (Exception e) {

@@ -6,6 +6,7 @@ import com.bit.backend.dtos.UserDto;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.services.UserServiceI;
 import com.bit.backend.services.impl.LoginServiceI;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class LoginController {
     public LoginController(LoginServiceI loginServiceI, UserServiceI userServiceI) {this.loginServiceI = loginServiceI;
         this.userServiceI = userServiceI;}
 
+    @Transactional
     @PostMapping("/Login")
     public ResponseEntity<LoginDto> addLogin(@RequestBody LoginDto loginDto) {
         LoginDto updatedLoginDto = loginDto;
