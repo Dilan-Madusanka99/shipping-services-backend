@@ -82,4 +82,18 @@ public class PrivilegeGroupService implements PrivilegeGroupServiceI {
         PrivilegeGroup savedPrivilegeGroup = privilegeGroupRepository.save(privilegeGroup);
         return privilegeGroupMapper.toPrivilegeGroupDto(savedPrivilegeGroup);
     }
+
+    @Override
+    public PrivilegeGroupDto setSeafarerDefaultPrivilegeGroup(long id) {
+        Optional<PrivilegeGroup> oPrivilegeGroup = privilegeGroupRepository.findById(id);
+
+        if (!oPrivilegeGroup.isPresent()) {
+            throw new AppException("Privilege Group Not Exists", HttpStatus.BAD_REQUEST);
+        }
+        privilegeGroupRepository.clearSeafarerDefault();
+        PrivilegeGroup privilegeGroup = oPrivilegeGroup.get();
+        privilegeGroup.setSeafarerDefault(1);
+        PrivilegeGroup savedPrivilegeGroup = privilegeGroupRepository.save(privilegeGroup);
+        return privilegeGroupMapper.toPrivilegeGroupDto(savedPrivilegeGroup);
+    }
 }

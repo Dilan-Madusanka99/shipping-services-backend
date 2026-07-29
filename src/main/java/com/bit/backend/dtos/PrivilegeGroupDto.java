@@ -4,17 +4,19 @@ public class PrivilegeGroupDto {
 
     public PrivilegeGroupDto() {}
 
-    public PrivilegeGroupDto(Long id, String groupName, String groupDescription, int status) {
+    public PrivilegeGroupDto(Long id, String groupName, String groupDescription, int status, int seafarerDefault) {
         this.id = id;
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.status = status;
+        this.seafarerDefault = seafarerDefault;
     }
 
     private Long id;
     private String groupName;
     private String groupDescription;
     int status;
+    int seafarerDefault;
 
     public Long getId() {
         return id;
@@ -46,5 +48,13 @@ public class PrivilegeGroupDto {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getSeafarerDefault() {
+        return seafarerDefault;
+    }
+
+    public void setSeafarerDefault(int seafarerDefault) {
+        this.seafarerDefault = seafarerDefault;
     }
 }
