@@ -125,4 +125,27 @@ public class OtherDetailsRegistrationService implements OtherDetailsRegistration
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public OtherDetailsRegistrationDto getSeafarerOtherData(Long sid) {
+        try {
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findById(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<OtherDetailsRegistrationEntity> optionalOtherDetailsRegistrationEntity = otherDetailsRegistrationRepository.findBySidNo(seafarersEntity.getId().toString());
+
+            if (!optionalOtherDetailsRegistrationEntity.isPresent()) {
+                throw new AppException("Other Details Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            return otherDetailsRegistrationMapper.toOtherDetailsRegistrationDto(optionalOtherDetailsRegistrationEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

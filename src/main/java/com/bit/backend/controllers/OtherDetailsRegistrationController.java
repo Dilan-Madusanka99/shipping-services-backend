@@ -120,4 +120,14 @@ public class OtherDetailsRegistrationController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/other_details_registration/seafarer/{sid}")
+    public ResponseEntity<OtherDetailsRegistrationDto> getSeafarerOtherData(@PathVariable Long sid) {
+        try {
+            OtherDetailsRegistrationDto otherDetailsRegistrationDto = otherDetailsRegistrationServiceI.getSeafarerOtherData(sid);
+            return ResponseEntity.ok(otherDetailsRegistrationDto);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
