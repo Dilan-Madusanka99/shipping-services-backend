@@ -2,13 +2,16 @@ package com.bit.backend.services.impl;
 
 import com.bit.backend.dtos.EmployeeAttendenceDto;
 import com.bit.backend.entities.EmployeeAttendenceEntity;
+import com.bit.backend.entities.EmployeeEntity;
 import com.bit.backend.exceptions.AppException;
 import com.bit.backend.mappers.EmployeeAttendenceMapper;
 import com.bit.backend.repositories.EmployeeAttendenceRepository;
+import com.bit.backend.repositories.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -18,10 +21,12 @@ public class EmployeeAttendenceService implements EmployeeAttendenceServiceI {
 
     private final EmployeeAttendenceRepository employeeAttendenceRepository;
     private final EmployeeAttendenceMapper employeeAttendenceMapper;
+    private final EmployeeRepository employeeRepository;
 
-    public EmployeeAttendenceService(EmployeeAttendenceRepository employeeAttendenceRepository, EmployeeAttendenceMapper employeeAttendenceMapper) {
+    public EmployeeAttendenceService(EmployeeAttendenceRepository employeeAttendenceRepository, EmployeeAttendenceMapper employeeAttendenceMapper, EmployeeRepository employeeRepository) {
         this.employeeAttendenceRepository = employeeAttendenceRepository;
         this.employeeAttendenceMapper = employeeAttendenceMapper;
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
@@ -98,6 +103,33 @@ public class EmployeeAttendenceService implements EmployeeAttendenceServiceI {
 
             employeeAttendenceRepository.deleteById(id);
             return employeeAttendenceMapper.toEmployeeAttendenceDto(optionalEmployeeAttendenceEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Override
+    public EmployeeAttendenceDto markEmployeeAttendance(String employeeId) {
+        try {
+            Optional<EmployeeEntity> optionalEmployeeEntity = employeeRepository.findByEmpNo(employeeId);
+
+            if (!optionalEmployeeEntity.isPresent()) {
+                throw new AppException("Employee Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            EmployeeEntity employeeEntity = optionalEmployeeEntity.get();
+            LocalDate today = LocalDate.now(ZoneId.of("Asia/Colombo"));
+            if(!employeeAttendenceRepository.existsByUsersAndAttandenceDate(employeeEntity.getId().toString(), today)) {
+                EmployeeAttendenceEntity employeeAttendenceEntity = new EmployeeAttendenceEntity();
+                employeeAttendenceEntity.setAttendenceStatus("Present");
+                employeeAttendenceEntity.setUsers(employeeEntity.getId().toString());
+                employeeAttendenceEntity.setAttandenceDate(LocalDate.now());
+                employeeAttendenceEntity.setRoles(employeeEntity.getRoles());
+
+                EmployeeAttendenceEntity savedEmployeeAttendenceEntity = employeeAttendenceRepository.save(employeeAttendenceEntity);
+
+                return employeeAttendenceMapper.toEmployeeAttendenceDto(savedEmployeeAttendenceEntity);
+            }
+            return null;
         } catch (Exception e) {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }

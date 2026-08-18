@@ -10,4 +10,5 @@ public interface EmployeeAttendenceServiceI {
     List<EmployeeAttendenceDto> getData();
     EmployeeAttendenceDto updateEmployeeAttendence(long id, EmployeeAttendenceDto employeeAttendenceDto);
     EmployeeAttendenceDto deleteEmployeeAttendence(long id);
+    EmployeeAttendenceDto markEmployeeAttendance(String employeeId);
 }
