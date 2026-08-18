@@ -125,4 +125,27 @@ public class SeaServicesService implements SeaServicesServiceI {
     public Integer getSearServiceExperience(String sid) {
         return this.seaServicesRepository.getSeafarersExp(sid);
     }
+
+    @Override
+    public List<SeaServicesDto> getSeafarerDocumentData(Long sid) {
+        try {
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findById(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<List<SeaServicesEntity>> optionalSeaServicesEntity = seaServicesRepository.findBySidNo(seafarersEntity.getId().toString());
+
+            if (!optionalSeaServicesEntity.isPresent()) {
+                throw new AppException("Sea Service Details Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            return seaServicesMapper.toSeaServicesDtoList(optionalSeaServicesEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

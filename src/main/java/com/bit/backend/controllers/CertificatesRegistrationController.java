@@ -86,4 +86,14 @@ public class CertificatesRegistrationController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/certificates_registration/seafarer/{sid}")
+    public ResponseEntity<List<CertificatesRegistrationDto>> getSeafarerCertificateData(@PathVariable Long sid) {
+        try {
+            List<CertificatesRegistrationDto> certificatesRegistrationDtoList = certificatesRegistrationServiceI.getSeafarerCertificateData(sid);
+            return ResponseEntity.ok(certificatesRegistrationDtoList);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

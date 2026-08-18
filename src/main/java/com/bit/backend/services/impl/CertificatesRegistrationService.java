@@ -141,4 +141,27 @@ public class CertificatesRegistrationService implements CertificatesRegistration
         }
     }
 
+    @Override
+    public List<CertificatesRegistrationDto> getSeafarerCertificateData(Long sid) {
+        try {
+
+            Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findById(sid);
+
+            if (!optionalSeafarersEntity.isPresent()) {
+                throw new AppException("Seafarer Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+
+            SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();
+
+            Optional<List<CertificatesRegistrationEntity>> optionalCertificatesRegistrationEntity = certificatesRegistrationRepository.findBySidNo(seafarersEntity.getId().toString());
+
+            if (!optionalCertificatesRegistrationEntity.isPresent()) {
+                throw new AppException("Certificate Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+            }
+            return certificatesRegistrationMapper.toCertificatesRegistrationDtoList(optionalCertificatesRegistrationEntity.get());
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

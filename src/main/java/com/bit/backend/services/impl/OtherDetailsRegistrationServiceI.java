@@ -12,4 +12,5 @@ public interface OtherDetailsRegistrationServiceI {
     OtherDetailsRegistrationDto updateOtherDetailsRegistration(long id, OtherDetailsRegistrationDto otherDetailsRegistrationDto);
     OtherDetailsRegistrationDto deleteOtherDetailsRegistration(long id);
     OtherDetailsRegistrationDto getSeafarerData(String sid);
+    OtherDetailsRegistrationDto getSeafarerOtherData(Long sid);
 }
