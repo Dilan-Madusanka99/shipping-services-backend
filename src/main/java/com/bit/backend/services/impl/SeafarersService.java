@@ -101,7 +101,7 @@ public class SeafarersService implements SeafarersServiceI {
 
             /* Edit Standby Crew Details */
 
-            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntityList = onboardCrewRegistrationRepository.findBySidNo(savedSeafarersEntity.getSidNo());
+            Optional<List<OnboardCrewRegistrationEntity>> optionalOnboardCrewRegistrationEntityList = onboardCrewRegistrationRepository.findBySidNo(savedSeafarersEntity.getId().toString());
 
             if (optionalOnboardCrewRegistrationEntityList.isPresent() && optionalOnboardCrewRegistrationEntityList.get().size() == 1) {
                 List<OnboardCrewRegistrationEntity> onboardCrewRegistrationEntityList = optionalOnboardCrewRegistrationEntityList.get();
