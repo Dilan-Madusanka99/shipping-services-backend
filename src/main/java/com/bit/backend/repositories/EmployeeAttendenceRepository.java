@@ -14,7 +14,8 @@ public interface EmployeeAttendenceRepository extends JpaRepository<EmployeeAtte
     EmployeeAttendenceEntity findByUsersAndAttandenceDate(String users, LocalDate now);
 
     @Query(nativeQuery = true, value =
-            "SELECT CONCAT(e.first_name, ' ', e.last_name) AS employeeName, COUNT(*) AS cnt " +
+            "SELECT CONCAT(e.first_name, ' ', e.last_name) AS employeeName, " +
+                    "COUNT(CASE WHEN a.attendence_Status = 'Present' THEN 1 END) AS cnt " +
                     "FROM ems.employee_attendence a " +
                     "JOIN ems.employee e ON a.users = e.id " +
                     "WHERE MONTH(a.attandence_Date) = :month " +

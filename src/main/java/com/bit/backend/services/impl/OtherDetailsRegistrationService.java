@@ -110,7 +110,7 @@ public class OtherDetailsRegistrationService implements OtherDetailsRegistration
             Optional<SeafarersEntity> optionalSeafarersEntity = seafarersRepository.findBySidNo(sid);
 
             if (!optionalSeafarersEntity.isPresent()) {
-                throw new AppException("Seafarers  Registration Does Not Exists", HttpStatus.BAD_REQUEST);
+                throw new AppException("Seafarers Registration Does Not Exists", HttpStatus.BAD_REQUEST);
             }
 
             SeafarersEntity seafarersEntity = optionalSeafarersEntity.get();

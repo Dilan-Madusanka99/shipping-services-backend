@@ -11,6 +11,10 @@ import java.util.Optional;
 public interface PaymentsRepository extends JpaRepository<PaymentsEntity, Long> {
     Optional<PaymentsEntity> findByPaymentNo(String paymentNo);
 
-    @Query(nativeQuery = true, value = "select DATE_FORMAT(payment_date, '%Y-%m') as month, SUM(amount) as cnt from ems.payments group by month order by month")
+    @Query(nativeQuery = true,
+            value = "select DATE_FORMAT(payment_date, '%Y-%m') as month, " +
+                    "SUM(amount) as cnt from ems.payments " +
+                    "group by month " +
+                    "order by month")
     List<Map<String, Object>> getPaymentsByMonth();
 }

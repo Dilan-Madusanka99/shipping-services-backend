@@ -86,7 +86,7 @@ public class AppointmentService implements AppointmentServiceI{
             AppointmentEntity savedAppointmentEntity = appointmentRepository.save(newAppointmentEntity);
 
             AppointmentDto responseAppointmentDto = appointmentMapper.toAppointmentDto(savedAppointmentEntity);
-            AppointmentDto notified = this.notificationServiceI.sendAppointmentNotification(responseAppointmentDto,"reschedule");
+//            AppointmentDto notified = this.notificationServiceI.sendAppointmentNotification(responseAppointmentDto,"reschedule");
             return responseAppointmentDto;
 
         } catch (Exception e) {

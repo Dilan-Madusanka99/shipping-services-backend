@@ -13,6 +13,17 @@ public interface SeafarersRepository extends JpaRepository<SeafarersEntity, Long
     Optional<SeafarersEntity> findBySidNo(String sidNo);
     Optional<SeafarersEntity> findById(long id);
 
-    @Query(nativeQuery = true, value = "select DATE_FORMAT(applied_date, '%Y-%m') as month, count(*) as cnt from ems.seafarers_registration group by month order by month")
+//    @Query(nativeQuery = true,
+//            value = "select DATE_FORMAT(applied_date, '%Y-%m') as month, " +
+//                    "count(*) as cnt from ems.seafarers_registration " +
+//                    "group by month " +
+//                    "order by month")
+        @Query(nativeQuery = true,
+                value = "select `position` , " +
+                        "count(*) as cnt from ems.seafarers_registration " +
+                        "group by `position` " +
+                        "order by `position`")
     List<Map<String, Object>> getSeafarersRegisteredByMonth();
 }
+
+
