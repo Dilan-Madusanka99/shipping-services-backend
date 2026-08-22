@@ -62,4 +62,15 @@ public class EmployeeAttendenceController {
             throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/employeeAttendence/mark-attendance/present/{employeeId}")
+    public ResponseEntity<EmployeeAttendenceDto> markEmployeeAttendance(@PathVariable String employeeId) {
+
+        try {
+            EmployeeAttendenceDto responseEmployeeAttendenceDto = employeeAttendenceServiceI.markEmployeeAttendance(employeeId);
+            return ResponseEntity.ok(responseEmployeeAttendenceDto);
+        } catch (Exception e) {
+            throw new AppException("Request failed with error: " + e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
