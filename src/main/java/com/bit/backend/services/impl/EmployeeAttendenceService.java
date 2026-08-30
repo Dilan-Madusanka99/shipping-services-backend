@@ -23,7 +23,8 @@ public class EmployeeAttendenceService implements EmployeeAttendenceServiceI {
     private final EmployeeAttendenceMapper employeeAttendenceMapper;
     private final EmployeeRepository employeeRepository;
 
-    public EmployeeAttendenceService(EmployeeAttendenceRepository employeeAttendenceRepository, EmployeeAttendenceMapper employeeAttendenceMapper, EmployeeRepository employeeRepository) {
+    public EmployeeAttendenceService(EmployeeAttendenceRepository employeeAttendenceRepository,
+                                     EmployeeAttendenceMapper employeeAttendenceMapper, EmployeeRepository employeeRepository) {
         this.employeeAttendenceRepository = employeeAttendenceRepository;
         this.employeeAttendenceMapper = employeeAttendenceMapper;
         this.employeeRepository = employeeRepository;
@@ -35,7 +36,8 @@ public class EmployeeAttendenceService implements EmployeeAttendenceServiceI {
             System.out.println("***In Backend***");
 
             // validation to check if the same Employee has the attenadance marked for same date
-            EmployeeAttendenceEntity employeeAttendenceEntityValidation = employeeAttendenceRepository.findByUsersAndAttandenceDate(employeeAttendenceDto.getUsers(), LocalDate.now());
+            EmployeeAttendenceEntity employeeAttendenceEntityValidation = employeeAttendenceRepository
+                    .findByUsersAndAttandenceDate(employeeAttendenceDto.getUsers(), LocalDate.now());
 
             if (employeeAttendenceEntityValidation != null) {
                 throw new AppException("Attendance already marked for the employee for today", HttpStatus.BAD_REQUEST);
